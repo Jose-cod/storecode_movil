@@ -1,5 +1,6 @@
 package com.example.storecode_android.Presenter;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.util.Log;
@@ -13,6 +14,7 @@ import com.example.storecode_android.service.RestClientService;
 import com.example.storecode_android.service.RestClientServiceImpl;
 import com.example.storecode_android.utils.AnimacionesGenerales;
 import com.example.storecode_android.utils.LogFile;
+import com.example.storecode_android.view.MainDrawerActivity;
 
 import org.apache.log4j.Logger;
 
@@ -124,10 +126,13 @@ public class LoginPresenter {
                         e.printStackTrace();
                     }
 
-                    /*Intent intent = new Intent(view, MainPrincipalActivity.class);
+
+                    Intent intent = new Intent(view, MainDrawerActivity.class);
                     view.startActivity(intent);
                     view.finish();
-                    view.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);*/
+                    view.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
+                    
                 } else {
                     view.etContrasenia.getBackground().mutate().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
                     view.etIdUsuario.getBackground().mutate().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);

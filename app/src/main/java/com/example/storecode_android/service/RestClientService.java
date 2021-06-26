@@ -2,12 +2,14 @@ package com.example.storecode_android.service;
 
 import com.example.storecode_android.entidades.ReqLoginDto;
 import com.example.storecode_android.entidades.RespLoginDto;
+import com.example.storecode_android.entidades.RespObtenerProducto;
 import com.example.storecode_android.entidades.ResponseMasterDto;
 
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_LOGIN;
@@ -68,6 +70,9 @@ public interface RestClientService {
 
     @POST(REST_SERVICE_LOGIN)
     Call<RespLoginDto> login(@Body ReqLoginDto request);
+
+    @GET("products/byuser/49")
+    Call<List<RespObtenerProducto>> cargarProductos();
 
     /*@POST(REST_SERVICE_LOGIN_AUTORIZADO)
     Call<ResponseMasterDto<RespLogin_AutorizadoDto>> login_autorizado(@Body ReqLogin_AutorizadoDto request);

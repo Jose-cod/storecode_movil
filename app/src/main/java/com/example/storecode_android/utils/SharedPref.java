@@ -1,0 +1,191 @@
+package com.example.storecode_android.utils;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
+import org.apache.log4j.Logger;
+
+/**
+ * Description: Clase encargada de extraer las preferencias de usario desde SharedPreferences
+ * Created by EX440831 on 14/02/2020.
+ */
+
+public class SharedPref {
+    private static final Logger log = LogFile.getLogger(SharedPref.class);
+    private static SharedPreferences sharedPreferences;
+    private static SharedPreferences.Editor sharedPreferencesEdit;
+
+    @SuppressLint("CommitPrefEdits")
+    public static void inicializaPreferencias(Context context) {
+        if (sharedPreferences == null)
+            sharedPreferences = context.getSharedPreferences(Constantes.SHAR_PREF_NAME, Context.MODE_PRIVATE);
+        if (sharedPreferencesEdit == null)
+            sharedPreferencesEdit = sharedPreferences.edit();
+    }
+
+    public static String getString(final String nameSharedPreference) {
+        return sharedPreferences.getString(nameSharedPreference, null);
+    }
+
+    public static void setString(final String nameSharedPreference, final String value) {
+        sharedPreferencesEdit.putString(nameSharedPreference, value);
+        sharedPreferencesEdit.commit();
+    }
+
+    public static boolean getBoolean(final String nameSharedPreference) {
+        return sharedPreferences.getBoolean(nameSharedPreference, false);
+    }
+
+    public static void setBoolean(final String nameSharedPreference, final boolean value) {
+        sharedPreferencesEdit.putBoolean(nameSharedPreference, value);
+        sharedPreferencesEdit.commit();
+    }
+
+    public static String getTutorial(final String nameSharedPreference) {
+        return sharedPreferences.getString(nameSharedPreference, "Vacio");
+    }
+
+    public static void setTutorial(final String nameSharedPreference, final String value) {
+        sharedPreferencesEdit.putString(nameSharedPreference, value);
+        sharedPreferencesEdit.commit();
+    }
+
+    public static String getPermitirNotificaciones(final String nameSharedPreference) {
+        return sharedPreferences.getString(nameSharedPreference, "Vacio");
+    }
+
+    public static void setPermitirNotificaciones(final String nameSharedPreference, final String value) {
+        sharedPreferencesEdit.putString(nameSharedPreference, value);
+        sharedPreferencesEdit.commit();
+    }
+
+    public static void guardarAplicaciones(final Context context, String datos) {
+        inicializaPreferencias(context);
+        sharedPreferencesEdit.putString("productos", datos);
+        sharedPreferencesEdit.commit();
+    }
+
+    public static String obtenerAplicaciones(final Context context) {
+        inicializaPreferencias(context);
+        return sharedPreferences.getString("productos", "Vacio");
+    }
+
+   /* public static void guardarVersionPrevActualizacion(final Context context, final String versionAnterior) {
+        log.info( "--guardarPrecColocPosActualizacion--");
+        inicializaPreferencias(context);
+        sharedPreferencesEdit.putString(Constantes.SHAR_PREF_COLOC_PREC, versionAnterior);
+        sharedPreferencesEdit.commit();
+    }
+
+    public static void guardarNotificacionDescartada(final Context context, Notificacion_Descartada notificacion_descartada ) {
+        inicializaPreferencias(context);
+        sharedPreferencesEdit.putString(Constantes.SHAR_PREF_NOTIFICACIONES_DESCARTADAS, notificacion_descartada.toString());
+        sharedPreferencesEdit.commit();
+    }
+
+    public static String obtenerNotificacionDescartada(final Context context) {
+        inicializaPreferencias(context);
+        return sharedPreferences.getString(Constantes.SHAR_PREF_NOTIFICACIONES_DESCARTADAS, "Vacio");
+    }
+
+    public static void deleteNotificacionDescartada(final Context context) {
+        log.info("Notificacion Eliminada");
+        inicializaPreferencias(context);
+        sharedPreferencesEdit.remove(Constantes.SHAR_PREF_NOTIFICACIONES_DESCARTADAS);
+        sharedPreferencesEdit.commit();
+    }
+
+    //Bandera de Notificaciones Activas
+    public static void guardarNotificacionActiva(final Context context, String bandera_notificacion) {
+        inicializaPreferencias(context);
+        sharedPreferencesEdit.putString(Constantes.SHAR_PREF_NOTIFICACIONES_ACTIVA, bandera_notificacion);
+        sharedPreferencesEdit.commit();
+    }
+
+    public static String obtenerguardarNotificacionActiva(final Context context) {
+        inicializaPreferencias(context);
+        return sharedPreferences.getString(Constantes.SHAR_PREF_NOTIFICACIONES_ACTIVA, "Vacio");
+    }
+
+    public static void deleteNotificacionActiva(final Context context) {
+        log.info("Notificacion Eliminada");
+        inicializaPreferencias(context);
+        sharedPreferencesEdit.remove(Constantes.SHAR_PREF_NOTIFICACIONES_ACTIVA);
+        sharedPreferencesEdit.commit();
+    }
+
+    //Bandera de Notificaciones Activas
+    public static void guardarAplicaciones(final Context context, String datos) {
+        inicializaPreferencias(context);
+        sharedPreferencesEdit.putString(Constantes.SHAR_PREF_APLICACIONES_DISPONIBLES, datos);
+        sharedPreferencesEdit.commit();
+    }
+
+    public static String obtenerAplicaciones(final Context context) {
+        inicializaPreferencias(context);
+        return sharedPreferences.getString(Constantes.SHAR_PREF_APLICACIONES_DISPONIBLES, "Vacio");
+    }
+
+    public static void deleteAplicaciones(final Context context) {
+        log.info("Aplicacaciones Eliminada");
+        inicializaPreferencias(context);
+        sharedPreferencesEdit.remove(Constantes.SHAR_PREF_APLICACIONES_DISPONIBLES);
+        sharedPreferencesEdit.commit();
+    }*/
+
+    //Preference de Descripcion de Aplicaciones
+   /* public static void guardarDescripcionAplicaciones(final Context context, String datos) {
+        inicializaPreferencias(context);
+        sharedPreferencesEdit.putString(Constantes.SHAR_PREF_DESCRIPCION_APLICACIONES, datos);
+        sharedPreferencesEdit.commit();
+    }
+
+    public static String obtenerDescripcionAplicaciones(final Context context) {
+        inicializaPreferencias(context);
+        return sharedPreferences.getString(Constantes.SHAR_PREF_DESCRIPCION_APLICACIONES, "Vacio");
+    }
+
+    public static void deleteDescripcionAplicaciones(final Context context) {
+        log.info("Aplicacaciones Eliminada");
+        inicializaPreferencias(context);
+        sharedPreferencesEdit.remove(Constantes.SHAR_PREF_DESCRIPCION_APLICACIONES);
+        sharedPreferencesEdit.commit();
+    }
+
+    //Guarda Nombre del Usuario
+    public static String getNombreEmpleado(final String nameSharedPreference) {
+        return sharedPreferences.getString(nameSharedPreference, null);
+    }
+
+    public static void setNombreEmpleado(final String nameSharedPreference, final String value) {
+        sharedPreferencesEdit.putString(nameSharedPreference, value);
+        sharedPreferencesEdit.commit();
+    }
+
+    //Preference de PackageName
+    public static void guardarPackageName(String datos) {
+        log.info("Paquete Creado");
+        sharedPreferencesEdit.putString(Constantes.SHAR_PREF_PACKAGE_NAME, datos);
+        sharedPreferencesEdit.commit();
+    }
+
+    public static String obtenerPackageName() {
+        return sharedPreferences.getString(Constantes.SHAR_PREF_PACKAGE_NAME, "Vacio");
+    }
+
+    SharedPref.setString(Constantes.SHAR_PREF_USUARIO, aSwitch.isChecked() ? user : null);
+    sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+    SharedPreferences.Editor editor = sharedpreferences.edit();
+                            editor.putString("user", user);
+                            editor.putString("pass", pass);
+                            editor.apply();
+
+    public static void deletePackageName(final Context context) {
+        log.info("Paquete Eliminado");
+        inicializaPreferencias(context);
+        sharedPreferencesEdit.remove(Constantes.SHAR_PREF_PACKAGE_NAME);
+        sharedPreferencesEdit.commit();
+    }*/
+
+
+}

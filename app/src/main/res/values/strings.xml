@@ -110,9 +110,6 @@
     <string name="ad_nombrarvitrina_mensaje">Escribe un nombre para tu nuevo exhibidor</string>
 
 
-
-
-
     <!-- alertdialog_eliminarcelular -->
     <string name="ad_eliminarcelular_titulo">Eliminar celular</string>
     <string name="ad_eliminarcelular_nivel">Eliminar nivel</string>
@@ -145,7 +142,6 @@
     <string name="legal_nuevo_preciador">El pago Inicial corresponde a la diferencia a pagar al adquirir el equipo con el Plan Telcel Max Sin Límite 5000 sujeto a un plazo mínimo de contratación de 24 meses. * La cantidad de $170.72 corresponde al cargo mensual cuando el Cliente solicita el financiamento del Pago Inicial y paga de contado un enganche de $2,456.47. El monto de enganche podrá variar en función del historial crediticio y/o de pago del cliente. FINANCIAMIENTO SUJETO A APROBACIÓN Y EVALUACIÓN DE CAPACIDAD DE PAGO. Total financiado: $4,097.38. Pago Inicial Total financiado; $6,553.85. Cargo Mensual por Servicio (Renta) Plan Telcel Max Sin Límite 5000: $499. Cargo Mensual por Equipo $221.00</string>
     <string name="alert_no_internet_title">Error de conexión</string>
     <string name="alert_no_internet_msg">Hubo un problema con la conexión a internet</string>
-
 
 
     <!-- ============================== -->
@@ -327,7 +323,7 @@
     <string name="advise_name">Para acceder a la aplicación ingrese su contraseña de empleado</string>
     <string name="advise_name_precio">!Modo Retail esta activo! \n\nPara poder ingresar, por seguridad \ndebes confirmar tu contraseña de empleado \n</string>
     <string name="no_empleado">No de empleado</string>
-    <string name= "email_usuario">Email</string>
+    <string name="email_usuario">Email</string>
     <string name="usuario_pass">Contraseña</string>
     <string name="button_sesion">ENTRAR</string>
     <string name="button_validar">VALIDAR</string>
