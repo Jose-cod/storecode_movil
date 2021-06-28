@@ -61,13 +61,37 @@ public class SharedPref {
 
     public static void guardarAplicaciones(final Context context, String datos) {
         inicializaPreferencias(context);
-        sharedPreferencesEdit.putString("productos", datos);
+        sharedPreferencesEdit.putString(Constantes.PRODUCTOS, datos);
         sharedPreferencesEdit.commit();
     }
 
     public static String obtenerAplicaciones(final Context context) {
         inicializaPreferencias(context);
-        return sharedPreferences.getString("productos", "Vacio");
+        return sharedPreferences.getString(Constantes.PRODUCTOS, "Vacio");
+    }
+    //guardar datos del usuario
+
+    public static void guardarUsuario(final Context context, String user){
+        inicializaPreferencias(context);
+        sharedPreferencesEdit.putString(Constantes.USER, user);
+        sharedPreferencesEdit.commit();
+    }
+
+    public static String obtenerUsuario(final Context context){
+        inicializaPreferencias(context);
+        return sharedPreferences.getString(Constantes.USER,"{nombreUsuario='Rosendo'}");
+    }
+
+    public static void guardarIdUsuario(final Context context, Integer idUsuario){
+        inicializaPreferencias(context);
+        sharedPreferencesEdit.putInt(Constantes.ID_USER,idUsuario);
+        sharedPreferencesEdit.commit();
+    }
+
+    //obtener id del Usuario
+    public static Integer obtenerIdUsuario(final Context context){
+        inicializaPreferencias(context);
+        return sharedPreferences.getInt("idUsuario",0);
     }
 
    /* public static void guardarVersionPrevActualizacion(final Context context, final String versionAnterior) {

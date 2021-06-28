@@ -40,7 +40,7 @@ public class RespObtenerProducto {
 
     }
 
-    public RespObtenerProducto(Integer idProducto, String nombreProducto, String desProducto, double precioUnitarioProducto, String imagenProducto, Date fechaAlojadoProducto, double stockRealProducto, String statusProducto, Integer idMarca, Integer idCategoria, Integer idUsuario) {
+    public RespObtenerProducto(Integer idProducto, String nombreProducto, String desProducto, double precioUnitarioProducto, String imagenProducto, double stockRealProducto, String statusProducto, Integer idMarca, Integer idCategoria, Integer idUsuario) {
         this.idProducto = idProducto;
         this.nombreProducto = nombreProducto;
         this.desProducto = desProducto;

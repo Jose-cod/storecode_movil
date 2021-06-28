@@ -1,7 +1,6 @@
-package com.example.storecode_android.view;
+package com.example.storecode_android.view.fragments;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 /*import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -29,7 +27,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
+
 import com.example.storecode_android.R;
 
 /*import mx.com.telcel.di.sds.gsac.dapmov.mdm_telcel.R;
@@ -45,9 +43,9 @@ import mx.com.telcel.di.sds.gsac.dapmov.mdm_telcel.view.adapter_instaladas.Model
  * Created by EX440831 on 14/02/2020.
  */
 
-public class FragmentoInstaladas extends Fragment {
+public class HomeLogedFragment extends Fragment {
 
-    private static final Logger log = LogFile.getLogger(FragmentoInstaladas.class);
+    private static final Logger log = LogFile.getLogger(HomeLogedFragment.class);
     public RecyclerView recyclerView;
     public Activity mContext;
     public List<RespObtenerProducto> respuesta;

@@ -6,6 +6,11 @@ import android.graphics.PorterDuff;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+
+import com.example.storecode_android.entidades.RespUserData;
+import com.example.storecode_android.utils.SharedPref;
 import com.example.storecode_android.view.LoginActivity;
 import com.example.storecode_android.R;
 import com.example.storecode_android.entidades.ReqLoginDto;
@@ -20,6 +25,7 @@ import org.apache.log4j.Logger;
 
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.example.storecode_android.utils.Constantes.RESP_CODE_WEB_OK;
 /*
@@ -103,6 +109,7 @@ public class LoginPresenter {
         log.info("REQUEST:" + reqLoginDto.toString());
         Log.d("LOGIN APP PRESENTER REQUEST: ",reqLoginDto.toString());
         System.out.println(reqLoginDto.toString());
+        //guardar idUsuario en un shared preference
         call.enqueue(new Callback<RespLoginDto>() {
             @Override
             public void onResponse(Call<RespLoginDto> call, retrofit2.Response<RespLoginDto> response) {
@@ -120,17 +127,27 @@ public class LoginPresenter {
                     try{
                         System.out.println("");
                         Log.d("LOGIN APP PRESENTER","RESPONSE EXITOSO");
+                        System.out.println(response.body());
+                        SharedPref.guardarIdUsuario(view,response.body().getIdUsuario());
                         Toast.makeText(view,"Respuesta exitosa",Toast.LENGTH_SHORT).show();
+                        cargarDatosUsuario();
                         //consumirServicioBitacoraLogin(response.body().getPayLoad().getIdFuerzaDeVenta(), view.etIdUsuario.getText().toString());
                     }catch (Exception e){
                         e.printStackTrace();
                     }
 
-
+                    // Cambia de activity
                     Intent intent = new Intent(view, MainDrawerActivity.class);
                     view.startActivity(intent);
                     view.finish();
+
                     view.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                    //Cambiar el Navigation
+
+                    /*NavController navController = Navigation.findNavController(view, R.id.fragContentLoged);
+                    navController.navigate(R.id.toMainDrawerActivity);*/
+
+
 
                     
                 } else {
@@ -152,6 +169,58 @@ public class LoginPresenter {
             @Override
             public void onFailure(Call<RespLoginDto> call, final Throwable t) {
                 t.printStackTrace();
+                AnimacionesGenerales.mostrarLoader(false, view, null, null);
+                AnimacionesGenerales.mostrarAlertDialogErrorServer(view);
+            }
+        });
+    }
+
+    //
+
+    public void cargarDatosUsuario(){
+        System.out.println("--consultar datos del usuario--");
+        //obtener el id con el shared preferences
+        Integer idUsuario = SharedPref.obtenerIdUsuario(view);
+        RestClientService api = new RestClientServiceImpl();
+        Call<RespUserData> call = api.getUserById(idUsuario.toString());
+
+        call.enqueue(new Callback<RespUserData>() {
+            @Override
+            public void onResponse(Call<RespUserData> call, Response<RespUserData> response) {
+                System.out.println("code response:"+response.code());
+                if (response != null && response.code() == RESP_CODE_WEB_OK ) {
+                    AnimacionesGenerales.mostrarLoader(false,view, null, null);
+
+                    try{
+                        System.out.println("");
+                        Log.d("GET USER DATA BY ID","RESPONSE EXITOSO");
+                        System.out.println(response.body().toString());
+                        SharedPref.guardarUsuario(view,response.body().toString());
+                        Toast.makeText(view,"Respuesta exitosa",Toast.LENGTH_SHORT).show();
+                        //consumirServicioBitacoraLogin(response.body().getPayLoad().getIdFuerzaDeVenta(), view.etIdUsuario.getText().toString());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        AnimacionesGenerales.mostrarLoader(false,view, null, null);
+                        AnimacionesGenerales.mostrarAlertDialogErrorServer(view);
+                    }
+
+
+
+                } else {
+
+                    System.out.println("No se obtuvieron los datos");
+                    Log.d("errorMessage", "El response no fue exitoso al obtener los datos del usuario");
+
+                    AnimacionesGenerales.mostrarLoader(false,view
+                            , null, null);
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RespUserData> call, Throwable t) {
+                t.printStackTrace();
+                System.out.println("No se obtuvieron los datos");
                 AnimacionesGenerales.mostrarLoader(false, view, null, null);
                 AnimacionesGenerales.mostrarAlertDialogErrorServer(view);
             }

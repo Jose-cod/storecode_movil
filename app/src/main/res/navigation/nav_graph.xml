@@ -27,11 +27,22 @@
         tools:layout="@layout/fragment_profile_no_loged" >
         <action
             android:id="@+id/toLoginActivity"
-            app:destination="@id/loginActivity" />
+            app:destination="@id/loginActivity"
+            app:enterAnim="@anim/fade_in"
+
+            app:popExitAnim="@anim/fade_in"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
     <activity
         android:id="@+id/loginActivity"
         android:name="com.example.storecode_android.view.LoginActivity"
         android:label="activity_login"
-        tools:layout="@layout/activity_login" />
+        tools:layout="@layout/activity_login">
+
+
+
+    </activity>
+
+
 </navigation>

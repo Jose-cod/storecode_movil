@@ -2,7 +2,6 @@ package com.example.storecode_android.view;
 
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
@@ -19,24 +18,23 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.storecode_android.R;
 
-import com.example.storecode_android.entidades.ReqLoginDto;
-import com.example.storecode_android.entidades.RespLoginDto;
 import com.example.storecode_android.entidades.RespObtenerProducto;
 import com.example.storecode_android.service.RestClientService;
 import com.example.storecode_android.service.RestClientServiceImpl;
 import com.example.storecode_android.utils.AnimacionesGenerales;
 import com.example.storecode_android.utils.LogFile;
 import com.example.storecode_android.utils.SharedPref;
-import com.example.storecode_android.view.adapters.ModeloAdapterInstaladas;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 import org.apache.log4j.Logger;
-import java.io.File;
+
 import java.util.List;
 
 
@@ -59,6 +57,9 @@ public class MainDrawerActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private ImageButton btn_notificaciones;
     private RecyclerView rvProducto;
+    BottomNavigationView bnvMenuLoged ;
+
+
     //PerfilActivity perfilActivity;
     //SoporteTecnicoActivity soporteTecnicoActivity;
     public static SharedPreferences sharedpreferences;
@@ -200,8 +201,8 @@ public class MainDrawerActivity extends AppCompatActivity {
             switch (menuItem.getItemId()) {
 
                 case R.id.notificaciones:
-                    FragmentoInstaladas principalActivity = new FragmentoInstaladas();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.main_contenedor, principalActivity).commit();
+                    //FragmentoInstaladas principalActivity = new FragmentoInstaladas();
+                    //getSupportFragmentManager().beginTransaction().replace(R.id.main_contenedor, principalActivity).commit();
 
                     /*NotificacionesActivity notificacionesActivity = new NotificacionesActivity();
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -275,10 +276,17 @@ public class MainDrawerActivity extends AppCompatActivity {
             return false;
         });
 
-
+        bnvMenuLoged = findViewById(R.id.bnvMenuLoged);
+        configNav();
 
         cargarProductos();
 
+    }
+
+
+
+    public void configNav(){
+        NavigationUI.setupWithNavController(bnvMenuLoged, Navigation.findNavController(this, R.id.fragContentLoged));
     }
 
     @Override
@@ -455,7 +463,7 @@ public class MainDrawerActivity extends AppCompatActivity {
     }*/
 
     public void cargarProductos(){
-        log.info("--consumirServicioLogin--");
+        log.info("--consumirServicioProducto--");
         //AnimacionesGenerales.mostrarLoader(true, this, "Validando y cargando productos", getApplicationContext().getString(R.string.wait_retrofit));
         //ReqLoginDto reqLoginDto = new ReqLoginDto();
         //reqLoginDto.setEmailUsuario(this.etIdUsuario.getText().toString().replaceAll("\\s", ""));
@@ -492,8 +500,10 @@ public class MainDrawerActivity extends AppCompatActivity {
 
                         SharedPref.guardarAplicaciones(getApplicationContext(), response.body().toString());
 
-                        FragmentoInstaladas principalActivity = new FragmentoInstaladas();
-                        getSupportFragmentManager().beginTransaction().add(R.id.main_contenedor, principalActivity).commit();
+
+
+                        //FragmentoInstaladas principalActivity = new FragmentoInstaladas();
+                        //getSupportFragmentManager().beginTransaction().add(R.id.main_contenedor, principalActivity).commit();
                         Log.d("productos cargados exitosos","RESPONSE EXITOSO");
                         Toast.makeText(getApplicationContext(),"Respuesta exitosa",Toast.LENGTH_SHORT).show();
                         //consumirServicioBitacoraLogin(response.body().getPayLoad().getIdFuerzaDeVenta(), view.etIdUsuario.getText().toString());

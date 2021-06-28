@@ -77,8 +77,12 @@ public class ProfileNoLogedFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //NavDirections navDirection = ProfileNoLogedFragmentDirections
-               Intent intent = new Intent(getContext(), LoginActivity.class);
-               startActivity(intent);
+               //Intent intent = new Intent(getContext(), LoginActivity.class);
+                //startActivity(intent);
+               //Navegacion hacia la pantalla de Login
+               NavController navController = Navigation.findNavController(getActivity(), R.id.fragContent);
+               navController.navigate(R.id.toLoginActivity);
+
 
 
 

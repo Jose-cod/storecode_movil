@@ -108,9 +108,40 @@
 
             <FrameLayout
                 android:id="@+id/main_contenedor"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_width="fill_parent"
-                android:orientation="vertical"/>
+                android:orientation="vertical">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+                        <fragment
+
+                            android:id="@+id/fragContentLoged"
+                            android:name="androidx.navigation.fragment.NavHostFragment"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_above="@id/bnvMenuLoged"
+                            app:navGraph="@navigation/nav_graph_loged"
+                            app:defaultNavHost="true"></fragment>
+                        <com.google.android.material.bottomnavigation.BottomNavigationView
+                            android:id="@+id/bnvMenuLoged"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:background="@color/white"
+                            android:layout_marginBottom="30dp"
+
+                            app:menu="@menu/bnv_menu_loged"/>
+
+                    </RelativeLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </FrameLayout>
+
         </LinearLayout>
 
     </LinearLayout>

@@ -3,6 +3,7 @@ package com.example.storecode_android.service;
 import com.example.storecode_android.entidades.ReqLoginDto;
 import com.example.storecode_android.entidades.RespLoginDto;
 import com.example.storecode_android.entidades.RespObtenerProducto;
+import com.example.storecode_android.entidades.RespUserData;
 import com.example.storecode_android.entidades.ResponseMasterDto;
 import com.example.storecode_android.utils.LogFile;
 
@@ -168,6 +169,13 @@ public class RestClientServiceImpl implements RestClientService {
     public Call<List<RespObtenerProducto>> cargarProductos() {
         return restClient.cargarProductos();
     }
+
+    @Override
+    public Call<RespUserData> getUserById(String id) {
+        return restClient.getUserById(id);
+    }
+
+
 
     /*@Override
     public Call<ResponseMasterDto<RespLogin_AutorizadoDto>> login_autorizado(ReqLogin_AutorizadoDto request) {
