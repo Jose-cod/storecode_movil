@@ -109,8 +109,8 @@ public class ModeloAdapterInstaladas extends RecyclerView.Adapter<HolderModeloIn
         holder.tvDescription.setText(producto.getDesProducto());
         //holder.ivModelo.setImageURI(Uri.parse(producto.getImagenProducto()));
         Picasso.with(context).load(Uri.parse(producto.getImagenProducto())).into(holder.ivModelo);
-
-        Toast.makeText(context,"EL producto que seleccionaste es:"+producto.getNombreProducto()+"y su id es:"+producto.getIdProducto(),Toast.LENGTH_SHORT).show();
+        System.out.println("Click en:"+producto.getNombreProducto());
+        //Toast.makeText(context,"EL producto que seleccionaste es:"+producto.getNombreProducto()+"y su id es:"+producto.getIdProducto(),Toast.LENGTH_SHORT).show();
 
         //ENVIAR SIG SERVICIO
         //CONSULTAR PRODUCTO POR ID

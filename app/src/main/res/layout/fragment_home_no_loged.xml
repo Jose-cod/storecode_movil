@@ -1,14 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".view.fragments.HomeNoLogedFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Home Fragment test" />
+        android:layout_height="wrap_content"
+        android:text="Hola"
+        android:visibility="gone"
+        ></TextView>
 
-</FrameLayout>
+    <SearchView
+        android:id="@+id/frament_home_searchView"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:queryHint="Encuentra tu producto"
+        android:background="#E6E9F5"
+        android:iconifiedByDefault="false"
+        android:searchHintIcon="@drawable/ic_search"
+        android:visibility="gone">
+    </SearchView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="@dimen/margin_h3"
+        android:id="@+id/rvProducts"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5"/>
+
+</LinearLayout>

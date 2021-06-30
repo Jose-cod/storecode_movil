@@ -13,6 +13,10 @@ public class Constantes {
 
     public static final String REST_SERVICE_USER_BY_ID = "users";
 
+    public static final String REST_SERVICE_PRODUCTS = "products";
+
+    public static final String REST_SERVICE_PRODUCTS_BY_USER = "products/byuser";
+
     //Constantes del Share preferences
     public static final String PRODUCTOS="productos";
     public static final String ID_USER="idUsuario";

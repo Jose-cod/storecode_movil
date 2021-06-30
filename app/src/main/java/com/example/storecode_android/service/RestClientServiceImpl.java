@@ -166,13 +166,19 @@ public class RestClientServiceImpl implements RestClientService {
     }
 
     @Override
-    public Call<List<RespObtenerProducto>> cargarProductos() {
-        return restClient.cargarProductos();
+    public Call<List<RespObtenerProducto>> cargarProductos(String id) {
+        return restClient.cargarProductos(id);
     }
+
 
     @Override
     public Call<RespUserData> getUserById(String id) {
         return restClient.getUserById(id);
+    }
+
+    @Override
+    public Call<List<RespObtenerProducto>> cargarAllProductos() {
+        return restClient.cargarAllProductos();
     }
 
 

@@ -107,7 +107,7 @@
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight=".18"
-                android:background="@drawable/ic_person"
+                android:background="@drawable/ic_edit"
                 android:scaleType="centerCrop"
                 android:layout_gravity="center_horizontal"
                 />
@@ -153,7 +153,7 @@
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight=".18"
-                android:background="@drawable/ic_person"
+                android:background="@drawable/ic_shopping_bag"
                 android:scaleType="centerCrop"
                 android:layout_gravity="center_horizontal"
                 />
@@ -198,7 +198,7 @@
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight=".18"
-                android:background="@drawable/ic_person"
+                android:background="@drawable/ic_payments"
                 android:scaleType="centerCrop"
                 android:layout_gravity="center_horizontal"
                 />
@@ -244,7 +244,7 @@
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight=".18"
-                android:background="@drawable/ic_person"
+                android:background="@drawable/ic_shop"
                 android:scaleType="centerCrop"
                 android:layout_gravity="center_horizontal"
                 />
@@ -262,7 +262,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/lato_regular"
-                android:text="Productos en venta"
+                android:text="Vender productos"
 
                 android:layout_gravity="center"
                 android:textColor="@color/black"

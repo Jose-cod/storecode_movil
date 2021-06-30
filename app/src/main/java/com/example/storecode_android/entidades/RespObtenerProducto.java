@@ -19,6 +19,15 @@ public class RespObtenerProducto {
      /*
 
 
+     {
+        "idProducto": 0,
+        "nombreProducto": "Manguera",
+        "desProducto": "Manguera para carro",
+        "precioUnitarioProducto": 998,
+        "imagenProducto": "http://192.168.1.72:3000/public/products/image-1616627584744.jpg",
+        "stockRealProducto": 8,
+        "idUsuario": 40
+    }
 
 
      {

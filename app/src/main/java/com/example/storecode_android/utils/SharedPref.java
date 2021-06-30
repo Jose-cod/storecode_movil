@@ -94,6 +94,23 @@ public class SharedPref {
         return sharedPreferences.getInt("idUsuario",0);
     }
 
+
+    //ELiminar datos del usuario
+    public static void deleteUserData(final Context context) {
+        log.info("Usuario Eliminado");
+        inicializaPreferencias(context);
+        sharedPreferencesEdit.remove(Constantes.USER);
+        sharedPreferencesEdit.commit();
+    }
+
+    //ELiminar todos los productos
+    public static void deleteProducts(final Context context) {
+        log.info("Productos Eliminados");
+        inicializaPreferencias(context);
+        sharedPreferencesEdit.remove(Constantes.PRODUCTOS);
+        sharedPreferencesEdit.commit();
+    }
+
    /* public static void guardarVersionPrevActualizacion(final Context context, final String versionAnterior) {
         log.info( "--guardarPrecColocPosActualizacion--");
         inicializaPreferencias(context);

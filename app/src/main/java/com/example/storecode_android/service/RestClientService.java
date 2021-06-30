@@ -15,6 +15,8 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_LOGIN;
+import static com.example.storecode_android.utils.Constantes.REST_SERVICE_PRODUCTS;
+import static com.example.storecode_android.utils.Constantes.REST_SERVICE_PRODUCTS_BY_USER;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_USER_BY_ID;
 
 /*
@@ -74,11 +76,14 @@ public interface RestClientService {
     @POST(REST_SERVICE_LOGIN)
     Call<RespLoginDto> login(@Body ReqLoginDto request);
 
-    @GET("products/byuser/49")
-    Call<List<RespObtenerProducto>> cargarProductos();
+    @GET(REST_SERVICE_PRODUCTS_BY_USER+"/{id}")
+    Call<List<RespObtenerProducto>> cargarProductos(@Path("id") String id);
 
     @GET(REST_SERVICE_USER_BY_ID+"/{id}")
     Call<RespUserData> getUserById(@Path("id") String id);
+
+    @GET(REST_SERVICE_PRODUCTS)
+    Call<List<RespObtenerProducto>> cargarAllProductos();
 
 
     /*@POST(REST_SERVICE_LOGIN_AUTORIZADO)

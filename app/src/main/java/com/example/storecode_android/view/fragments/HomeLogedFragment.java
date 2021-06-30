@@ -54,6 +54,7 @@ public class HomeLogedFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         String response = SharedPref.obtenerAplicaciones(getContext());
         if(!response.equals("Vacio")) {
             log.info("Lista Aplicaciones: "+ response);

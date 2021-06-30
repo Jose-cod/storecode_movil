@@ -22,6 +22,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.storecode_android.MainActivity;
 import com.example.storecode_android.R;
 
 import com.example.storecode_android.entidades.RespObtenerProducto;
@@ -56,7 +57,8 @@ public class MainDrawerActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private ImageButton btn_notificaciones;
-    private RecyclerView rvProducto;
+    private ImageButton btn_cerrar_sesion;
+    //private RecyclerView rvProducto;
     BottomNavigationView bnvMenuLoged ;
 
 
@@ -85,6 +87,7 @@ public class MainDrawerActivity extends AppCompatActivity {
         //setSupportActionBar(toolbar);
 
         btn_notificaciones = findViewById(R.id.btn_notificaciones);
+        //btn_cerrar_sesion = findViewById(R.id.btn_cerrar_sesion);
 
         /*btn_notificaciones.setOnTouchListener((v, event) -> {
             switch(event.getAction()) {
@@ -249,7 +252,7 @@ public class MainDrawerActivity extends AppCompatActivity {
 
         actionBarDrawerToggle.syncState();
 
-        ImageButton btn_cerrar_sesion = findViewById(R.id.btn_cerrar_sesion);
+        btn_cerrar_sesion = findViewById(R.id.btn_cerrar_sesion);
 
         btn_cerrar_sesion.setOnTouchListener((v, event) -> {
             switch(event.getAction()) {
@@ -266,11 +269,15 @@ public class MainDrawerActivity extends AppCompatActivity {
                    /* SharedPreferences.Editor editor = sharedpreferences.edit();
                     editor.remove("pass");
                     editor.apply();*/
+                    SharedPref.deleteUserData(getApplicationContext());
+                    SharedPref.deleteProducts(getApplicationContext());
 
-                    Intent intentSoporteTecnico = new Intent(getApplicationContext(), LoginActivity.class);
-                    startActivity(intentSoporteTecnico);
+                    Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(mainActivity);
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                     finish();
+
+
                    return true;
             }
             return false;
@@ -468,8 +475,10 @@ public class MainDrawerActivity extends AppCompatActivity {
         //ReqLoginDto reqLoginDto = new ReqLoginDto();
         //reqLoginDto.setEmailUsuario(this.etIdUsuario.getText().toString().replaceAll("\\s", ""));
         //reqLoginDto.setContraUsuario(view.etContrasenia.getText().toString().replaceAll("\\s", ""));
+        Integer idUsuario = SharedPref.obtenerIdUsuario(getApplicationContext());
+
         RestClientService api = new RestClientServiceImpl();
-        Call<List<RespObtenerProducto>> call = api.cargarProductos();
+        Call<List<RespObtenerProducto>> call = api.cargarProductos(idUsuario.toString());
         //log.info("REQUEST:" + reqLoginDto.toString());
         //Log.d("LOGIN APP PRESENTER REQUEST: ",reqLoginDto.toString());
         //System.out.println(reqLoginDto.toString());
