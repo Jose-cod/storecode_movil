@@ -1,8 +1,6 @@
 package com.example.storecode_android.entidades;
 
-import java.util.Date;
-
-public class RespObtenerProducto {
+public class RespGetProductByUser {
     private Integer idProducto;
     private String nombreProducto;
     private String desProducto;
@@ -11,62 +9,20 @@ public class RespObtenerProducto {
     //private Date fechaAlojadoProducto;
     private double stockRealProducto;
     private String statusProducto;
-    private Integer idMarca;
-    private Integer idCategoria;
+    private String idMarca;
+    private String idCategoria;
     private Integer idUsuario;
 
-
-     /*
-
-     {idProducto=34,
-     nombreProducto='Pantalla plana',
-      desProducto='Televisión inteligente',
-      precioUnitarioProducto=9500.0,
-      imagenProducto='http://192.168.1.72:3000/public/products/image-1616629033631.jpg',
-      stockRealProducto=6.0,
-      statusProducto='1',
-      idMarca=6,
-      idCategoria=1,
-      idUsuario=39},
-
-
-     {
-        "idProducto": 0,
-        "nombreProducto": "Manguera",
-        "desProducto": "Manguera para carro",
-        "precioUnitarioProducto": 998,
-        "imagenProducto": "http://192.168.1.72:3000/public/products/image-1616627584744.jpg",
-        "stockRealProducto": 8,
-        "idUsuario": 40
-    }
-
-
-     {
-        "idProducto": 48,
-        "Nombrw": "Laptop Dell",
-        "Descripcion": "Laptop Dell nuevo",
-        "$ Unitario": 4200,
-        "Imagen": "http://192.168.1.72:3000/public/products/IMG-20210310-WA0004.jpeg-1617939165921.jpeg",
-        "Fecha": "2021-04-06T05:00:00.000Z",
-        "Stock": "3.00",
-        "Estatus": "Activo",
-        "Marca": "SONY",
-        "Categoria": "ELECTRÓNICOS"
-    }
-    * */
-
-
-    public RespObtenerProducto(){
+    public RespGetProductByUser(){
 
     }
 
-    public RespObtenerProducto(Integer idProducto, String nombreProducto, String desProducto, double precioUnitarioProducto, String imagenProducto, double stockRealProducto, String statusProducto, Integer idMarca, Integer idCategoria, Integer idUsuario) {
+    public RespGetProductByUser(Integer idProducto, String nombreProducto, String desProducto, double precioUnitarioProducto, String imagenProducto, double stockRealProducto, String statusProducto, String idMarca, String idCategoria, Integer idUsuario) {
         this.idProducto = idProducto;
         this.nombreProducto = nombreProducto;
         this.desProducto = desProducto;
         this.precioUnitarioProducto = precioUnitarioProducto;
         this.imagenProducto = imagenProducto;
-        //this.fechaAlojadoProducto = fechaAlojadoProducto;
         this.stockRealProducto = stockRealProducto;
         this.statusProducto = statusProducto;
         this.idMarca = idMarca;
@@ -114,14 +70,6 @@ public class RespObtenerProducto {
         this.imagenProducto = imagenProducto;
     }
 
-    /*public Date getFechaAlojadoProducto() {
-        return fechaAlojadoProducto;
-    }*/
-
-    /*public void setFechaAlojadoProducto(Date fechaAlojadoProducto) {
-        this.fechaAlojadoProducto = fechaAlojadoProducto;
-    }*/
-
     public double getStockRealProducto() {
         return stockRealProducto;
     }
@@ -138,19 +86,19 @@ public class RespObtenerProducto {
         this.statusProducto = statusProducto;
     }
 
-    public Integer getIdMarca() {
+    public String getIdMarca() {
         return idMarca;
     }
 
-    public void setIdMarca(Integer idMarca) {
+    public void setIdMarca(String idMarca) {
         this.idMarca = idMarca;
     }
 
-    public Integer getIdCategoria() {
+    public String getIdCategoria() {
         return idCategoria;
     }
 
-    public void setIdCategoria(Integer idCategoria) {
+    public void setIdCategoria(String idCategoria) {
         this.idCategoria = idCategoria;
     }
 
@@ -170,12 +118,26 @@ public class RespObtenerProducto {
                 ", desProducto='" + desProducto + '\'' +
                 ", precioUnitarioProducto=" + precioUnitarioProducto +
                 ", imagenProducto='" + imagenProducto + '\'' +
-                //", fechaAlojadoProducto=" + fechaAlojadoProducto.toString() +
                 ", stockRealProducto=" + stockRealProducto +
                 ", statusProducto='" + statusProducto + '\'' +
-                ", idMarca=" + idMarca +
-                ", idCategoria=" + idCategoria +
+                ", idMarca='" + idMarca + '\'' +
+                ", idCategoria='" + idCategoria + '\'' +
                 ", idUsuario=" + idUsuario +
                 '}';
     }
+
+    /*
+    {
+        "idProducto": 50,
+        "nombreProducto": "Laptop HP",
+        "desProducto": "Laptop HP de ultima generación",
+        "precioUnitarioProducto": 3500,
+        "imagenProducto": "http://192.168.1.72:3000/public/products/laptop_hp.jpg-1617843523662.jpg",
+        "stockRealProducto": "6.00",
+        "statusProducto": "Activo",
+        "idMarca": "HP",
+        "idCategoria": "ELECTRÓNICOS",
+        "idUsuario": 49
+    }
+     */
 }

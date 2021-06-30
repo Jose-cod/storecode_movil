@@ -96,10 +96,10 @@ public class HomeNoLogedFragment extends Fragment {
                         it.remove();
                     }*/
 
-                    recyclerView.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(), 1));
+                    /*recyclerView.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(), 1));
                     ModeloAdapterInstaladas adapter = new ModeloAdapterInstaladas(respuesta, getActivity(), searchView);
                     recyclerView.setHasFixedSize(true);
-                    recyclerView.setAdapter(adapter);
+                    recyclerView.setAdapter(adapter);*/
                 }
             }
         }else{

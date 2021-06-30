@@ -500,4 +500,12 @@
     <string name="plan_details_social_col">WhatsApp, Facebook y Twitter</string>
     <string name="plan_details_subtitle">Detalles del plan</string>
     <string name="device_example_title" translatable="false">SAMSUNG LTE SM-J730GM GALAXY J7 PRO</string>
+
+    <!--
+    Mensajes de espera
+    -->
+    <string name="waiting_products">Por favor, espere</string>
+    <string name="load_products">Cargando productos...</string>
+
+
 </resources>

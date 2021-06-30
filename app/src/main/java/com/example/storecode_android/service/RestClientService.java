@@ -1,6 +1,7 @@
 package com.example.storecode_android.service;
 
 import com.example.storecode_android.entidades.ReqLoginDto;
+import com.example.storecode_android.entidades.RespGetProductByUser;
 import com.example.storecode_android.entidades.RespLoginDto;
 import com.example.storecode_android.entidades.RespObtenerProducto;
 import com.example.storecode_android.entidades.RespUserData;
@@ -77,7 +78,7 @@ public interface RestClientService {
     Call<RespLoginDto> login(@Body ReqLoginDto request);
 
     @GET(REST_SERVICE_PRODUCTS_BY_USER+"/{id}")
-    Call<List<RespObtenerProducto>> cargarProductos(@Path("id") String id);
+    Call<List<RespGetProductByUser>> cargarProductos(@Path("id") String id);
 
     @GET(REST_SERVICE_USER_BY_ID+"/{id}")
     Call<RespUserData> getUserById(@Path("id") String id);

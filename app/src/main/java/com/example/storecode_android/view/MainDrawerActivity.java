@@ -286,7 +286,7 @@ public class MainDrawerActivity extends AppCompatActivity {
         bnvMenuLoged = findViewById(R.id.bnvMenuLoged);
         configNav();
 
-        cargarProductos();
+        //cargarProductos();
 
     }
 
@@ -469,7 +469,7 @@ public class MainDrawerActivity extends AppCompatActivity {
         });
     }*/
 
-    public void cargarProductos(){
+    /*public void cargarProductos(){
         log.info("--consumirServicioProducto--");
         //AnimacionesGenerales.mostrarLoader(true, this, "Validando y cargando productos", getApplicationContext().getString(R.string.wait_retrofit));
         //ReqLoginDto reqLoginDto = new ReqLoginDto();
@@ -487,20 +487,20 @@ public class MainDrawerActivity extends AppCompatActivity {
             public void onResponse(Call<List<RespObtenerProducto>> call, retrofit2.Response<List<RespObtenerProducto>> response) {
                 if (response != null && response.code() == RESP_CODE_WEB_OK ) {
                     //AnimacionesGenerales.mostrarLoader(false, getApplicationContext(), null, null);
-                    /*usuarioSession = response.body().getPayLoad();
+                    *//*usuarioSession = response.body().getPayLoad();
                     usuarioSession.setIdUsuario(view.etIdUsuario.getText().toString());
                     log.info("RESPONSE:" + usuarioSession.toString());
                     //Si está chequeado seteamos el usuario, en caso contrario seteamos null para olvidar el usuario
                     SharedPref.setString(Constantes.SHAR_PREF_USUARIO, view.mSwitch.isChecked() ? view.etIdUsuario.getText().toString() : null);
                     Ocultamos el diálogo
-                    */
+                    *//*
 
 
 
                     //Si el inicio de sesión es exitoso entonces guardamos el Primer evento de LOG
                     try{
-                        /*ModeloAdapterInstaladas modeloAdapter= new ModeloAdapterInstaladas(response.body());
-                        rvProducto = findViewById(R.id.activity_preciadorunicomodelo_recyclerView);*/
+                        *//*ModeloAdapterInstaladas modeloAdapter= new ModeloAdapterInstaladas(response.body());
+                        rvProducto = findViewById(R.id.activity_preciadorunicomodelo_recyclerView);*//*
                         //rvProducto.setLayoutManager(,LinearLayoutManager.VERTICAL);
                         //asignar recycler
                         System.out.println(response.body().get(0).getNombreProducto());
@@ -521,10 +521,10 @@ public class MainDrawerActivity extends AppCompatActivity {
                     }
 
 
-                    /*Intent intent = new Intent(getApplicationContext(), MainDrawerActivity.class);
+                    *//*Intent intent = new Intent(getApplicationContext(), MainDrawerActivity.class);
                     getApplicationContext().startActivity(intent);
                     getApplicationContext().finish();
-                    view.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);*/
+                    view.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);*//*
                 } else {
                     Log.d("productos cargados no exitosos","RESPONSE NO EXITOSO");
                     Toast.makeText(getApplicationContext(),"Respuesta no exitosa",Toast.LENGTH_SHORT).show();
@@ -534,13 +534,13 @@ public class MainDrawerActivity extends AppCompatActivity {
                     //view.etIdUsuario.requestFocus();
                     //AnimacionesGenerales.mostrarLoader(false,getApplicationContext(), null, null);
                     //log.info("Response:"+response.body().toString());
-                    /*if (response != null && response.code() == RESP_CODE_WEB_OK ) {
+                    *//*if (response != null && response.code() == RESP_CODE_WEB_OK ) {
                         log.error(response.body().getDetailResponse().getCode() + " " + response.body().getDetailResponse().getBusinessMeaning());
                         AnimacionesGenerales.mostrarAlertDialogError(view, response.body().getDetailResponse().getBusinessMeaning(), response.body().getDetailResponse().getCode());
                     } else {
                         AnimacionesGenerales.mostrarAlertDialogErrorServer(view);
                         Toast.makeText(view, view.getResources().getString(R.string.msj_password_incorrecto), Toast.LENGTH_LONG).show();
-                    }*/
+                    }*//*
                 }
             }
 
@@ -551,6 +551,6 @@ public class MainDrawerActivity extends AppCompatActivity {
                 AnimacionesGenerales.mostrarAlertDialogErrorServer(MainDrawerActivity.this);
             }
         });
-    }
+    }*/
 
 }

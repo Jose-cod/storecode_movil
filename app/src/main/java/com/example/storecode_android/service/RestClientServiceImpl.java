@@ -1,6 +1,7 @@
 package com.example.storecode_android.service;
 
 import com.example.storecode_android.entidades.ReqLoginDto;
+import com.example.storecode_android.entidades.RespGetProductByUser;
 import com.example.storecode_android.entidades.RespLoginDto;
 import com.example.storecode_android.entidades.RespObtenerProducto;
 import com.example.storecode_android.entidades.RespUserData;
@@ -166,7 +167,7 @@ public class RestClientServiceImpl implements RestClientService {
     }
 
     @Override
-    public Call<List<RespObtenerProducto>> cargarProductos(String id) {
+    public Call<List<RespGetProductByUser>> cargarProductos(String id) {
         return restClient.cargarProductos(id);
     }
 

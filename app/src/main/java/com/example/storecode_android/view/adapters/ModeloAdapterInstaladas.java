@@ -22,12 +22,15 @@ import com.example.storecode_android.R;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.storecode_android.entidades.RespGetProductByUser;
 import com.example.storecode_android.entidades.RespObtenerProducto;
 import com.example.storecode_android.utils.LogFile;
 import com.squareup.picasso.Picasso;
 
 import org.apache.log4j.Logger;
 
+import java.util.AbstractList;
+import java.util.ArrayList;
 import java.util.List;
 
 /*import mx.com.telcel.di.sds.gsac.dapmov.mdm_telcel.R;
@@ -60,25 +63,28 @@ public class ModeloAdapterInstaladas extends RecyclerView.Adapter<HolderModeloIn
     private final List<RespObtenerDatosAplicaciones> modeloList;
     private List<RespObtenerDatosAplicaciones> mFilteredList;*/
 
-    private final List<RespObtenerProducto> modeloList ;
+    private final ArrayList<RespGetProductByUser> modeloList= new ArrayList<RespGetProductByUser>();
     private int aux;
 
     private ImageButton btn_buscar;
     private int bandera_search = 0;
     private SearchView msearchView;
     private Context context;
-    private List<RespObtenerProducto> mFilteredList;
+    private List<RespGetProductByUser> mFilteredList= modeloList;
+
+    private ModeloAdapterListener modeloAdapterListener;
 
     String version;
 
     Drawable d;
 
-    public ModeloAdapterInstaladas(List<RespObtenerProducto> modeloList, Activity context, SearchView searchView) {
+    public ModeloAdapterInstaladas(ModeloAdapterListener modeloAdapterListener, Activity context, SearchView searchView) {
         this.context = context;
-        this.modeloList = modeloList;
-        this.mFilteredList = modeloList;
+        //this.modeloList = modeloList;
+        //this.mFilteredList = modeloList;
         this.aux = aux;
         this.msearchView =searchView;
+        this.modeloAdapterListener= modeloAdapterListener;
     }
 
 
@@ -101,15 +107,31 @@ public class ModeloAdapterInstaladas extends RecyclerView.Adapter<HolderModeloIn
 
     @Override
     public void onBindViewHolder(@NonNull HolderModeloInstaladas holder, int position) {
-        RespObtenerProducto producto= modeloList.get(position);
-
+        RespGetProductByUser producto= modeloList.get(position);
+        System.out.println("----------------");
+        System.out.printf("OnBindViewHolder");
         System.out.println(producto.getNombreProducto());
         holder.tvName.setText(producto.getNombreProducto());
         holder.tvPrice.setText("$ "+producto.getPrecioUnitarioProducto());
         holder.tvDescription.setText(producto.getDesProducto());
         //holder.ivModelo.setImageURI(Uri.parse(producto.getImagenProducto()));
-        Picasso.with(context).load(Uri.parse(producto.getImagenProducto())).into(holder.ivModelo);
+        Picasso.with(context)
+                .load(Uri.parse(producto.getImagenProducto()))
+                .into(holder.ivModelo);
+
+
         System.out.println("Click en:"+producto.getNombreProducto());
+
+        //Metodo para mostrar el detalle del producto
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("producto:"+producto.getNombreProducto());
+                modeloAdapterListener.OnProductClicked(modeloList.get(position),position);
+            }
+        });
+
+
         //Toast.makeText(context,"EL producto que seleccionaste es:"+producto.getNombreProducto()+"y su id es:"+producto.getIdProducto(),Toast.LENGTH_SHORT).show();
 
         //ENVIAR SIG SERVICIO
@@ -124,12 +146,17 @@ public class ModeloAdapterInstaladas extends RecyclerView.Adapter<HolderModeloIn
 
     @Override
     public int getItemCount() {
+        System.out.println("---------getItemCount de modelo instaladas------------");
+        System.out.println(modeloList.size());
         return modeloList.size();
     }
 
-    public void updateData(List<RespObtenerProducto> data){
+    public void updateData(List<RespGetProductByUser> data){
+        System.out.println("en el update data");
+
         modeloList.clear();
         modeloList.addAll(data);
+        System.out.println(modeloList);
         notifyDataSetChanged();
     }
 

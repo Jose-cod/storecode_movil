@@ -6,9 +6,11 @@ import android.graphics.PorterDuff;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.lifecycle.MutableLiveData;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.storecode_android.entidades.RespObtenerProducto;
 import com.example.storecode_android.entidades.RespUserData;
 import com.example.storecode_android.utils.SharedPref;
 import com.example.storecode_android.view.LoginActivity;
@@ -23,33 +25,14 @@ import com.example.storecode_android.view.MainDrawerActivity;
 
 import org.apache.log4j.Logger;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.example.storecode_android.utils.Constantes.RESP_CODE_WEB_OK;
-/*
-import mx.com.telcel.di.sds.gsac.dapmov.precio_inteligente.R;
-import mx.com.telcel.di.sds.gsac.dapmov.precio_inteligente.kotlin.ui.main.MainPrincipalActivity;
-import mx.com.telcel.di.sds.gsac.dapmov.precio_inteligente.model.dto.ReqBitacoraLoginAppDto;
-import mx.com.telcel.di.sds.gsac.dapmov.precio_inteligente.model.dto.ReqLoginDto;
-import mx.com.telcel.di.sds.gsac.dapmov.precio_inteligente.model.dto.RespBitacoraLoginDto;
-import mx.com.telcel.di.sds.gsac.dapmov.precio_inteligente.model.dto.RespLoginDto;
-import mx.com.telcel.di.sds.gsac.dapmov.precio_inteligente.model.dto.ResponseMasterDto;
-import mx.com.telcel.di.sds.gsac.dapmov.precio_inteligente.service.rest.RestClientService;
-import mx.com.telcel.di.sds.gsac.dapmov.precio_inteligente.service.rest.impl.RestClientServiceImpl;
-import mx.com.telcel.di.sds.gsac.dapmov.precio_inteligente.utils.AnimacionesGenerales;
-import mx.com.telcel.di.sds.gsac.dapmov.precio_inteligente.utils.Constantes;
-import mx.com.telcel.di.sds.gsac.dapmov.precio_inteligente.utils.LogFile;
-import mx.com.telcel.di.sds.gsac.dapmov.precio_inteligente.utils.SharedPref;
-import mx.com.telcel.di.sds.gsac.dapmov.precio_inteligente.view.LoginActivity;
-import retrofit2.Call;
-import retrofit2.Callback;
 
-import static mx.com.telcel.di.sds.gsac.dapmov.precio_inteligente.utils.Constantes.RESP_CODE_OK;
-import static mx.com.telcel.di.sds.gsac.dapmov.precio_inteligente.utils.Constantes.RESP_CODE_WEB_OK;
-import static mx.com.telcel.di.sds.gsac.dapmov.precio_inteligente.utils.VariablesSesion.usuarioSession;
-*/
 
 
 /**
@@ -62,6 +45,9 @@ public class LoginPresenter {
     public LoginPresenter(LoginActivity view) {
         this.view = view;
     }
+
+
+
 
     /**
      * Description: Función encargada de cargar las preferencias de de sessión
@@ -79,6 +65,8 @@ public class LoginPresenter {
         }
     }*/
 
+
+
     public void cambiarColorBoton() {
         if (view.etIdUsuario != null && view.etContrasenia != null && !view.etIdUsuario.getText().toString().isEmpty() && !view.etContrasenia.getText().toString().isEmpty()) {
             view.btnEntrar.setEnabled(true);
@@ -93,6 +81,13 @@ public class LoginPresenter {
     private boolean validaCamposLlenos() {
         return (!view.etIdUsuario.getText().toString().isEmpty() && !view.etContrasenia.getText().toString().isEmpty());
     }
+
+    /**
+     * Description: Función encargada de traer los productos dependiendo del usuario
+     */
+
+
+
 
     /**
      * Description: Función encargada de consumir el servicio Login

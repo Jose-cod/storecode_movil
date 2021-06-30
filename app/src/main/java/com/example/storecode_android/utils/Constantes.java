@@ -15,7 +15,7 @@ public class Constantes {
 
     public static final String REST_SERVICE_PRODUCTS = "products";
 
-    public static final String REST_SERVICE_PRODUCTS_BY_USER = "products/byuser";
+    public static final String REST_SERVICE_PRODUCTS_BY_USER = "products/iduser";
 
     //Constantes del Share preferences
     public static final String PRODUCTOS="productos";
