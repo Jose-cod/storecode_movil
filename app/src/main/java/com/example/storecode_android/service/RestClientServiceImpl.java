@@ -3,6 +3,7 @@ package com.example.storecode_android.service;
 import com.example.storecode_android.entidades.ReqLoginDto;
 import com.example.storecode_android.entidades.RespGetProductByUser;
 import com.example.storecode_android.entidades.RespLoginDto;
+import com.example.storecode_android.entidades.RespObtenerImagesDto;
 import com.example.storecode_android.entidades.RespObtenerProducto;
 import com.example.storecode_android.entidades.RespUserData;
 import com.example.storecode_android.entidades.ResponseMasterDto;
@@ -167,7 +168,7 @@ public class RestClientServiceImpl implements RestClientService {
     }
 
     @Override
-    public Call<List<RespGetProductByUser>> cargarProductos(String id) {
+    public Call<List<RespObtenerProducto>> cargarProductos(String id) {
         return restClient.cargarProductos(id);
     }
 
@@ -180,6 +181,11 @@ public class RestClientServiceImpl implements RestClientService {
     @Override
     public Call<List<RespObtenerProducto>> cargarAllProductos() {
         return restClient.cargarAllProductos();
+    }
+
+    @Override
+    public Call<RespObtenerImagesDto> obtenerImages(String id) {
+        return restClient.obtenerImages(id);
     }
 
 

@@ -10,11 +10,7 @@
         android:name="com.example.storecode_android.view.fragments.HomeNoLogedFragment"
         android:label="fragment_home_no_loged"
         tools:layout="@layout/fragment_home_no_loged" />
-    <fragment
-        android:id="@+id/navSearchNoLogedFragment"
-        android:name="com.example.storecode_android.view.fragments.SearchNoLogedFragment"
-        android:label="fragment_search_no_loged"
-        tools:layout="@layout/fragment_search_no_loged" />
+
     <fragment
         android:id="@+id/navCartNoLogedFragment"
         android:name="com.example.storecode_android.view.fragments.CartNoLogedFragment"

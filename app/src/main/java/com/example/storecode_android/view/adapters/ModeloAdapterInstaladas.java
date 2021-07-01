@@ -63,14 +63,14 @@ public class ModeloAdapterInstaladas extends RecyclerView.Adapter<HolderModeloIn
     private final List<RespObtenerDatosAplicaciones> modeloList;
     private List<RespObtenerDatosAplicaciones> mFilteredList;*/
 
-    private final ArrayList<RespGetProductByUser> modeloList= new ArrayList<RespGetProductByUser>();
+    private final ArrayList<RespObtenerProducto> modeloList= new ArrayList<RespObtenerProducto>();
     private int aux;
 
     private ImageButton btn_buscar;
     private int bandera_search = 0;
     private SearchView msearchView;
     private Context context;
-    private List<RespGetProductByUser> mFilteredList= modeloList;
+    private List<RespObtenerProducto> mFilteredList= modeloList;
 
     private ModeloAdapterListener modeloAdapterListener;
 
@@ -107,7 +107,7 @@ public class ModeloAdapterInstaladas extends RecyclerView.Adapter<HolderModeloIn
 
     @Override
     public void onBindViewHolder(@NonNull HolderModeloInstaladas holder, int position) {
-        RespGetProductByUser producto= modeloList.get(position);
+        RespObtenerProducto producto= modeloList.get(position);
         System.out.println("----------------");
         System.out.printf("OnBindViewHolder");
         System.out.println(producto.getNombreProducto());
@@ -115,8 +115,10 @@ public class ModeloAdapterInstaladas extends RecyclerView.Adapter<HolderModeloIn
         holder.tvPrice.setText("$ "+producto.getPrecioUnitarioProducto());
         holder.tvDescription.setText(producto.getDesProducto());
         //holder.ivModelo.setImageURI(Uri.parse(producto.getImagenProducto()));
-        Picasso.with(context)
+        /*Picasso.with(context)
                 .load(Uri.parse(producto.getImagenProducto()))
+                .into(holder.ivModelo);*/
+        Picasso.get().load(Uri.parse(producto.getImagenProducto()))
                 .into(holder.ivModelo);
 
 
@@ -151,7 +153,7 @@ public class ModeloAdapterInstaladas extends RecyclerView.Adapter<HolderModeloIn
         return modeloList.size();
     }
 
-    public void updateData(List<RespGetProductByUser> data){
+    public void updateData(List<RespObtenerProducto> data){
         System.out.println("en el update data");
 
         modeloList.clear();

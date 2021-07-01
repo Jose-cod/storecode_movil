@@ -9,12 +9,13 @@
         android:id="@+id/navHomeLogedFragment"
         android:name="com.example.storecode_android.view.fragments.HomeLogedFragment"
         android:label="fragment_home_loged"
-        tools:layout="@layout/fragment_home_loged" />
-    <fragment
-        android:id="@+id/navSearchLogedFragment"
-        android:name="com.example.storecode_android.view.fragments.SearchLogedFragment"
-        android:label="fragment_search_loged"
-        tools:layout="@layout/fragment_search_loged" />
+        tools:layout="@layout/fragment_home_loged" >
+        <action
+            android:id="@+id/HomeLogedToProductDetailAction"
+            app:destination="@id/productDetailFragment"
+            app:enterAnim="@anim/fade_in" />
+    </fragment>
+
     <fragment
         android:id="@+id/navCartLogedFragment"
         android:name="com.example.storecode_android.view.fragments.CartLogedFragment"
@@ -25,4 +26,18 @@
         android:name="com.example.storecode_android.view.fragments.ProfileLogedFragment"
         android:label="fragment_profile_loged"
         tools:layout="@layout/fragment_profile_loged" />
+    <fragment
+        android:id="@+id/productDetailFragment"
+        android:name="com.example.storecode_android.view.fragments.ProductDetailFragment"
+        android:label="fragment_product_detail"
+        tools:layout="@layout/fragment_product_detail">
+        <argument
+            android:name="respObtenerProducto"
+            app:argType="com.example.storecode_android.entidades.RespObtenerProducto" />
+        <action
+            android:id="@+id/productDetail_to_homeLoged"
+            app:destination="@id/navHomeLogedFragment"
+            app:popUpTo="@id/navHomeLogedFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

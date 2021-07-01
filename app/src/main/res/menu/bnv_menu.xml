@@ -7,11 +7,6 @@
         android:icon="@drawable/ic_home"
         />
 
-    <item
-        android:id="@+id/navSearchNoLogedFragment"
-        android:title="Buscar"
-        android:icon="@drawable/ic_search"
-        />
 
     <item
         android:id="@+id/navCartNoLogedFragment"

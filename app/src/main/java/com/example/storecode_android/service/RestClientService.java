@@ -3,6 +3,7 @@ package com.example.storecode_android.service;
 import com.example.storecode_android.entidades.ReqLoginDto;
 import com.example.storecode_android.entidades.RespGetProductByUser;
 import com.example.storecode_android.entidades.RespLoginDto;
+import com.example.storecode_android.entidades.RespObtenerImagesDto;
 import com.example.storecode_android.entidades.RespObtenerProducto;
 import com.example.storecode_android.entidades.RespUserData;
 import com.example.storecode_android.entidades.ResponseMasterDto;
@@ -15,6 +16,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
+import static com.example.storecode_android.utils.Constantes.REST_SERVICE_IMAGES_COMPLE;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_LOGIN;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_PRODUCTS;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_PRODUCTS_BY_USER;
@@ -78,13 +80,18 @@ public interface RestClientService {
     Call<RespLoginDto> login(@Body ReqLoginDto request);
 
     @GET(REST_SERVICE_PRODUCTS_BY_USER+"/{id}")
-    Call<List<RespGetProductByUser>> cargarProductos(@Path("id") String id);
+    Call<List<RespObtenerProducto>> cargarProductos(@Path("id") String id);
 
     @GET(REST_SERVICE_USER_BY_ID+"/{id}")
     Call<RespUserData> getUserById(@Path("id") String id);
 
     @GET(REST_SERVICE_PRODUCTS)
     Call<List<RespObtenerProducto>> cargarAllProductos();
+
+    //Servicio para obtener las imagenes complementarias
+    @GET(REST_SERVICE_IMAGES_COMPLE+"/{id}")
+    Call<RespObtenerImagesDto> obtenerImages(@Path("id") String id);
+
 
 
     /*@POST(REST_SERVICE_LOGIN_AUTORIZADO)

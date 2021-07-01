@@ -1,8 +1,9 @@
 package com.example.storecode_android.entidades;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class RespObtenerProducto {
+public class RespObtenerProducto implements Serializable {
     private Integer idProducto;
     private String nombreProducto;
     private String desProducto;
@@ -17,6 +18,20 @@ public class RespObtenerProducto {
 
 
      /*
+
+     {
+        "idProducto": 0,
+        "nombreProducto": "Manguera",
+        "desProducto": "Manguera para carro",
+        "precioUnitarioProducto": 998,
+        "imagenProducto": "http://192.168.1.72:3000/public/products/image-1616627584744.jpg",
+        "fechaAlojadoProducto": "2021-03-06T06:00:00.000Z",
+        "stockRealProducto": 8,
+        "statusProducto": "1",
+        "idMarca": 6,
+        "idCategoria": 8,
+        "idUsuario": 40
+    }
 
      {idProducto=34,
      nombreProducto='Pantalla plana',

@@ -16,6 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -52,7 +54,7 @@ public class HomeLogedFragment extends Fragment implements ModeloAdapterListener
     private static final Logger log = LogFile.getLogger(HomeLogedFragment.class);
     public RecyclerView recyclerView;
     public Activity mContext;
-    public List<RespGetProductByUser> respuesta;
+    public List<RespObtenerProducto> respuesta;
 
     //declarar presenter y adapter
     private ModeloAdapterInstaladas modeloAdapterInstaladas;
@@ -148,9 +150,9 @@ public class HomeLogedFragment extends Fragment implements ModeloAdapterListener
     public void observePresenter(){
 
         // Create the observer which updates the UI.
-        final Observer<List<RespGetProductByUser>> productsObserver = new Observer<List<RespGetProductByUser>>() {
+        final Observer<List<RespObtenerProducto>> productsObserver = new Observer<List<RespObtenerProducto>>() {
             @Override
-            public void onChanged(List<RespGetProductByUser> products) {
+            public void onChanged(List<RespObtenerProducto> products) {
                 modeloAdapterInstaladas.updateData(products);
             }
 
@@ -173,7 +175,17 @@ public class HomeLogedFragment extends Fragment implements ModeloAdapterListener
 
 
     @Override
-    public void OnProductClicked(RespGetProductByUser producto, int position) {
+    public void OnProductClicked(RespObtenerProducto producto, int position) {
         System.out.println("CLicked: "+producto.getNombreProducto());
+
+        //Navegar hacia la pantalla Detalle del producto
+        /*HomeLogedFragmentDirections.ActionNavHomeLogedFragmentToProductDetailFragment action
+        NavController navController = Navigation.findNavController(getActivity(), R.id.fragContentLoged);
+        navController.navigate(R.id.toLoginActivity);*/
+        HomeLogedFragmentDirections.HomeLogedToProductDetailAction action = HomeLogedFragmentDirections.HomeLogedToProductDetailAction(producto);
+        Navigation.findNavController(getView()).navigate(action);
+        //action.setRespObtenerProducto(producto);
+
+        //HomeLogedFragmentDirections.ActionNavHomeLogedFragmentToProductDetailFragment action= HomeLogedFragmentDirections.ActionNavHomeLogedFragmentToProductDetailFragment();
     }
 }

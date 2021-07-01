@@ -32,6 +32,7 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.squareup.picasso.Picasso;
 
+
 import org.apache.log4j.Logger;
 
 import java.io.StringReader;
@@ -119,9 +120,10 @@ public class ProfileLogedFragment extends Fragment {
 
         //
         if(!resp.getImagenUsuario().isEmpty()){
-            Picasso.with(view.getContext()).load(Uri.parse(resp.getImagenUsuario())).into(ivProfile);
+            Picasso.get().load(Uri.parse(resp.getImagenUsuario())).into(ivProfile);
+
         }else{
-            Picasso.with(view.getContext()).load(Uri.parse("http://192.168.1.72:3000/public/users/empty-avatar.jpg")).into(ivProfile);
+            Picasso.get().load(Uri.parse("http://192.168.1.72:3000/public/users/empty-avatar.jpg")).into(ivProfile);
         }
         //
 
