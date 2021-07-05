@@ -42,6 +42,11 @@ public class LoginPresenter {
     private static final Logger log = LogFile.getLogger(LoginPresenter.class);
     private final LoginActivity view;
 
+    public MutableLiveData<RespUserData> vendedor= new MutableLiveData();
+
+    public LoginPresenter(){
+        view=null;
+    }
     public LoginPresenter(LoginActivity view) {
         this.view = view;
     }
@@ -170,12 +175,55 @@ public class LoginPresenter {
         });
     }
 
-    //
+    /*
+      Función para obtener los datos del vendedor
+     */
+
+    public void getUserById(String id){
+        System.out.println("--consultar datos del vendedor--");
+        //obtener el id con el shared preferences
+        RestClientService api = new RestClientServiceImpl();
+        Call<RespUserData> call = api.getUserById(id);
+
+        call.enqueue(new Callback<RespUserData>() {
+            @Override
+            public void onResponse(Call<RespUserData> call, Response<RespUserData> response) {
+                System.out.println("code response:"+response.code());
+                if (response != null && response.code() == RESP_CODE_WEB_OK ) {
+
+                    try{
+                        System.out.println("");
+                        Log.d("GET VENDOR BY ID","RESPONSE EXITOSO");
+                        System.out.println(response.body().toString());
+                        vendedor.postValue(response.body());
+
+                        //consumirServicioBitacoraLogin(response.body().getPayLoad().getIdFuerzaDeVenta(), view.etIdUsuario.getText().toString());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                } else {
+
+                    System.out.println("No se obtuvieron los datos");
+                    Log.d("errorMessage", "El response no fue exitoso al obtener los datos del usuario");
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RespUserData> call, Throwable t) {
+                t.printStackTrace();
+                System.out.println("No se obtuvieron los datos");
+                AnimacionesGenerales.mostrarLoader(false, view, null, null);
+                AnimacionesGenerales.mostrarAlertDialogErrorServer(view);
+            }
+        });
+    }
 
     public void cargarDatosUsuario(){
         System.out.println("--consultar datos del usuario--");
         //obtener el id con el shared preferences
-        Integer idUsuario = SharedPref.obtenerIdUsuario(view);
+        Integer idUsuario = Integer.parseInt(SharedPref.obtenerIdUsuario(view));
         RestClientService api = new RestClientServiceImpl();
         Call<RespUserData> call = api.getUserById(idUsuario.toString());
 

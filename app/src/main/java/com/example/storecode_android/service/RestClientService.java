@@ -1,6 +1,7 @@
 package com.example.storecode_android.service;
 
 import com.example.storecode_android.entidades.ReqLoginDto;
+import com.example.storecode_android.entidades.RespDetaProductoComen;
 import com.example.storecode_android.entidades.RespGetProductByUser;
 import com.example.storecode_android.entidades.RespLoginDto;
 import com.example.storecode_android.entidades.RespObtenerImagesDto;
@@ -16,6 +17,8 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
+import static com.example.storecode_android.utils.Constantes.REST_SERVICE_COMENTS_GEN;
+import static com.example.storecode_android.utils.Constantes.REST_SERVICE_COMENT_CLIENT;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_IMAGES_COMPLE;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_LOGIN;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_PRODUCTS;
@@ -91,6 +94,15 @@ public interface RestClientService {
     //Servicio para obtener las imagenes complementarias
     @GET(REST_SERVICE_IMAGES_COMPLE+"/{id}")
     Call<RespObtenerImagesDto> obtenerImages(@Path("id") String id);
+    //Servicio para obtener los comentarios generales
+
+    @GET(REST_SERVICE_COMENTS_GEN+"/{id}")
+    Call<List<RespDetaProductoComen>> getComentsGeneral(@Path("id") String id);
+
+    //Servicio para obtener los comentarios de clientes
+
+    @GET(REST_SERVICE_COMENT_CLIENT+"/{id}")
+    Call<List<RespDetaProductoComen>> getComentsClient(@Path("id") String id);
 
 
 

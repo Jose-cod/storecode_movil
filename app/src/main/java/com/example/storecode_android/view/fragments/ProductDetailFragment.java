@@ -1,5 +1,8 @@
 package com.example.storecode_android.view.fragments;
 
+import android.content.Context;
+import android.database.Cursor;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,19 +12,30 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.CursorAdapter;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.example.storecode_android.Presenter.LoginPresenter;
 import com.example.storecode_android.Presenter.ProductPresenter;
 import com.example.storecode_android.R;
 import com.example.storecode_android.entidades.RespObtenerImagesDto;
 import com.example.storecode_android.entidades.RespObtenerProducto;
+import com.example.storecode_android.view.MainDrawerActivity;
+import com.example.storecode_android.view.adapters.ComentariosAdapter;
+import com.example.storecode_android.view.adapters.ModeloAdapterInstaladas;
+import com.example.storecode_android.view.adapters.SpinnerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +51,28 @@ public class ProductDetailFragment extends Fragment {
     ImageButton btnSalir;
     ImageSlider sliderImageProducts;
     private ProductPresenter productPresenter;
+    private LoginPresenter loginPresenter;
     RespObtenerProducto producto;
+    TextView tvName;
+    TextView tvDescription;
+    TextView tvPrice;
+    TextView tvStock;
+    TextView tvNameVendor;
+    TextView tvEmailVendor;
+    Spinner spinner ;
+
+    //adapter
+    private ComentariosAdapter comentariosAdapter;
+    private RelativeLayout rlBaseComentario;
+    RecyclerView rvComents;
+    //para comentarios de clientes
+    private ComentariosAdapter comentariosAdapterClient;
+    private RelativeLayout rlBaseComentarioClient;
+    RecyclerView rvComentsClient;
+
+
+
+
 
 
     public ProductDetailFragment() {
@@ -69,26 +104,81 @@ public class ProductDetailFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         productPresenter = new ProductPresenter(getContext());
+        loginPresenter = new LoginPresenter();
         sliderImageProducts = view.findViewById(R.id.sliderImageProducts);
+        //asignacion de elementos de la interfaz grafica
+        spinner= view.findViewById(R.id.stock_spinner);
         btnSalir= view.findViewById(R.id.btnSalir);
-        TextView tv = view.findViewById(R.id.txtNameProductDetailFragment);
+        tvName = view.findViewById(R.id.tvTitleProduct);
+        tvDescription = view.findViewById(R.id.tvDescription);
+        tvPrice = view.findViewById(R.id.tvPrecio);
+        tvStock = view.findViewById(R.id.tvStock);
+        // Para mostrar datos del vendedor
+        tvNameVendor = view.findViewById(R.id.tvNameVendor);
+        tvEmailVendor = view.findViewById(R.id.tvEmailVendor);
+        //para mostrar comentarios
+        comentariosAdapter= new ComentariosAdapter(getActivity());
+        rvComents = view.findViewById(R.id.rv_coments);
+        rlBaseComentario= view.findViewById(R.id.rlBaseComents);
+
+        //para mostrar comentarios de clientes
+        comentariosAdapterClient= new ComentariosAdapter(getActivity());
+        rvComentsClient = view.findViewById(R.id.rv_coments_clients);
+        rlBaseComentarioClient= view.findViewById(R.id.rlBaseComentsClient);
+
         producto = ProductDetailFragmentArgs.fromBundle(getArguments()).getRespObtenerProducto();
-        tv.setText("Nombre del producto:"+producto.getNombreProducto());
+        tvName.setText("Nombre del producto: "+producto.getNombreProducto());
+        tvDescription.setText("Descripción: "+producto.getDesProducto());
+        tvPrice.setText("Precio: $"+ producto.getPrecioUnitarioProducto());
+        tvStock.setText("Productos existentes: "+ producto.getStockRealProducto());
 
         productPresenter.getImagesCompl(producto.getIdProducto().toString());
+        loginPresenter.getUserById(producto.getIdUsuario().toString());
+        //mostrar comentarios
+        productPresenter.getComentsGen(producto.getIdProducto().toString());
+        productPresenter.getComentsClient(producto.getIdProducto().toString());
+
+        rvComents.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(),LinearLayoutManager.VERTICAL, false));
+
+        rvComents.setHasFixedSize(true);
+        rvComents.setAdapter(comentariosAdapter);
+
+        rvComentsClient.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(),LinearLayoutManager.VERTICAL, false));
+
+        rvComentsClient.setHasFixedSize(true);
+        rvComentsClient.setAdapter(comentariosAdapterClient);
+
+        //
+        ArrayList<Double> items= getArrayItems(producto.getStockRealProducto());
+
+        //adapter
+        SpinnerAdapter customAdapter = new SpinnerAdapter(getContext(),R.layout.custom_spinner_adapter,items);
+        spinner.setAdapter(customAdapter);
+
+
         observePresenter();
 
 
 
         btnSalir.setOnClickListener(v -> {
-            //Navegacion hacia atras
-            //NavDirections navDirection= ProductDetailFragmentDirections.productDetailToHomeLoged();
-            //Navigation.findNavController(getView()).navigate(navDirection);
 
             Navigation.findNavController(getView()).navigate(ProductDetailFragmentDirections.productDetailToHomeLoged());
         });
 
     }
+
+    public ArrayList<Double> getArrayItems(Double max){
+        ArrayList<Double> items= new ArrayList();
+        for (double i=1.0; i<max; i++){
+            items.add(i);
+        }
+        return items;
+    }
+
+
+    /*public ArrayAdapter<double> getItemSpinner(double max){
+
+    }*/
 
     public void observePresenter(){
 
@@ -114,6 +204,37 @@ public class ProductDetailFragment extends Fragment {
 
             sliderImageProducts.setImageList(slideModels, true);
         });
+
+        loginPresenter.vendedor.observe(getViewLifecycleOwner(), vendedor -> {
+            tvNameVendor.setText("Nombre: "+vendedor.getNombreUsuario());
+            tvEmailVendor.setText("Email: "+vendedor.getEmailUsuario());
+        });
+
+        productPresenter.comentarios.observe(getViewLifecycleOwner(), comentarios ->{
+            comentariosAdapter.updateData(comentarios);
+        });
+
+        productPresenter.comentariosClient.observe(getViewLifecycleOwner(), comentarios ->{
+            comentariosAdapterClient.updateData(comentarios);
+        });
+
+        //ocultar el progress bar
+
+        productPresenter.isLoadingComentsClient.observe(getViewLifecycleOwner(), isLoading -> {
+            if(isLoading!=null){
+                //cambiar la visibilidad del relative layout
+                rlBaseComentarioClient.setVisibility(View.INVISIBLE);
+            }
+
+        });
+
+        productPresenter.isLoadingComents.observe(getViewLifecycleOwner(),isLoading ->{
+            rlBaseComentario.setVisibility(View.INVISIBLE);
+        });
+
+
+
+
 
     }
 

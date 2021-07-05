@@ -271,11 +271,12 @@ public class MainDrawerActivity extends AppCompatActivity {
                     editor.apply();*/
                     SharedPref.deleteUserData(getApplicationContext());
                     SharedPref.deleteProducts(getApplicationContext());
+                    SharedPref.deleteIdUser(getApplicationContext());
 
                     Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(mainActivity);
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                    finish();
+                    this.finish();
 
 
                    return true;

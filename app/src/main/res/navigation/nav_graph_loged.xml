@@ -25,7 +25,13 @@
         android:id="@+id/navProfileLogedFragment"
         android:name="com.example.storecode_android.view.fragments.ProfileLogedFragment"
         android:label="fragment_profile_loged"
-        tools:layout="@layout/fragment_profile_loged" />
+        tools:layout="@layout/fragment_profile_loged" >
+        <action
+            android:id="@+id/toRegisterProduct"
+            app:destination="@id/registerProductFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out" />
+    </fragment>
     <fragment
         android:id="@+id/productDetailFragment"
         android:name="com.example.storecode_android.view.fragments.ProductDetailFragment"
@@ -38,6 +44,18 @@
             android:id="@+id/productDetail_to_homeLoged"
             app:destination="@id/navHomeLogedFragment"
             app:popUpTo="@id/navHomeLogedFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerProductFragment"
+        android:name="com.example.storecode_android.view.fragments.RegisterProductFragment"
+        android:label="fragment_register_product"
+        tools:layout="@layout/fragment_register_product" >
+        <action
+            android:id="@+id/toProfileLogedFragment"
+            app:destination="@id/navProfileLogedFragment"
+            app:popEnterAnim="@anim/fade_out"
+            app:popUpTo="@id/navProfileLogedFragment"
             app:popUpToInclusive="true" />
     </fragment>
 </navigation>

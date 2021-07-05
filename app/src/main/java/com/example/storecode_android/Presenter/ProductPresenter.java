@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.storecode_android.R;
+import com.example.storecode_android.entidades.RespDetaProductoComen;
 import com.example.storecode_android.entidades.RespGetProductByUser;
 import com.example.storecode_android.entidades.RespObtenerImagesDto;
 import com.example.storecode_android.entidades.RespObtenerProducto;
@@ -39,6 +40,16 @@ public class ProductPresenter {
     //Datos para las imagenes complementarias
     public MutableLiveData<RespObtenerImagesDto> imagesCompl= new MutableLiveData();
 
+    //Variables para los comentarios de productos
+
+    public MutableLiveData<List<RespDetaProductoComen>> comentarios= new MutableLiveData();
+    public MutableLiveData<Boolean> isLoadingComents= new MutableLiveData();
+
+    //Variables para los comentarios de productos
+
+    public MutableLiveData<List<RespDetaProductoComen>> comentariosClient= new MutableLiveData();
+    public MutableLiveData<Boolean> isLoadingComentsClient= new MutableLiveData();
+
     private static final Logger log = LogFile.getLogger(LoginPresenter.class);
     private final Context view;
 
@@ -57,6 +68,12 @@ public class ProductPresenter {
     public void refreshImagesComple(String id){
         getImagesCompl(id);
     }
+
+    //refrescar comentarios generales
+    public void refreshComents(String id){getComentsGen(id);}
+
+    //refrescar comentarios de clientes
+    public void refreshComentsClient(String id){getComentsClient(id);}
 
     public void getAllProducts(){
         log.info("--Obteniendo los productos por el id usuario---");
@@ -208,6 +225,105 @@ public class ProductPresenter {
             /*public void processFinished(){
                 isLoading.setValue(true);
             }*/
+        });
+    }
+
+    /**
+     * Description: Función encargada de traer los comentarios generales
+     */
+
+    public void getComentsGen(String id) {
+        log.info("--Obteniendo los comentarios generales---");
+
+
+        Call<List<RespDetaProductoComen>> call = restClientService.getComentsGeneral(id);
+
+        Log.d("GET COMENTS PRESENTER REQUEST: ", "");
+
+        call.enqueue(new Callback<List<RespDetaProductoComen>>() {
+            @Override
+            public void onResponse(Call<List<RespDetaProductoComen>> call, Response<List<RespDetaProductoComen>> response) {
+                if (response != null && response.code() == RESP_CODE_WEB_OK) {
+                    //AnimacionesGenerales.mostrarLoader(false, view, null, null);
+
+
+                    try {
+                        System.out.println("");
+                        Log.d("GET COMENTS PRESENTER", "RESPONSE EXITOSO");
+                        System.out.println(response.body());
+                        Toast.makeText(view, "Respuesta exitosa", Toast.LENGTH_SHORT).show();
+                        comentarios.postValue(response.body());
+                        processFinished();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                } else {
+                    /*view.etContrasenia.getBackground().mutate().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
+                    view.etIdUsuario.getBackground().mutate().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
+                    view.etIdUsuario.requestFocus();*/
+                    //AnimacionesGenerales.mostrarLoader(false, view, null, null);
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<RespDetaProductoComen>> call, Throwable t) {
+                System.err.println("Ocurrio un error al obtener los comentarios" + t.getMessage());
+
+            }
+
+            public void processFinished(){
+                isLoadingComents.setValue(true);
+            }
+        });
+    }
+
+    /**
+     * Description: Función encargada de traer los comentarios generales
+     */
+
+    public void getComentsClient(String id) {
+        log.info("--Obteniendo los comentarios generales---");
+
+
+        Call<List<RespDetaProductoComen>> call = restClientService.getComentsClient(id);
+
+        Log.d("GET COMENTS PRESENTER REQUEST: ", "");
+
+        call.enqueue(new Callback<List<RespDetaProductoComen>>() {
+            @Override
+            public void onResponse(Call<List<RespDetaProductoComen>> call, Response<List<RespDetaProductoComen>> response) {
+                if (response != null && response.code() == RESP_CODE_WEB_OK) {
+                    //AnimacionesGenerales.mostrarLoader(false, view, null, null);
+
+
+                    try {
+                        System.out.println("");
+                        Log.d("GET COMENTS PRESENTER", "RESPONSE EXITOSO");
+                        System.out.println(response.body());
+                        Toast.makeText(view, "Respuesta exitosa", Toast.LENGTH_SHORT).show();
+                        comentariosClient.postValue(response.body());
+                        processFinished();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                } else {
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<RespDetaProductoComen>> call, Throwable t) {
+                System.err.println("Ocurrio un error al obtener los comentarios" + t.getMessage());
+
+            }
+
+            public void processFinished(){
+                isLoadingComentsClient.setValue(true);
+            }
         });
     }
 

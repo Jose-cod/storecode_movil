@@ -19,6 +19,10 @@ public class Constantes {
 
     public static final String REST_SERVICE_IMAGES_COMPLE= "products/imagesc";
 
+    public static final String REST_SERVICE_COMENTS_GEN ="detaproductocomen";
+
+    public static final String REST_SERVICE_COMENT_CLIENT = "detaproductocomencliente";
+
     //Constantes del Share preferences
     public static final String PRODUCTOS="productos";
     public static final String ID_USER="idUsuario";

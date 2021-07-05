@@ -9,11 +9,13 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,6 +60,7 @@ public class ProfileLogedFragment extends Fragment {
     ImageView ivProfile;
     TextView tvName;
     TextView tvEmail;
+    ImageButton btnSell;
 
     RespUserData resp;
 
@@ -112,21 +115,27 @@ public class ProfileLogedFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         ivProfile = view.findViewById(R.id.ivProfile);
-        tvName = view.findViewById(R.id.tvEmail);
-        tvEmail = view.findViewById(R.id.tvName);
+        tvName = view.findViewById(R.id.tvName);
+        tvEmail = view.findViewById(R.id.tvEmail);
+        btnSell = view.findViewById(R.id.btnSell);
 
-        tvName.setText(resp.getNombreUsuario()+" "+resp.getApellido1Usuario()+" "+resp.getApellido2Usuario());
+        if(resp.getApellido2Usuario().equals("null")){
+            tvName.setText(resp.getNombreUsuario()+" "+resp.getApellido1Usuario());
+        }else{
+            tvName.setText(resp.getNombreUsuario()+" "+resp.getApellido1Usuario()+" "+resp.getApellido2Usuario());
+        }
+
         tvEmail.setText(resp.getEmailUsuario());
 
         //
-        if(!resp.getImagenUsuario().isEmpty()){
+        if(!resp.getImagenUsuario().equals("null")){
             Picasso.get().load(Uri.parse(resp.getImagenUsuario())).into(ivProfile);
-
-        }else{
-            Picasso.get().load(Uri.parse("http://192.168.1.72:3000/public/users/empty-avatar.jpg")).into(ivProfile);
         }
-        //
 
+        //
+        btnSell.setOnClickListener( v ->{
+            Navigation.findNavController(getView()).navigate(ProfileLogedFragmentDirections.toRegisterProduct());
+        });
 
     }
 

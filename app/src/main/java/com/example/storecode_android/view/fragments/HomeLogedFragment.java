@@ -135,8 +135,13 @@ public class HomeLogedFragment extends Fragment implements ModeloAdapterListener
         recyclerView= view.findViewById(R.id.activity_preciadorunicomodelo_recyclerView);
         SearchView searchView = view.findViewById(R.id.activity_preciadorunicomodelo_searchView2);
 
-        Integer idUser = SharedPref.obtenerIdUsuario(getContext());
+        Integer idUser = Integer.parseInt(SharedPref.obtenerIdUsuario(getContext()));
+
+        System.out.println("------Home Loged-------");
+        System.out.println(idUser);
+
         productPresenter.refreshProductsByUser(idUser.toString());
+
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(),LinearLayoutManager.VERTICAL, false));

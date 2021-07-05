@@ -84,14 +84,16 @@ public class SharedPref {
 
     public static void guardarIdUsuario(final Context context, Integer idUsuario){
         inicializaPreferencias(context);
-        sharedPreferencesEdit.putInt(Constantes.ID_USER,idUsuario);
+        sharedPreferencesEdit.putString(Constantes.ID_USER,idUsuario.toString());
         sharedPreferencesEdit.commit();
     }
 
     //obtener id del Usuario
-    public static Integer obtenerIdUsuario(final Context context){
+    public static String obtenerIdUsuario(final Context context){
         inicializaPreferencias(context);
-        return sharedPreferences.getInt("idUsuario",0);
+        return sharedPreferences.getString(Constantes.ID_USER,"null");
+        
+        
     }
 
 
@@ -100,6 +102,13 @@ public class SharedPref {
         log.info("Usuario Eliminado");
         inicializaPreferencias(context);
         sharedPreferencesEdit.remove(Constantes.USER);
+        sharedPreferencesEdit.commit();
+    }
+
+    public static void deleteIdUser(final Context context){
+        log.info("Id usuario eliminado");
+        inicializaPreferencias(context);
+        sharedPreferencesEdit.remove(Constantes.ID_USER);
         sharedPreferencesEdit.commit();
     }
 

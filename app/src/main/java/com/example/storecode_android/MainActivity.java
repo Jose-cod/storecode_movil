@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -40,12 +41,32 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         bnvMenu = findViewById(R.id.bnvMenu);
         // Ajustes de navegacion y cargar productos
-        configNav();
-        cargarProductos();
+
+
+        loginVerified();
     }
 
     public void configNav(){
         NavigationUI.setupWithNavController(bnvMenu, Navigation.findNavController(this, R.id.fragContent));
+    }
+
+    public void loginVerified(){
+
+        String idUser =SharedPref.obtenerIdUsuario(this);
+
+        if(!idUser.equals("null")){
+            System.out.println("----------------------id user-------------------------------");
+            System.out.println(idUser);
+            // Cambia de activity
+            Intent intent = new Intent(this, MainDrawerActivity.class);
+            this.startActivity(intent);
+            this.finish();
+
+            this.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        }else{
+            configNav();
+            cargarProductos();
+        }
     }
 
 

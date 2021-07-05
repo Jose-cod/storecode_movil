@@ -1,6 +1,7 @@
 package com.example.storecode_android.service;
 
 import com.example.storecode_android.entidades.ReqLoginDto;
+import com.example.storecode_android.entidades.RespDetaProductoComen;
 import com.example.storecode_android.entidades.RespGetProductByUser;
 import com.example.storecode_android.entidades.RespLoginDto;
 import com.example.storecode_android.entidades.RespObtenerImagesDto;
@@ -186,6 +187,16 @@ public class RestClientServiceImpl implements RestClientService {
     @Override
     public Call<RespObtenerImagesDto> obtenerImages(String id) {
         return restClient.obtenerImages(id);
+    }
+
+    @Override
+    public Call<List<RespDetaProductoComen>> getComentsGeneral(String id) {
+        return restClient.getComentsGeneral(id);
+    }
+
+    @Override
+    public Call<List<RespDetaProductoComen>> getComentsClient(String id) {
+        return restClient.getComentsClient(id);
     }
 
 

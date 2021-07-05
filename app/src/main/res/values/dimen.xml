@@ -100,5 +100,11 @@
 
     <dimen name="size_animation_app_icon">56dp</dimen>
 
+    <!--
+    Dimensiones para los textos
+    -->
+    <dimen name="textDescriptions">16sp</dimen>
+    <dimen name="textTitle_24sp">24sp</dimen>
+
 
 </resources>
