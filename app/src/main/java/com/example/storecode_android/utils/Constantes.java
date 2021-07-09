@@ -23,6 +23,8 @@ public class Constantes {
 
     public static final String REST_SERVICE_COMENT_CLIENT = "detaproductocomencliente";
 
+    public static final String REST_SERVICE_UPLOAD_PRODUCT = "upload";
+
     //Constantes del Share preferences
     public static final String PRODUCTOS="productos";
     public static final String ID_USER="idUsuario";

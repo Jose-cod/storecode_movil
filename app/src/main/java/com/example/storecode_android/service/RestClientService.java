@@ -2,19 +2,24 @@ package com.example.storecode_android.service;
 
 import com.example.storecode_android.entidades.ReqLoginDto;
 import com.example.storecode_android.entidades.RespDetaProductoComen;
-import com.example.storecode_android.entidades.RespGetProductByUser;
 import com.example.storecode_android.entidades.RespLoginDto;
 import com.example.storecode_android.entidades.RespObtenerImagesDto;
 import com.example.storecode_android.entidades.RespObtenerProducto;
 import com.example.storecode_android.entidades.RespUserData;
-import com.example.storecode_android.entidades.ResponseMasterDto;
 
 import java.util.List;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_COMENTS_GEN;
@@ -23,6 +28,7 @@ import static com.example.storecode_android.utils.Constantes.REST_SERVICE_IMAGES
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_LOGIN;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_PRODUCTS;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_PRODUCTS_BY_USER;
+import static com.example.storecode_android.utils.Constantes.REST_SERVICE_UPLOAD_PRODUCT;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_USER_BY_ID;
 
 /*
@@ -103,6 +109,20 @@ public interface RestClientService {
 
     @GET(REST_SERVICE_COMENT_CLIENT+"/{id}")
     Call<List<RespDetaProductoComen>> getComentsClient(@Path("id") String id);
+
+    //@Headers({"Content-Type: multipart/form-data"})
+    @Multipart
+    @POST(REST_SERVICE_UPLOAD_PRODUCT)
+    Call<ResponseBody> uploadProduct(
+            @Part("nombreProducto") RequestBody nombreProducto,
+            @Part("desProducto") RequestBody desProducto,
+            @Part("precioUnitario") RequestBody precioUnitario,
+            @Part("cantidadProducto") RequestBody cantidadProducto,
+            @Part("marca") RequestBody marca,
+            @Part("categoria") RequestBody categoria,
+            @Part("idUsuario") RequestBody idUsuario,
+            @Part MultipartBody.Part image
+    );
 
 
 

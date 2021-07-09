@@ -2,50 +2,26 @@ package com.example.storecode_android.service;
 
 import com.example.storecode_android.entidades.ReqLoginDto;
 import com.example.storecode_android.entidades.RespDetaProductoComen;
-import com.example.storecode_android.entidades.RespGetProductByUser;
 import com.example.storecode_android.entidades.RespLoginDto;
 import com.example.storecode_android.entidades.RespObtenerImagesDto;
 import com.example.storecode_android.entidades.RespObtenerProducto;
 import com.example.storecode_android.entidades.RespUserData;
-import com.example.storecode_android.entidades.ResponseMasterDto;
 import com.example.storecode_android.utils.LogFile;
 
 import org.apache.log4j.Logger;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.security.KeyManagementException;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.cert.Certificate;
-import java.security.cert.CertificateException;
-import java.security.cert.CertificateFactory;
-import java.security.cert.X509Certificate;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.TrustManagerFactory;
-import javax.net.ssl.X509TrustManager;
 
-
-import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
-import okhttp3.Response;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Body;
 
 import static com.example.storecode_android.utils.Constantes.TIME_OUT_RETROFIT;
 import static com.example.storecode_android.utils.Constantes.URL_BASE;
@@ -198,6 +174,13 @@ public class RestClientServiceImpl implements RestClientService {
     public Call<List<RespDetaProductoComen>> getComentsClient(String id) {
         return restClient.getComentsClient(id);
     }
+
+    @Override
+    public Call<ResponseBody> uploadProduct(RequestBody nombreProducto, RequestBody desProducto, RequestBody precioUnitario, RequestBody cantidadProducto, RequestBody marca, RequestBody categoria, RequestBody idUsuario, MultipartBody.Part file) {
+        return restClient.uploadProduct(nombreProducto,desProducto,precioUnitario,cantidadProducto,marca,categoria,idUsuario, file);
+    }
+
+
 
 
 

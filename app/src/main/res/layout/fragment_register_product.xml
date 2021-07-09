@@ -91,6 +91,17 @@
             android:hint="Cantidad disponible"
             ></com.google.android.material.textfield.TextInputEditText>
 
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_marginHorizontal="@dimen/a8dp"
+            android:layout_marginVertical="@dimen/a8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Guardar producto"
+            android:textColor="@color/white"
+            android:background="@color/colorBackground"
+            ></Button>
+
 
     </LinearLayout>
 
