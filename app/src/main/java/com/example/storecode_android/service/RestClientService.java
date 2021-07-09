@@ -2,6 +2,7 @@ package com.example.storecode_android.service;
 
 import com.example.storecode_android.entidades.ReqLoginDto;
 import com.example.storecode_android.entidades.RespDetaProductoComen;
+import com.example.storecode_android.entidades.RespGetProductByUser;
 import com.example.storecode_android.entidades.RespLoginDto;
 import com.example.storecode_android.entidades.RespObtenerImagesDto;
 import com.example.storecode_android.entidades.RespObtenerProducto;
@@ -28,6 +29,7 @@ import static com.example.storecode_android.utils.Constantes.REST_SERVICE_IMAGES
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_LOGIN;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_PRODUCTS;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_PRODUCTS_BY_USER;
+import static com.example.storecode_android.utils.Constantes.REST_SERVICE_PRODUCTS_ON_SALE;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_UPLOAD_PRODUCT;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_USER_BY_ID;
 
@@ -96,6 +98,10 @@ public interface RestClientService {
 
     @GET(REST_SERVICE_PRODUCTS)
     Call<List<RespObtenerProducto>> cargarAllProductos();
+
+    //obtener los productos que estan en venta
+    @GET(REST_SERVICE_PRODUCTS_ON_SALE+"/{id}")
+    Call<List<RespGetProductByUser>> getProductsOnSale(@Path("id") String id);
 
     //Servicio para obtener las imagenes complementarias
     @GET(REST_SERVICE_IMAGES_COMPLE+"/{id}")

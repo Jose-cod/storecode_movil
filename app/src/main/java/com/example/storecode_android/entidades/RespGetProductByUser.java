@@ -13,6 +13,21 @@ public class RespGetProductByUser {
     private String idCategoria;
     private Integer idUsuario;
 
+    /*
+     {
+        "idProducto": 55,
+        "nombreProducto": "Estuche de lentes",
+        "desProducto": "Estuche",
+        "precioUnitarioProducto": 50,
+        "imagenProducto": "http://192.168.1.72:3000/public/products/image_picker2281895957813068809.jpg-1625784021658.jpg",
+        "stockRealProducto": "2.00",
+        "statusProducto": "Activo",
+        "idMarca": "HUAWEI",
+        "idCategoria": "MUEBLES",
+        "idUsuario": 100
+    }
+     */
+
     public RespGetProductByUser(){
 
     }

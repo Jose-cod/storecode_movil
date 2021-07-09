@@ -17,6 +17,8 @@ public class Constantes {
 
     public static final String REST_SERVICE_PRODUCTS_BY_USER = "products/byuser";
 
+    public static final String REST_SERVICE_PRODUCTS_ON_SALE ="products/iduser";
+
     public static final String REST_SERVICE_IMAGES_COMPLE= "products/imagesc";
 
     public static final String REST_SERVICE_COMENTS_GEN ="detaproductocomen";

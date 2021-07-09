@@ -61,6 +61,7 @@ public class ProfileLogedFragment extends Fragment {
     TextView tvName;
     TextView tvEmail;
     ImageButton btnSell;
+    ImageButton btnProductsOnSale;
 
     RespUserData resp;
 
@@ -118,6 +119,7 @@ public class ProfileLogedFragment extends Fragment {
         tvName = view.findViewById(R.id.tvName);
         tvEmail = view.findViewById(R.id.tvEmail);
         btnSell = view.findViewById(R.id.btnSell);
+        btnProductsOnSale = view.findViewById(R.id.btn_sell_products);
 
         if(resp.getApellido2Usuario().equals("null")){
             tvName.setText(resp.getNombreUsuario()+" "+resp.getApellido1Usuario());
@@ -135,6 +137,11 @@ public class ProfileLogedFragment extends Fragment {
         //
         btnSell.setOnClickListener( v ->{
             Navigation.findNavController(getView()).navigate(ProfileLogedFragmentDirections.toRegisterProduct());
+        });
+
+        //ir a la pantalla de productos en venta
+        btnProductsOnSale.setOnClickListener(v->{
+            Navigation.findNavController(getView()).navigate(ProfileLogedFragmentDirections.toProductOnSale());
         });
 
     }

@@ -8,7 +8,9 @@ import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.MutableLiveData;
+import androidx.navigation.Navigation;
 
 import com.example.storecode_android.R;
 import com.example.storecode_android.entidades.Producto;
@@ -21,6 +23,8 @@ import com.example.storecode_android.utils.AnimacionesGenerales;
 import com.example.storecode_android.utils.LogFile;
 import com.example.storecode_android.view.LoginActivity;
 import com.example.storecode_android.view.MainDrawerActivity;
+import com.example.storecode_android.view.fragments.RegisterProductFragment;
+import com.example.storecode_android.view.fragments.RegisterProductFragmentDirections;
 import com.google.android.gms.common.util.JsonUtils;
 
 import org.apache.log4j.Logger;
@@ -42,8 +46,17 @@ import static com.example.storecode_android.utils.Constantes.RESP_CODE_WEB_OK;
 public class ProductPresenter {
 
     RestClientServiceImpl restClientService= new RestClientServiceImpl();
+
+    private final Context view;
+    //RegisterProductFragment view;
+
     public MutableLiveData<List<RespObtenerProducto>> listProducts = new MutableLiveData();
     public MutableLiveData<Boolean> isLoading= new MutableLiveData();
+
+    //variables para obtener productos en venta
+
+    public MutableLiveData<List<RespGetProductByUser>> listProductsOnSale = new MutableLiveData();
+    public MutableLiveData<Boolean> isLoadingOnSale= new MutableLiveData();
     //Variables para el home no loged
     public MutableLiveData<List<RespObtenerProducto>> listAllProducts = new MutableLiveData();
     public MutableLiveData<Boolean> isLoadingAll= new MutableLiveData();
@@ -60,11 +73,15 @@ public class ProductPresenter {
     public MutableLiveData<List<RespDetaProductoComen>> comentariosClient= new MutableLiveData();
     public MutableLiveData<Boolean> isLoadingComentsClient= new MutableLiveData();
 
+
     private static final Logger log = LogFile.getLogger(LoginPresenter.class);
-    private final Context view;
+    //private final Context view;
 
     public ProductPresenter(Context view) {
         this.view = view;
+    }
+    public ProductPresenter(){
+        this.view= null;
     }
 
     public void refreshAllProducts(){
@@ -73,6 +90,10 @@ public class ProductPresenter {
 
     public void refreshProductsByUser(String id){
         getProductsByUser(id);
+    }
+
+    public void refreshProductsOnSale(String id){
+        getProductsOnSale(id);
     }
 
     public void refreshImagesComple(String id){
@@ -185,6 +206,63 @@ public class ProductPresenter {
         });
 
     }
+
+
+    /**
+     * Description: Función encargada de traer los productos que estan en venta
+     */
+
+    public void getProductsOnSale(String id){
+        log.info("--Obteniendo los productos que estan en venta---");
+        //AnimacionesGenerales.mostrarLoader(true, view, view.getString(R.string.load_products), view.getString(R.string.waiting_products));
+
+        Call<List<RespGetProductByUser>> call =restClientService.getProductsOnSale(id);
+        //log.info("REQUEST:" + reqLoginDto.toString());
+        Log.d("GET PRODUCTS ON SALE APP PRESENTER REQUEST: ","");
+
+        call.enqueue(new Callback<List<RespGetProductByUser>>() {
+            @Override
+            public void onResponse(Call<List<RespGetProductByUser>> call, Response<List<RespGetProductByUser>> response) {
+                if (response != null && response.code() == RESP_CODE_WEB_OK ) {
+                    //AnimacionesGenerales.mostrarLoader(false, view, null, null);
+
+
+                    try{
+                        System.out.println("");
+                        Log.d("GET PRODUCTS BY USER APP PRESENTER","RESPONSE EXITOSO");
+                        System.out.println(response.body());
+                        //SharedPref.guardarIdUsuario(view,response.body().getIdUsuario());
+                        Toast.makeText(view,"Respuesta exitosa",Toast.LENGTH_SHORT).show();
+                        listProductsOnSale.postValue(response.body());
+                        processFinished();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                } else {
+                    /*view.etContrasenia.getBackground().mutate().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
+                    view.etIdUsuario.getBackground().mutate().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
+                    view.etIdUsuario.requestFocus();*/
+                    AnimacionesGenerales.mostrarLoader(false, view, null, null);
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<RespGetProductByUser>> call, Throwable t) {
+                System.err.println("Ocurrio un error al obtener los productos"+t.getMessage());
+                processFinished();
+            }
+
+            public void processFinished(){
+                isLoadingOnSale.setValue(true);
+            }
+        });
+
+    }
+
+
+
 
     /**
      * Description: Función encargada de traer todos los productos
@@ -384,6 +462,9 @@ public class ProductPresenter {
                         System.out.println(response.body().toString());
                         System.out.println(response.code());
                         System.out.println("Producto saved");
+                        Toast.makeText(view, "Producto registrado correctamente", Toast.LENGTH_SHORT).show();
+                        //Navigation.findNavController(view.getView()).navigate(RegisterProductFragmentDirections.toProfileLogedFragment());
+
                         //Toast.makeText(view, "Producto registrado correctamente", Toast.LENGTH_SHORT).show();
                     }
                 }

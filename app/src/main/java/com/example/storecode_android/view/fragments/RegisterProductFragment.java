@@ -23,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -30,6 +31,7 @@ import android.widget.Toast;
 import com.example.storecode_android.Presenter.ProductPresenter;
 import com.example.storecode_android.R;
 import com.example.storecode_android.entidades.Producto;
+import com.example.storecode_android.utils.SharedPref;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -54,6 +56,10 @@ public class RegisterProductFragment extends Fragment {
     ImageView ivPhoto;
     Button btnChooseImage;
     Button btnSave;
+    EditText editTxtNameProduct;
+    EditText editTxtDescription;
+    EditText editTxtStock;
+    EditText editTxtPriceProduct;
     ProductPresenter productPresenter;
 
 
@@ -108,6 +114,12 @@ public class RegisterProductFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         btnReturn= view.findViewById(R.id.btnReturn);
         ivPhoto= view.findViewById(R.id.ivPhotoProduct);
+        //
+        editTxtNameProduct = view.findViewById(R.id.editTxtNameProduct);
+        editTxtDescription = view.findViewById(R.id.editTxtDescription);
+        editTxtPriceProduct = view.findViewById(R.id.editTxtPriceProduct);
+        editTxtStock = view.findViewById(R.id.editTxtStock);
+        //
         btnChooseImage = view.findViewById(R.id.btnChooseImage);
         btnSave = view.findViewById(R.id.btnSave);
 
@@ -120,8 +132,19 @@ public class RegisterProductFragment extends Fragment {
         });
 
         btnSave.setOnClickListener(v ->{
+            Producto producto= new Producto(
+                    pathAbsolute,
+                    editTxtNameProduct.getText().toString(),
+                    editTxtDescription.getText().toString(),
+                    Double.parseDouble(editTxtPriceProduct.getText().toString()),
+                    Double.parseDouble(editTxtStock.getText().toString()),
+                    15,
+                    0,
+                    Integer.parseInt(SharedPref.obtenerIdUsuario(getContext()))
+
+            );
             if(pathAbsolute!=null){
-                productPresenter.uploadProduct(pathAbsolute, new Producto(uri,"prueba nombre","esto es una prueba", 70.0,1.0,15,0,49));
+                productPresenter.uploadProduct(pathAbsolute,producto);
             }else{
                 Toast.makeText(getContext(),"No has seleccionado una imagen",Toast.LENGTH_SHORT).show();
             }

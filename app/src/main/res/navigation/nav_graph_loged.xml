@@ -31,6 +31,10 @@
             app:destination="@id/registerProductFragment"
             app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/toProductOnSale"
+            app:destination="@id/productsOnSaleFragment"
+            app:enterAnim="@anim/fade_in" />
     </fragment>
     <fragment
         android:id="@+id/productDetailFragment"
@@ -55,6 +59,19 @@
             android:id="@+id/toProfileLogedFragment"
             app:destination="@id/navProfileLogedFragment"
             app:popEnterAnim="@anim/fade_out"
+            app:popUpTo="@id/navProfileLogedFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/productsOnSaleFragment"
+        android:name="com.example.storecode_android.view.fragments.ProductsOnSaleFragment"
+        android:label="fragment_products_on_sale"
+        tools:layout="@layout/fragment_products_on_sale" >
+        <action
+            android:id="@+id/action_productsOnSaleFragment_to_navProfileLogedFragment"
+            app:destination="@id/navProfileLogedFragment"
+            app:popEnterAnim="@anim/fade_out"
+            app:popExitAnim="@anim/fade_out"
             app:popUpTo="@id/navProfileLogedFragment"
             app:popUpToInclusive="true" />
     </fragment>

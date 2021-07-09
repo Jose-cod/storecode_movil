@@ -3,7 +3,7 @@ package com.example.storecode_android.entidades;
 import android.net.Uri;
 
 public class Producto {
-    Uri image;
+    String image;
     String nombreProducto;
     String desProducto;
     Double precioUnitario;
@@ -16,7 +16,7 @@ public class Producto {
 
     }
 
-    public Producto(Uri image, String nombreProducto, String desProducto, Double precioUnitario, Double cantidadProducto, Integer marca, Integer categoria, Integer idUsuario) {
+    public Producto(String image, String nombreProducto, String desProducto, Double precioUnitario, Double cantidadProducto, Integer marca, Integer categoria, Integer idUsuario) {
         this.image = image;
         this.nombreProducto = nombreProducto;
         this.desProducto = desProducto;
@@ -27,11 +27,11 @@ public class Producto {
         this.idUsuario = idUsuario;
     }
 
-    public Uri getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(Uri image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
@@ -104,4 +104,19 @@ public class Producto {
                 ", idUsuario=" + idUsuario +
                 '}';
     }
+
+    /*
+     {
+        "idProducto": 55,
+        "nombreProducto": "Estuche de lentes",
+        "desProducto": "Estuche",
+        "precioUnitarioProducto": 50,
+        "imagenProducto": "http://192.168.1.72:3000/public/products/image_picker2281895957813068809.jpg-1625784021658.jpg",
+        "stockRealProducto": "2.00",
+        "statusProducto": "Activo",
+        "idMarca": "HUAWEI",
+        "idCategoria": "MUEBLES",
+        "idUsuario": 100
+    }
+     */
 }
