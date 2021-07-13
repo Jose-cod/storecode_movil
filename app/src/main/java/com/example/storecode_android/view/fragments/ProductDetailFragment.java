@@ -103,7 +103,7 @@ public class ProductDetailFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        productPresenter = new ProductPresenter(getContext());
+        productPresenter = new ProductPresenter(getContext(), getView());
         loginPresenter = new LoginPresenter();
         sliderImageProducts = view.findViewById(R.id.sliderImageProducts);
         //asignacion de elementos de la interfaz grafica

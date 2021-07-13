@@ -1,5 +1,7 @@
 package com.example.storecode_android.service;
 
+import com.example.storecode_android.entidades.Brand;
+import com.example.storecode_android.entidades.Category;
 import com.example.storecode_android.entidades.ReqLoginDto;
 import com.example.storecode_android.entidades.RespDetaProductoComen;
 import com.example.storecode_android.entidades.RespGetProductByUser;
@@ -184,6 +186,16 @@ public class RestClientServiceImpl implements RestClientService {
     @Override
     public Call<ResponseBody> uploadProduct(RequestBody nombreProducto, RequestBody desProducto, RequestBody precioUnitario, RequestBody cantidadProducto, RequestBody marca, RequestBody categoria, RequestBody idUsuario, MultipartBody.Part file) {
         return restClient.uploadProduct(nombreProducto,desProducto,precioUnitario,cantidadProducto,marca,categoria,idUsuario, file);
+    }
+
+    @Override
+    public Call<List<Category>> getAllCategories() {
+        return restClient.getAllCategories();
+    }
+
+    @Override
+    public Call<List<Brand>> getAllBrands() {
+        return restClient.getAllBrands();
     }
 
 

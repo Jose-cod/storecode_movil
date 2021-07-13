@@ -136,7 +136,7 @@ public class HomeNoLogedFragment extends Fragment implements ModeloAdapterListen
         rlBaseHome = view.findViewById(R.id.rlBaseHomeNoLoged);
         //checar si manda error
         //productPresenter = new ProductPresenter(getContext());
-        productPresenter = new ProductPresenter(getContext());
+        productPresenter = new ProductPresenter(getContext(), getView());
         recyclerView= view.findViewById(R.id.rv_all_products);
         SearchView searchView = view.findViewById(R.id.svHomeNoLoged);
 

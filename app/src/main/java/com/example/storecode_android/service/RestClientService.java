@@ -1,5 +1,7 @@
 package com.example.storecode_android.service;
 
+import com.example.storecode_android.entidades.Brand;
+import com.example.storecode_android.entidades.Category;
 import com.example.storecode_android.entidades.ReqLoginDto;
 import com.example.storecode_android.entidades.RespDetaProductoComen;
 import com.example.storecode_android.entidades.RespGetProductByUser;
@@ -25,6 +27,8 @@ import retrofit2.http.Path;
 
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_COMENTS_GEN;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_COMENT_CLIENT;
+import static com.example.storecode_android.utils.Constantes.REST_SERVICE_GET_BRANDS;
+import static com.example.storecode_android.utils.Constantes.REST_SERVICE_GET_CATEGORIES;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_IMAGES_COMPLE;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_LOGIN;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_PRODUCTS;
@@ -129,6 +133,15 @@ public interface RestClientService {
             @Part("idUsuario") RequestBody idUsuario,
             @Part MultipartBody.Part image
     );
+
+    //Obtener todas las categorias
+
+    @GET(REST_SERVICE_GET_CATEGORIES)
+    Call<List<Category>> getAllCategories();
+
+    //Obtener todas las MARCAS
+    @GET(REST_SERVICE_GET_BRANDS)
+    Call<List<Brand>> getAllBrands();
 
 
 

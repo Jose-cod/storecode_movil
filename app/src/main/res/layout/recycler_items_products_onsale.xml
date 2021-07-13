@@ -127,18 +127,21 @@
             >
 
             <ImageButton
+                android:id="@+id/btnEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_edit"
                 ></ImageButton>
 
             <ImageButton
+                android:id="@+id/btnDelete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_delete"
                 ></ImageButton>
 
             <ImageButton
+                android:id="@+id/btnAddImages"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_image"

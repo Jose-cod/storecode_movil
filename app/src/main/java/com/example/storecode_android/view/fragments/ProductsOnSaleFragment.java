@@ -7,12 +7,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
 
@@ -37,11 +39,15 @@ public class ProductsOnSaleFragment extends Fragment implements ProductsOnSaleLi
     public RecyclerView recyclerView;
     public List<RespObtenerProducto> respuesta;
 
+    ImageButton btnEdit, btnDelete, btnAddImages;
+
     //declarar presenter y adapter
     private ProductsOnSaleAdapter productsOnSaleAdapter;
     private ProductPresenter productPresenter;
 
     private RelativeLayout rlBaseOnSale;
+
+    ImageButton btnReturn;
 
 
 
@@ -82,8 +88,13 @@ public class ProductsOnSaleFragment extends Fragment implements ProductsOnSaleLi
         rlBaseOnSale = view.findViewById(R.id.rlBaseProductsOnSale);
         //checar si manda error
         //productPresenter = new ProductPresenter(getContext());
-        productPresenter = new ProductPresenter(getContext());
+        productPresenter = new ProductPresenter(getContext(), getView());
         recyclerView= view.findViewById(R.id.rv_products_onSale);
+        btnReturn = view.findViewById(R.id.btnReturn);
+
+       /* btnEdit = view.findViewById(R.id.btnEdit);
+        btnDelete = view.findViewById(R.id.btnDelete);
+        btnAddImages = view.findViewById(R.id.btnAddImages);*/
         //SearchView searchView = view.findViewById(R.id.activity_preciadorunicomodelo_searchView2);
 
         Integer idUser = Integer.parseInt(SharedPref.obtenerIdUsuario(getContext()));
@@ -100,7 +111,14 @@ public class ProductsOnSaleFragment extends Fragment implements ProductsOnSaleLi
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(productsOnSaleAdapter);
 
+
+        btnReturn.setOnClickListener(v->{
+            Navigation.findNavController(getView()).navigate(ProductsOnSaleFragmentDirections.actionProductsOnSaleFragmentToNavProfileLogedFragment());
+        });
+
         observePresenter();
+
+
     }
 
     public void observePresenter(){

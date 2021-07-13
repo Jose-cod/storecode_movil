@@ -6,6 +6,7 @@ import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
@@ -13,6 +14,8 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.navigation.Navigation;
 
 import com.example.storecode_android.R;
+import com.example.storecode_android.entidades.Brand;
+import com.example.storecode_android.entidades.Category;
 import com.example.storecode_android.entidades.Producto;
 import com.example.storecode_android.entidades.RespDetaProductoComen;
 import com.example.storecode_android.entidades.RespGetProductByUser;
@@ -31,6 +34,7 @@ import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.sql.SQLOutput;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -48,6 +52,7 @@ public class ProductPresenter {
     RestClientServiceImpl restClientService= new RestClientServiceImpl();
 
     private final Context view;
+    private final View view2;
     //RegisterProductFragment view;
 
     public MutableLiveData<List<RespObtenerProducto>> listProducts = new MutableLiveData();
@@ -73,15 +78,23 @@ public class ProductPresenter {
     public MutableLiveData<List<RespDetaProductoComen>> comentariosClient= new MutableLiveData();
     public MutableLiveData<Boolean> isLoadingComentsClient= new MutableLiveData();
 
+    //variables para observar las categorias
+    public MutableLiveData<List<Category>> listCategories= new MutableLiveData<>();
+
+    //variables para observar las marcas
+    public MutableLiveData<List<Brand>> listBrands = new MutableLiveData<>();
 
     private static final Logger log = LogFile.getLogger(LoginPresenter.class);
     //private final Context view;
 
-    public ProductPresenter(Context view) {
+    public ProductPresenter(Context view, View view2) {
+
         this.view = view;
+        this.view2 = view2;
     }
     public ProductPresenter(){
         this.view= null;
+        this.view2 =null;
     }
 
     public void refreshAllProducts(){
@@ -150,6 +163,116 @@ public class ProductPresenter {
             public void processFinished(){
                 isLoadingAll.setValue(true);
             }
+        });
+
+    }
+
+
+    /**
+     * Description: Función encargada de traer todas las categorias
+     */
+
+    public void getAllCategories(){
+        log.info("--Obteniendo todas las categorias---");
+        //AnimacionesGenerales.mostrarLoader(true, view, view.getString(R.string.load_products), view.getString(R.string.waiting_products));
+
+        Call<List<Category>> call =restClientService.getAllCategories();
+        //log.info("REQUEST:" + reqLoginDto.toString());
+        Log.d("GET CATEGORIES APP PRESENTER REQUEST: ","");
+
+        call.enqueue(new Callback<List<Category>>() {
+            @Override
+            public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
+                if (response != null && response.code() == RESP_CODE_WEB_OK ) {
+                    //AnimacionesGenerales.mostrarLoader(false, view, null, null);
+
+
+                    try{
+                        System.out.println("");
+                        Log.d("GET ALL CATEGORIES APP PRESENTER","RESPONSE EXITOSO");
+                        System.out.println(response.body());
+                        //SharedPref.guardarIdUsuario(view,response.body().getIdUsuario());
+                        Toast.makeText(view,"Respuesta exitosa",Toast.LENGTH_SHORT).show();
+                        listCategories.postValue(response.body());
+                        //processFinished();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                } else {
+                    /*view.etContrasenia.getBackground().mutate().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
+                    view.etIdUsuario.getBackground().mutate().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
+                    view.etIdUsuario.requestFocus();*/
+                    //AnimacionesGenerales.mostrarLoader(false, view, null, null);
+                    System.out.println("Codigo de respuesta"+response.code());
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Category>> call, Throwable t) {
+                //processFinished();
+                System.out.println("Ocurrio un error al obtener las categorias");
+            }
+
+            /*public void processFinished(){
+                isLoadingAll.setValue(true);
+            }*/
+        });
+
+    }
+
+
+    /**
+     * Description: Función encargada de traer todas las categorias
+     */
+
+    public void getAllBrands(){
+        log.info("--Obteniendo todas las marcas---");
+        //AnimacionesGenerales.mostrarLoader(true, view, view.getString(R.string.load_products), view.getString(R.string.waiting_products));
+
+        Call<List<Brand>> call =restClientService.getAllBrands();
+        //log.info("REQUEST:" + reqLoginDto.toString());
+        Log.d("GET BRANDS APP PRESENTER REQUEST: ","");
+
+        call.enqueue(new Callback<List<Brand>>() {
+            @Override
+            public void onResponse(Call<List<Brand>> call, Response<List<Brand>> response) {
+                if (response != null && response.code() == RESP_CODE_WEB_OK ) {
+                    //AnimacionesGenerales.mostrarLoader(false, view, null, null);
+
+
+                    try{
+                        System.out.println("");
+                        Log.d("GET ALL BRANDS APP PRESENTER","RESPONSE EXITOSO");
+                        System.out.println(response.body());
+                        //SharedPref.guardarIdUsuario(view,response.body().getIdUsuario());
+                        Toast.makeText(view,"Respuesta exitosa",Toast.LENGTH_SHORT).show();
+                        listBrands.postValue(response.body());
+                        //processFinished();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                } else {
+                    /*view.etContrasenia.getBackground().mutate().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
+                    view.etIdUsuario.getBackground().mutate().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
+                    view.etIdUsuario.requestFocus();*/
+                    //AnimacionesGenerales.mostrarLoader(false, view, null, null);
+                    System.out.println("Codigo de respuesta"+response.code());
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Brand>> call, Throwable t) {
+                //processFinished();
+                System.out.println("Ocurrio un error al obtener las MARCAS");
+            }
+
+            /*public void processFinished(){
+                isLoadingAll.setValue(true);
+            }*/
         });
 
     }
@@ -463,6 +586,10 @@ public class ProductPresenter {
                         System.out.println(response.code());
                         System.out.println("Producto saved");
                         Toast.makeText(view, "Producto registrado correctamente", Toast.LENGTH_SHORT).show();
+                        if(view2!=null){
+                            Navigation.findNavController(view2).navigate(RegisterProductFragmentDirections.toProfileLogedFragment());
+                        }
+                        //Navigation.findNavController().navigate(RegisterProductFragmentDirections.toProfileLogedFragment());
                         //Navigation.findNavController(view.getView()).navigate(RegisterProductFragmentDirections.toProfileLogedFragment());
 
                         //Toast.makeText(view, "Producto registrado correctamente", Toast.LENGTH_SHORT).show();

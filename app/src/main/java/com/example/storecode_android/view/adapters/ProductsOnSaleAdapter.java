@@ -13,12 +13,14 @@ import android.widget.ImageButton;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.storecode_android.R;
 import com.example.storecode_android.entidades.RespGetProductByUser;
 import com.example.storecode_android.entidades.RespObtenerProducto;
 import com.example.storecode_android.utils.LogFile;
+import com.example.storecode_android.view.fragments.ProductsOnSaleFragmentDirections;
 import com.squareup.picasso.Picasso;
 
 import org.apache.log4j.Logger;
@@ -100,6 +102,12 @@ public class ProductsOnSaleAdapter extends RecyclerView.Adapter<HolderProductsOn
                 //System.out.println("producto:"+producto.getNombreProducto());
                 //modeloAdapterListener.OnProductClicked(modeloList.get(position),position);
             }
+        });
+
+
+        holder.btnEdit.setOnClickListener(v->{
+            ProductsOnSaleFragmentDirections.ToUpdateProduct action = ProductsOnSaleFragmentDirections.toUpdateProduct(producto);
+            Navigation.findNavController(v).navigate(action);
         });
 
 

@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
@@ -26,18 +27,29 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.storecode_android.Presenter.ProductPresenter;
 import com.example.storecode_android.R;
+import com.example.storecode_android.entidades.Brand;
+import com.example.storecode_android.entidades.Category;
 import com.example.storecode_android.entidades.Producto;
+import com.example.storecode_android.entidades.RespObtenerProducto;
 import com.example.storecode_android.utils.SharedPref;
+import com.example.storecode_android.view.adapters.SpinnerAdapter;
+import com.example.storecode_android.view.adapters.SpinnerBrandAdapter;
+import com.example.storecode_android.view.adapters.SpinnerCategoryAdapter;
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -61,6 +73,12 @@ public class RegisterProductFragment extends Fragment {
     EditText editTxtStock;
     EditText editTxtPriceProduct;
     ProductPresenter productPresenter;
+
+    Spinner spinner ;
+    Spinner spinnerBrand;
+
+    Category category;
+    Brand brand;
 
 
 
@@ -123,7 +141,10 @@ public class RegisterProductFragment extends Fragment {
         btnChooseImage = view.findViewById(R.id.btnChooseImage);
         btnSave = view.findViewById(R.id.btnSave);
 
-        productPresenter= new ProductPresenter(getContext());
+        spinner = view.findViewById(R.id.category_spinner);
+        spinnerBrand = view.findViewById(R.id.brand_spinner);
+
+        productPresenter= new ProductPresenter(getContext(), getView());
 
         btnChooseImage.setOnClickListener(v->{
             Intent intent = new Intent(Intent.ACTION_PICK);
@@ -131,29 +152,71 @@ public class RegisterProductFragment extends Fragment {
             startActivityForResult(intent, SELECT_PHOTO);
         });
 
+        productPresenter.getAllCategories();
+        productPresenter.getAllBrands();
+
+
+        observer();
+
         btnSave.setOnClickListener(v ->{
+
+            System.out.println("---------------------Item del spinner-------------------");
+            System.out.println(spinner.getSelectedItem());
+            //obtener el id de la categoria al parsear el json
+
+            try{
+                Gson gson = new Gson();
+                category = gson.fromJson(spinner.getSelectedItem().toString(), Category.class);
+                if( category!= null ){
+                    //impresion de todo el objeto
+                    System.out.println("Id categoria"+category.getIdCategoria());
+                }
+            }catch(JsonSyntaxException e){
+                System.err.println("JsonSyntaxException: " + e.getMessage());
+            }
+
+            System.out.println(spinnerBrand.getSelectedItem());
+            //obtener el id de la categoria al parsear el json
+
+            try{
+                Gson gson = new Gson();
+                brand = gson.fromJson(spinnerBrand.getSelectedItem().toString(), Brand.class);
+                if( brand!= null ){
+                    //impresion de todo el objeto
+                    System.out.println("Id marca: "+brand.getIdMarca());
+                }
+            }catch(JsonSyntaxException e){
+                System.err.println("JsonSyntaxException: " + e.getMessage());
+            }
+
             Producto producto= new Producto(
                     pathAbsolute,
                     editTxtNameProduct.getText().toString(),
                     editTxtDescription.getText().toString(),
                     Double.parseDouble(editTxtPriceProduct.getText().toString()),
                     Double.parseDouble(editTxtStock.getText().toString()),
-                    15,
-                    0,
+                    brand.getIdMarca(),
+                    category.getIdCategoria(),
                     Integer.parseInt(SharedPref.obtenerIdUsuario(getContext()))
 
             );
             if(pathAbsolute!=null){
                 productPresenter.uploadProduct(pathAbsolute,producto);
+
             }else{
                 Toast.makeText(getContext(),"No has seleccionado una imagen",Toast.LENGTH_SHORT).show();
             }
 
         });
 
+        //
+
+
         btnReturn.setOnClickListener(v->{
             Navigation.findNavController(getView()).navigate(RegisterProductFragmentDirections.toProfileLogedFragment());
         });
+
+
     }
 
     @Override
@@ -171,57 +234,11 @@ public class RegisterProductFragment extends Fragment {
             System.out.println(imageFile.getAbsolutePath());
 
 
-
-            /*String filePath2 = fileUri;
-            String fileUri2 = Uri.fromFile(new File(filePath2)).toString();
-            System.out.println("fileUri 2: ------------------------------------------");
-            System.out.println(fileUri2);
-
-
-            String FilePath = data.getData().getPath();
-            Uri selectedImageUri = data.getData();
-
-            if (selectedImageUri.toString().contains("storage/emulated")){
-                System.out.println("Dentro del if:");
-                String[] split = selectedImageUri.toString().split("storage/");
-                FilePath = "storage/"+split[1];
-                System.out.println(FilePath);
-            } else {
-                //FilePath = ImageFilePath.getPath(, selectedImageUri);
-            }
-
-            if (FilePath == null) {
-                FilePath = "";
-            }
-            File file = new File(FilePath);
-            System.out.println("get Absolute path----------------------------------");
-            String pathAbsolute= file.getAbsolutePath();
-            System.out.println(pathAbsolute);*/
-
-
-
-            /*String path3= data.getData().getPath();
-
-            String path = uri.getPath(); // "file:///mnt/sdcard/FileName.mp3"
-            try {
-                File file2 = new File(new URI(path));
-                String pathfile2=file2.getAbsolutePath();
-                System.out.println(pathfile2);
-            } catch (URISyntaxException e) {
-                e.printStackTrace();
-            }*/
-            //File imageFile = new File(getActivity().getRealPathFromURI(selectedImageURI));
-
-
-
-
             System.out.println("Ruta de la imagen");
 
             try {
 
                 Bitmap bitmap= MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
-
-
 
                 //file = new File(path);
                 //ivPhoto.setImageURI(Uri.parse(path));
@@ -251,12 +268,36 @@ public class RegisterProductFragment extends Fragment {
         return result;
     }
 
-    public String getPath(Uri uri) {
+    /*public String getPath(Uri uri) {
         String[] projection = { MediaStore.Images.Media.DATA };
         Cursor cursor =getActivity().getContentResolver().query(uri, projection, null,null,null);
         int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         cursor.moveToFirst();
         return cursor.getString(column_index);
-    }
+    }*/
     //end get uri
+
+    //observer
+    public void observer(){
+
+        final Observer<List<Category>> categoryObserver = categories -> {
+            ArrayList<Category> itemCategories= new ArrayList<>();
+            itemCategories.addAll(categories);
+            //adapter del spinner
+            SpinnerCategoryAdapter customAdapter = new SpinnerCategoryAdapter(getContext(),R.layout.category_spinner_adapter,itemCategories);
+            spinner.setAdapter(customAdapter);
+        };
+        productPresenter.listCategories.observe(getViewLifecycleOwner(), categoryObserver);
+
+
+        final Observer<List<Brand>> brandObserver = brands -> {
+            ArrayList<Brand> itemBrands= new ArrayList<>();
+            itemBrands.addAll(brands);
+            //adapter del spinner
+            SpinnerBrandAdapter customAdapter = new SpinnerBrandAdapter(getContext(),R.layout.category_spinner_adapter,itemBrands);
+            spinnerBrand.setAdapter(customAdapter);
+        };
+        productPresenter.listBrands.observe(getViewLifecycleOwner(), brandObserver);
+    }
+    //observer
 }

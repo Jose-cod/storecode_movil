@@ -132,7 +132,7 @@ public class HomeLogedFragment extends Fragment implements ModeloAdapterListener
         rlBaseHome = view.findViewById(R.id.rlBaseHome);
         //checar si manda error
         //productPresenter = new ProductPresenter(getContext());
-        productPresenter = new ProductPresenter(getContext());
+        productPresenter = new ProductPresenter(getContext(),getView());
         recyclerView= view.findViewById(R.id.activity_preciadorunicomodelo_recyclerView);
         SearchView searchView = view.findViewById(R.id.activity_preciadorunicomodelo_searchView2);
 

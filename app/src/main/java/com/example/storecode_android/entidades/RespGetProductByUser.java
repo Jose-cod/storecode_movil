@@ -1,6 +1,8 @@
 package com.example.storecode_android.entidades;
 
-public class RespGetProductByUser {
+import java.io.Serializable;
+
+public class RespGetProductByUser implements Serializable {
     private Integer idProducto;
     private String nombreProducto;
     private String desProducto;

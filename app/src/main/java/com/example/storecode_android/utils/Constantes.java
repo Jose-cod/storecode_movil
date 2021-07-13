@@ -27,6 +27,10 @@ public class Constantes {
 
     public static final String REST_SERVICE_UPLOAD_PRODUCT = "upload";
 
+    public static final String REST_SERVICE_GET_CATEGORIES = "categories";
+
+    public static final String REST_SERVICE_GET_BRANDS ="brands";
+
     //Constantes del Share preferences
     public static final String PRODUCTOS="productos";
     public static final String ID_USER="idUsuario";
