@@ -1,15 +1,10 @@
 package com.example.storecode_android.Presenter;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.net.Uri;
-import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.MutableLiveData;
 import androidx.navigation.Navigation;
 
@@ -17,24 +12,21 @@ import com.example.storecode_android.R;
 import com.example.storecode_android.entidades.Brand;
 import com.example.storecode_android.entidades.Category;
 import com.example.storecode_android.entidades.Producto;
+import com.example.storecode_android.entidades.ReqUpdateProduct;
 import com.example.storecode_android.entidades.RespDetaProductoComen;
 import com.example.storecode_android.entidades.RespGetProductByUser;
+import com.example.storecode_android.entidades.RespMessage;
 import com.example.storecode_android.entidades.RespObtenerImagesDto;
 import com.example.storecode_android.entidades.RespObtenerProducto;
 import com.example.storecode_android.service.RestClientServiceImpl;
 import com.example.storecode_android.utils.AnimacionesGenerales;
 import com.example.storecode_android.utils.LogFile;
-import com.example.storecode_android.view.LoginActivity;
-import com.example.storecode_android.view.MainDrawerActivity;
-import com.example.storecode_android.view.fragments.RegisterProductFragment;
 import com.example.storecode_android.view.fragments.RegisterProductFragmentDirections;
-import com.google.android.gms.common.util.JsonUtils;
+import com.example.storecode_android.view.fragments.UpdateProductFragmentDirections;
 
 import org.apache.log4j.Logger;
 
 import java.io.File;
-import java.io.FilenameFilter;
-import java.sql.SQLOutput;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -604,6 +596,73 @@ public class ProductPresenter {
             });
         }
 
+
+    }
+
+    /*
+    Método para actualizar productos
+     */
+
+    public void updateProducts(String id, ReqUpdateProduct product){
+
+        Call<RespMessage> call = restClientService.updateProduct(id, product);
+
+        call.enqueue(new Callback<RespMessage>() {
+            @Override
+            public void onResponse(Call<RespMessage> call, Response<RespMessage> response) {
+                System.out.println("codigo de respuesta: "+response.code());
+                if(response!=null && response.code() == RESP_CODE_WEB_OK){
+                    Log.d("SAVE FILE","ACTUALIZANDO PRODUCTO");
+
+                    Toast.makeText(view, "Producto actualizado correctamente", Toast.LENGTH_SHORT).show();
+                    if(view2!=null){
+                        Navigation.findNavController(view2).navigate(UpdateProductFragmentDirections.actionUpdateProductFragmentToProductsOnSaleFragment());
+                    }
+
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<RespMessage> call, Throwable t) {
+                System.out.println("HA OCURRIODO UN ERROR AL ACTUALIZAR EL PRODUCTO");
+            }
+        });
+
+    }
+
+     /*
+    Método para actualizar productos
+     */
+
+    public void deleteProduct(String id){
+
+        Call<RespMessage> call = restClientService.deleteProduct(id);
+
+        call.enqueue(new Callback<RespMessage>() {
+            @Override
+            public void onResponse(Call<RespMessage> call, Response<RespMessage> response) {
+
+                if(response!=null && response.code() == RESP_CODE_WEB_OK){
+                    Log.d("SAVE FILE","ELIMINADO LOGICO DE UN PRODUCTO");
+
+                    Toast.makeText(view, "Producto eliminado correctamente", Toast.LENGTH_SHORT).show();
+
+                }else{
+                    System.out.println("codigo de respuesta: "+response.code());
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<RespMessage> call, Throwable t) {
+                System.out.println("HA OCURRIODO UN ERROR AL ACTUALIZAR EL PRODUCTO");
+                Toast.makeText(view, "Ha ocurrido un error inesperado", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 

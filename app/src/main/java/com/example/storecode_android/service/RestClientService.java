@@ -3,9 +3,11 @@ package com.example.storecode_android.service;
 import com.example.storecode_android.entidades.Brand;
 import com.example.storecode_android.entidades.Category;
 import com.example.storecode_android.entidades.ReqLoginDto;
+import com.example.storecode_android.entidades.ReqUpdateProduct;
 import com.example.storecode_android.entidades.RespDetaProductoComen;
 import com.example.storecode_android.entidades.RespGetProductByUser;
 import com.example.storecode_android.entidades.RespLoginDto;
+import com.example.storecode_android.entidades.RespMessage;
 import com.example.storecode_android.entidades.RespObtenerImagesDto;
 import com.example.storecode_android.entidades.RespObtenerProducto;
 import com.example.storecode_android.entidades.RespUserData;
@@ -16,17 +18,17 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
-import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_COMENTS_GEN;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_COMENT_CLIENT;
+import static com.example.storecode_android.utils.Constantes.REST_SERVICE_DELETE_PRODUCTS;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_GET_BRANDS;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_GET_CATEGORIES;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_IMAGES_COMPLE;
@@ -142,6 +144,17 @@ public interface RestClientService {
     //Obtener todas las MARCAS
     @GET(REST_SERVICE_GET_BRANDS)
     Call<List<Brand>> getAllBrands();
+
+    //Actualizar productos
+
+    @PUT(REST_SERVICE_PRODUCTS+"/{id}")
+    Call<RespMessage> updateProduct(@Path("id") String id, @Body ReqUpdateProduct product);
+
+    //Eliminado lógico de un producto
+    @PUT(REST_SERVICE_DELETE_PRODUCTS+"/{id}")
+    Call<RespMessage> deleteProduct(@Path("id") String id);
+
+
 
 
 

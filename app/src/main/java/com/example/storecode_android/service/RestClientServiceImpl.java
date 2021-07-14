@@ -3,9 +3,11 @@ package com.example.storecode_android.service;
 import com.example.storecode_android.entidades.Brand;
 import com.example.storecode_android.entidades.Category;
 import com.example.storecode_android.entidades.ReqLoginDto;
+import com.example.storecode_android.entidades.ReqUpdateProduct;
 import com.example.storecode_android.entidades.RespDetaProductoComen;
 import com.example.storecode_android.entidades.RespGetProductByUser;
 import com.example.storecode_android.entidades.RespLoginDto;
+import com.example.storecode_android.entidades.RespMessage;
 import com.example.storecode_android.entidades.RespObtenerImagesDto;
 import com.example.storecode_android.entidades.RespObtenerProducto;
 import com.example.storecode_android.entidades.RespUserData;
@@ -22,7 +24,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -197,6 +198,20 @@ public class RestClientServiceImpl implements RestClientService {
     public Call<List<Brand>> getAllBrands() {
         return restClient.getAllBrands();
     }
+
+    @Override
+    public Call<RespMessage> updateProduct(String id, ReqUpdateProduct product) {
+        return restClient.updateProduct(id, product);
+    }
+
+    @Override
+    public Call<RespMessage> deleteProduct(String id) {
+        return restClient.deleteProduct(id);
+    }
+
+
+
+
 
 
 

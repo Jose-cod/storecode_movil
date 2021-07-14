@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.storecode_android.Presenter.ProductPresenter;
 import com.example.storecode_android.R;
 import com.example.storecode_android.entidades.RespGetProductByUser;
 import com.example.storecode_android.entidades.RespObtenerProducto;
@@ -45,6 +46,7 @@ public class ProductsOnSaleAdapter extends RecyclerView.Adapter<HolderProductsOn
     private List<RespGetProductByUser> mFilteredList = modeloList;
 
     private ProductsOnSaleListener modeloAdapterListener;
+    ProductPresenter productPresenter;
 
     String version;
 
@@ -85,6 +87,10 @@ public class ProductsOnSaleAdapter extends RecyclerView.Adapter<HolderProductsOn
         holder.tvNameOnSale.setText(producto.getNombreProducto());
         holder.tvPriceOnSale.setText("$ " + producto.getPrecioUnitarioProducto());
         holder.tvDescriptionOnSale.setText(producto.getDesProducto());
+        holder.tvStockOnSale.setText("Cantidad: "+producto.getStockRealProducto());
+        holder.tvMarcaOnSale.setText("Marca: "+producto.getIdMarca());
+        holder.tvCategoryOnSale.setText("Categoria: "+producto.getIdCategoria());
+
         //holder.ivModelo.setImageURI(Uri.parse(producto.getImagenProducto()));
         /*Picasso.with(context)
                 .load(Uri.parse(producto.getImagenProducto()))
@@ -108,6 +114,11 @@ public class ProductsOnSaleAdapter extends RecyclerView.Adapter<HolderProductsOn
         holder.btnEdit.setOnClickListener(v->{
             ProductsOnSaleFragmentDirections.ToUpdateProduct action = ProductsOnSaleFragmentDirections.toUpdateProduct(producto);
             Navigation.findNavController(v).navigate(action);
+        });
+
+        holder.btnDelete.setOnClickListener(v->{
+            productPresenter = new ProductPresenter(context, null);
+            productPresenter.deleteProduct(producto.getIdProducto().toString());
         });
 
 
