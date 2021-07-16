@@ -17,6 +17,9 @@ public class RespObtenerProducto implements Serializable {
     private Integer idUsuario;
 
 
+
+
+
      /*
 
      {

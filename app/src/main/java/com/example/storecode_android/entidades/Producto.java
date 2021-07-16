@@ -12,6 +12,9 @@ public class Producto {
     Integer categoria;
     Integer idUsuario;
 
+
+
+
     public Producto(){
 
     }

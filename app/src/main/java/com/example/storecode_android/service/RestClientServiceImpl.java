@@ -2,6 +2,7 @@ package com.example.storecode_android.service;
 
 import com.example.storecode_android.entidades.Brand;
 import com.example.storecode_android.entidades.Category;
+import com.example.storecode_android.entidades.ProductInCard;
 import com.example.storecode_android.entidades.ReqLoginDto;
 import com.example.storecode_android.entidades.ReqUpdateProduct;
 import com.example.storecode_android.entidades.RespDetaProductoComen;
@@ -207,6 +208,11 @@ public class RestClientServiceImpl implements RestClientService {
     @Override
     public Call<RespMessage> deleteProduct(String id) {
         return restClient.deleteProduct(id);
+    }
+
+    @Override
+    public Call<List<ProductInCard>> getProductsInCart(String id) {
+        return restClient.getProductsInCart(id);
     }
 
 

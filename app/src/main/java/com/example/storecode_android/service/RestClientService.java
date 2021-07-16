@@ -2,6 +2,7 @@ package com.example.storecode_android.service;
 
 import com.example.storecode_android.entidades.Brand;
 import com.example.storecode_android.entidades.Category;
+import com.example.storecode_android.entidades.ProductInCard;
 import com.example.storecode_android.entidades.ReqLoginDto;
 import com.example.storecode_android.entidades.ReqUpdateProduct;
 import com.example.storecode_android.entidades.RespDetaProductoComen;
@@ -31,6 +32,7 @@ import static com.example.storecode_android.utils.Constantes.REST_SERVICE_COMENT
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_DELETE_PRODUCTS;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_GET_BRANDS;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_GET_CATEGORIES;
+import static com.example.storecode_android.utils.Constantes.REST_SERVICE_GET_PRODUCTS_IN_CART;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_IMAGES_COMPLE;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_LOGIN;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_PRODUCTS;
@@ -153,6 +155,10 @@ public interface RestClientService {
     //Eliminado lógico de un producto
     @PUT(REST_SERVICE_DELETE_PRODUCTS+"/{id}")
     Call<RespMessage> deleteProduct(@Path("id") String id);
+
+    //Obtener los productos en el carrito
+    @GET(REST_SERVICE_GET_PRODUCTS_IN_CART+"/{id}")
+    Call<List<ProductInCard>> getProductsInCart(@Path("id") String id);
 
 
 

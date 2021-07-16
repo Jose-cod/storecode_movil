@@ -33,6 +33,8 @@ public class Constantes {
 
     public static final String REST_SERVICE_DELETE_PRODUCTS = "delete/products";
 
+    public static final String REST_SERVICE_GET_PRODUCTS_IN_CART ="productsInCard";
+
     //Constantes del Share preferences
     public static final String PRODUCTOS="productos";
     public static final String ID_USER="idUsuario";
