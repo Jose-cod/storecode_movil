@@ -75,8 +75,7 @@ public class ProductPresenter {
     public MutableLiveData<List<Category>> listCategories= new MutableLiveData<>();
 
     //variables para observar los productos en el carrito
-    public MutableLiveData<List<ProductInCard>> listProductsInCart= new MutableLiveData<>();
-    public MutableLiveData<Boolean> isLoadingProductsInCart= new MutableLiveData<>();
+
     //variables para observar las marcas
     public MutableLiveData<List<Brand>> listBrands = new MutableLiveData<>();
 
@@ -105,9 +104,7 @@ public class ProductPresenter {
         getProductsOnSale(id);
     }
 
-    public void refreshProductsInCart(String id){
-        getProductsInCart(id);
-    }
+
 
     public void refreshImagesComple(String id){
         getImagesCompl(id);
@@ -677,53 +674,7 @@ public class ProductPresenter {
 
 
 
-    /**
-     * Description: Función encargada de traer los comentarios generales
-     */
 
-    public void getProductsInCart(String id) {
-        log.info("--Obteniendo los productos del carrito---");
-
-
-        Call<List<ProductInCard>> call = restClientService.getProductsInCart(id);
-
-        Log.d("GET PRODUCTS IN CART PRESENTER REQUEST: ", "");
-
-        call.enqueue(new Callback<List<ProductInCard>>() {
-            @Override
-            public void onResponse(Call<List<ProductInCard>> call, Response<List<ProductInCard>> response) {
-                if (response != null && response.code() == RESP_CODE_WEB_OK) {
-                    //AnimacionesGenerales.mostrarLoader(false, view, null, null);
-
-
-                    try {
-                        System.out.println("");
-                        Log.d("GET PRODUCTS IN CART", "RESPONSE EXITOSO");
-                        System.out.println(response.body());
-                        Toast.makeText(view, "Respuesta exitosa", Toast.LENGTH_SHORT).show();
-                        listProductsInCart.postValue(response.body());
-                        processFinished();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                } else {
-
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<ProductInCard>> call, Throwable t) {
-                System.err.println("Ocurrio un error al obtener los productos en el carrito" + t.getMessage());
-
-            }
-
-            public void processFinished(){
-                isLoadingProductsInCart.setValue(true);
-            }
-        });
-    }
 
 
 

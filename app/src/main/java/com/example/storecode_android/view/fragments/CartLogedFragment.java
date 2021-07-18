@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.example.storecode_android.Presenter.CarritoPresenter;
 import com.example.storecode_android.Presenter.ProductPresenter;
 import com.example.storecode_android.R;
 import com.example.storecode_android.entidades.ProductInCard;
@@ -36,6 +37,8 @@ public class CartLogedFragment extends Fragment {
     //declarar presenter y adapter
     private ProductsInCartAdapter productsInCartAdapter;
     private ProductPresenter productPresenter;
+
+    private CarritoPresenter carritoPresenter;
 
     private RelativeLayout rlBaseOnCart;
 
@@ -79,6 +82,7 @@ public class CartLogedFragment extends Fragment {
         //checar si manda error
         //productPresenter = new ProductPresenter(getContext());
         productPresenter = new ProductPresenter(getContext(), getView());
+        carritoPresenter = new CarritoPresenter(getActivity());
         rvProductsInCart= view.findViewById(R.id.rvCartLoged);
 
         Integer idUser = Integer.parseInt(SharedPref.obtenerIdUsuario(getContext()));
@@ -88,9 +92,9 @@ public class CartLogedFragment extends Fragment {
 
 
 
-        productPresenter.refreshProductsInCart(String.valueOf(idUser));
+        carritoPresenter.refreshProductsInCart(String.valueOf(idUser));
         rvProductsInCart.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(),LinearLayoutManager.VERTICAL, false));
-        productsInCartAdapter = new ProductsInCartAdapter( getActivity());
+        productsInCartAdapter = new ProductsInCartAdapter( getActivity(), carritoPresenter);
         rvProductsInCart.setHasFixedSize(true);
         rvProductsInCart.setAdapter(productsInCartAdapter);
         observer();
@@ -105,10 +109,10 @@ public class CartLogedFragment extends Fragment {
                 System.out.println(productInCard);
             });
         };
-        productPresenter.listProductsInCart.observe(getViewLifecycleOwner(), productsObserver);
+        carritoPresenter.listProductsInCart.observe(getViewLifecycleOwner(), productsObserver);
 
 
-        productPresenter.isLoadingProductsInCart.observe(getViewLifecycleOwner(),new Observer<Boolean>(){
+        carritoPresenter.isLoadingProductsInCart.observe(getViewLifecycleOwner(),new Observer<Boolean>(){
 
             @Override
             public void onChanged(Boolean isLoading) {

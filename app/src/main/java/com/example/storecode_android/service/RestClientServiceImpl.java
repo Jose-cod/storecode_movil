@@ -3,11 +3,15 @@ package com.example.storecode_android.service;
 import com.example.storecode_android.entidades.Brand;
 import com.example.storecode_android.entidades.Category;
 import com.example.storecode_android.entidades.ProductInCard;
+import com.example.storecode_android.entidades.ProductoCarrito;
+import com.example.storecode_android.entidades.ReqCarrito;
 import com.example.storecode_android.entidades.ReqLoginDto;
 import com.example.storecode_android.entidades.ReqUpdateProduct;
 import com.example.storecode_android.entidades.RespDetaProductoComen;
+import com.example.storecode_android.entidades.RespGetCarrito;
 import com.example.storecode_android.entidades.RespGetProductByUser;
 import com.example.storecode_android.entidades.RespLoginDto;
+import com.example.storecode_android.entidades.RespMensaje;
 import com.example.storecode_android.entidades.RespMessage;
 import com.example.storecode_android.entidades.RespObtenerImagesDto;
 import com.example.storecode_android.entidades.RespObtenerProducto;
@@ -213,6 +217,26 @@ public class RestClientServiceImpl implements RestClientService {
     @Override
     public Call<List<ProductInCard>> getProductsInCart(String id) {
         return restClient.getProductsInCart(id);
+    }
+
+    @Override
+    public Call<RespMensaje> insertCarrito(ReqCarrito reqCarrito) {
+        return restClient.insertCarrito(reqCarrito);
+    }
+
+    @Override
+    public Call<RespGetCarrito> getCarritoByIdUser(String idUser) {
+        return restClient.getCarritoByIdUser(idUser);
+    }
+
+    @Override
+    public Call<RespMensaje> insertProductInCart(ProductoCarrito productoCarrito) {
+        return restClient.insertProductInCart(productoCarrito);
+    }
+
+    @Override
+    public Call<RespMensaje> deleteProductFromCart(String idProductoCarrito) {
+        return restClient.deleteProductFromCart(idProductoCarrito);
     }
 
 

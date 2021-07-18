@@ -1,7 +1,9 @@
 package com.example.storecode_android.view.adapters;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 
@@ -16,8 +18,10 @@ public class HolderProductsInCart extends RecyclerView.ViewHolder{
     TextView tvDescriptionOnCart;
     TextView tvPriceOnCart;
     TextView tvStockOnCart;
-    TextView btnPayment;
+    Button btnPayment;
+    Button btnDeleteFromCart;
     TextView tvSubtotal;
+    Spinner spinner_cantidad;
 
 
     public HolderProductsInCart(@NonNull View itemView) {
@@ -28,7 +32,9 @@ public class HolderProductsInCart extends RecyclerView.ViewHolder{
         tvPriceOnCart = itemView.findViewById(R.id.tvPriceOnCart);
         tvStockOnCart = itemView.findViewById(R.id.tvStockOnCart);
         btnPayment =  itemView.findViewById(R.id.btnPayment);
+        btnDeleteFromCart = itemView.findViewById(R.id.btnDeleteFromCart);
         tvSubtotal = itemView.findViewById(R.id.tvSubtotal);
+        spinner_cantidad = itemView.findViewById(R.id.spinner_cantidad);
 
     }
 }

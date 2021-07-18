@@ -3,11 +3,15 @@ package com.example.storecode_android.service;
 import com.example.storecode_android.entidades.Brand;
 import com.example.storecode_android.entidades.Category;
 import com.example.storecode_android.entidades.ProductInCard;
+import com.example.storecode_android.entidades.ProductoCarrito;
+import com.example.storecode_android.entidades.ReqCarrito;
 import com.example.storecode_android.entidades.ReqLoginDto;
 import com.example.storecode_android.entidades.ReqUpdateProduct;
+import com.example.storecode_android.entidades.RespGetCarrito;
 import com.example.storecode_android.entidades.RespDetaProductoComen;
 import com.example.storecode_android.entidades.RespGetProductByUser;
 import com.example.storecode_android.entidades.RespLoginDto;
+import com.example.storecode_android.entidades.RespMensaje;
 import com.example.storecode_android.entidades.RespMessage;
 import com.example.storecode_android.entidades.RespObtenerImagesDto;
 import com.example.storecode_android.entidades.RespObtenerProducto;
@@ -30,14 +34,18 @@ import retrofit2.http.Path;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_COMENTS_GEN;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_COMENT_CLIENT;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_DELETE_PRODUCTS;
+import static com.example.storecode_android.utils.Constantes.REST_SERVICE_DELETE_PRODUCT_CART;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_GET_BRANDS;
+import static com.example.storecode_android.utils.Constantes.REST_SERVICE_GET_CARRITO;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_GET_CATEGORIES;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_GET_PRODUCTS_IN_CART;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_IMAGES_COMPLE;
+import static com.example.storecode_android.utils.Constantes.REST_SERVICE_INSERT_CART;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_LOGIN;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_PRODUCTS;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_PRODUCTS_BY_USER;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_PRODUCTS_ON_SALE;
+import static com.example.storecode_android.utils.Constantes.REST_SERVICE_PRODUCT_CART;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_UPLOAD_PRODUCT;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_USER_BY_ID;
 
@@ -159,8 +167,20 @@ public interface RestClientService {
     //Obtener los productos en el carrito
     @GET(REST_SERVICE_GET_PRODUCTS_IN_CART+"/{id}")
     Call<List<ProductInCard>> getProductsInCart(@Path("id") String id);
+    //insertar carrito
+    @POST(REST_SERVICE_INSERT_CART)
+    Call<RespMensaje> insertCarrito(@Body ReqCarrito reqCarrito);
 
+    //Obtener el id del carrito a traves del id del usuario
+    @GET(REST_SERVICE_GET_CARRITO+"/{idUser}")
+    Call<RespGetCarrito> getCarritoByIdUser(@Path("idUser") String idUser);
 
+    //Insertar producto en el carrito
+    @POST(REST_SERVICE_PRODUCT_CART)
+    Call<RespMensaje> insertProductInCart(@Body ProductoCarrito productoCarrito);
+
+    @PUT(REST_SERVICE_DELETE_PRODUCT_CART+"/{idProductoCarrito}")
+    Call<RespMensaje> deleteProductFromCart(@Path("idProductoCarrito") String idProductoCarrito);
 
 
 

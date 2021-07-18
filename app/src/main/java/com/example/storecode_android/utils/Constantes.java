@@ -35,6 +35,14 @@ public class Constantes {
 
     public static final String REST_SERVICE_GET_PRODUCTS_IN_CART ="productsInCard";
 
+    public static final String REST_SERVICE_INSERT_CART = "card";
+
+    public static final String REST_SERVICE_GET_CARRITO ="carrito";
+
+    public static final String REST_SERVICE_PRODUCT_CART ="productocarrito";
+
+    public static final String REST_SERVICE_DELETE_PRODUCT_CART ="delete/productcarrito";
+
     //Constantes del Share preferences
     public static final String PRODUCTOS="productos";
     public static final String ID_USER="idUsuario";

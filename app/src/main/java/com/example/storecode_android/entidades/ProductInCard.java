@@ -1,6 +1,7 @@
 package com.example.storecode_android.entidades;
 
 public class ProductInCard {
+    Integer idproductocarrito;
     Integer idProducto;
     String nombreProducto;
     String desProducto;
@@ -16,7 +17,8 @@ public class ProductInCard {
 
     }
 
-    public ProductInCard(Integer idProducto, String nombreProducto, String desProducto, Double precioUnitarioProducto, String imagenProducto, Integer idMarca, Integer idCategoria, Integer idUsuario, Integer cantidadProducto) {
+    public ProductInCard(Integer idproductocarrito,Integer idProducto, String nombreProducto, String desProducto, Double precioUnitarioProducto, String imagenProducto, Integer idMarca, Integer idCategoria, Integer idUsuario, Integer cantidadProducto) {
+        this.idproductocarrito = idproductocarrito;
         this.idProducto = idProducto;
         this.nombreProducto = nombreProducto;
         this.desProducto = desProducto;
@@ -28,6 +30,13 @@ public class ProductInCard {
         this.cantidadProducto = cantidadProducto;
     }
 
+    public Integer getIdproductocarrito(){
+        return idproductocarrito;
+    }
+
+    public void set(Integer idproductocarrito){
+        this.idproductocarrito= idproductocarrito;
+    }
     public Integer getIdProducto() {
         return idProducto;
     }
@@ -103,6 +112,7 @@ public class ProductInCard {
     @Override
     public String toString() {
         return "{" +
+                "idproductocarrito"+idproductocarrito+
                 "idProducto=" + idProducto +
                 ", nombreProducto='" + nombreProducto + '\'' +
                 ", desProducto='" + desProducto + '\'' +

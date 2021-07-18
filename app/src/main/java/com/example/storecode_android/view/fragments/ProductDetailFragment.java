@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
@@ -27,11 +28,14 @@ import android.widget.TextView;
 
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.example.storecode_android.Presenter.CarritoPresenter;
 import com.example.storecode_android.Presenter.LoginPresenter;
 import com.example.storecode_android.Presenter.ProductPresenter;
 import com.example.storecode_android.R;
+import com.example.storecode_android.entidades.ReqCarrito;
 import com.example.storecode_android.entidades.RespObtenerImagesDto;
 import com.example.storecode_android.entidades.RespObtenerProducto;
+import com.example.storecode_android.utils.SharedPref;
 import com.example.storecode_android.view.MainDrawerActivity;
 import com.example.storecode_android.view.adapters.ComentariosAdapter;
 import com.example.storecode_android.view.adapters.ModeloAdapterInstaladas;
@@ -52,6 +56,7 @@ public class ProductDetailFragment extends Fragment {
     ImageSlider sliderImageProducts;
     private ProductPresenter productPresenter;
     private LoginPresenter loginPresenter;
+    private CarritoPresenter carritoPresenter;
     RespObtenerProducto producto;
     TextView tvName;
     TextView tvDescription;
@@ -60,6 +65,8 @@ public class ProductDetailFragment extends Fragment {
     TextView tvNameVendor;
     TextView tvEmailVendor;
     Spinner spinner ;
+
+    Button btnAddTOCart;
 
     //adapter
     private ComentariosAdapter comentariosAdapter;
@@ -105,6 +112,7 @@ public class ProductDetailFragment extends Fragment {
 
         productPresenter = new ProductPresenter(getContext(), getView());
         loginPresenter = new LoginPresenter();
+        carritoPresenter = new CarritoPresenter(getActivity());
         sliderImageProducts = view.findViewById(R.id.sliderImageProducts);
         //asignacion de elementos de la interfaz grafica
         spinner= view.findViewById(R.id.stock_spinner);
@@ -120,6 +128,8 @@ public class ProductDetailFragment extends Fragment {
         comentariosAdapter= new ComentariosAdapter(getActivity());
         rvComents = view.findViewById(R.id.rv_coments);
         rlBaseComentario= view.findViewById(R.id.rlBaseComents);
+
+        btnAddTOCart = view.findViewById(R.id.btnAddToCart);
 
         //para mostrar comentarios de clientes
         comentariosAdapterClient= new ComentariosAdapter(getActivity());
@@ -159,6 +169,23 @@ public class ProductDetailFragment extends Fragment {
         observePresenter();
 
 
+        btnAddTOCart.setOnClickListener(v -> {
+            String idUsuario = SharedPref.obtenerIdUsuario(getContext());
+            Double cantidad = Double.parseDouble(String.valueOf(spinner.getSelectedItem()));
+            carritoPresenter.insertCarrito(new ReqCarrito(
+                    Integer.parseInt(idUsuario),
+                    producto.getPrecioUnitarioProducto(),
+                    0.0,
+                    "1"
+            ));
+
+            carritoPresenter.getIdCarrito(idUsuario,producto.getIdProducto(), cantidad.intValue());
+
+            /*if(carritoPresenter.idUsuario!=null){
+                System.out.println("EL id del carrito es: "+carritoPresenter.idUsuario);
+                System.out.println("YA SE PUEDE PROCEDER CON EL SIGUIENTE PASO");
+            }*/
+        });
 
         btnSalir.setOnClickListener(v -> {
 
@@ -167,9 +194,9 @@ public class ProductDetailFragment extends Fragment {
 
     }
 
-    public ArrayList<Double> getArrayItems(Double max){
+    public static ArrayList<Double> getArrayItems(Double max){
         ArrayList<Double> items= new ArrayList();
-        for (double i=1.0; i<max; i++){
+        for (double i=1.0; i<=max; i++){
             items.add(i);
         }
         return items;

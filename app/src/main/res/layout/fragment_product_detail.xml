@@ -180,6 +180,8 @@
             </LinearLayout>
 
             <Button
+                android:id="@+id/btnAddToCart"
+                android:fontFamily="@font/lato"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAllCaps="false"
