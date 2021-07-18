@@ -11,13 +11,14 @@ public class ProductInCard {
     Integer idCategoria;
     Integer idUsuario;
     Integer cantidadProducto;
+    Double stockRealProducto;
 
 
     public ProductInCard(){
 
     }
 
-    public ProductInCard(Integer idproductocarrito,Integer idProducto, String nombreProducto, String desProducto, Double precioUnitarioProducto, String imagenProducto, Integer idMarca, Integer idCategoria, Integer idUsuario, Integer cantidadProducto) {
+    public ProductInCard(Integer idproductocarrito,Integer idProducto, String nombreProducto, String desProducto, Double precioUnitarioProducto, String imagenProducto, Integer idMarca, Integer idCategoria, Integer idUsuario, Integer cantidadProducto, Double stockRealProducto) {
         this.idproductocarrito = idproductocarrito;
         this.idProducto = idProducto;
         this.nombreProducto = nombreProducto;
@@ -28,8 +29,15 @@ public class ProductInCard {
         this.idCategoria = idCategoria;
         this.idUsuario = idUsuario;
         this.cantidadProducto = cantidadProducto;
+        this.stockRealProducto = stockRealProducto;
     }
 
+    public Double getStockRealProducto(){
+        return stockRealProducto;
+    }
+    public void setStockRealProducto(Double stockRealProducto){
+        this.stockRealProducto = stockRealProducto;
+    }
     public Integer getIdproductocarrito(){
         return idproductocarrito;
     }
@@ -112,7 +120,7 @@ public class ProductInCard {
     @Override
     public String toString() {
         return "{" +
-                "idproductocarrito"+idproductocarrito+
+                "idproductocarrito="+idproductocarrito+
                 "idProducto=" + idProducto +
                 ", nombreProducto='" + nombreProducto + '\'' +
                 ", desProducto='" + desProducto + '\'' +
@@ -122,6 +130,7 @@ public class ProductInCard {
                 ", idCategoria=" + idCategoria +
                 ", idUsuario=" + idUsuario +
                 ", cantidadProducto=" + cantidadProducto +
+                ", stockRealProducto="+ stockRealProducto+
                 '}';
     }
 

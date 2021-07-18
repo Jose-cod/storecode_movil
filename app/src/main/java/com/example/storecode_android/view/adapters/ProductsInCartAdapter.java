@@ -68,18 +68,29 @@ public class ProductsInCartAdapter extends RecyclerView.Adapter<HolderProductsIn
     @Override
     public void onBindViewHolder(@NonNull HolderProductsInCart holder, int position) {
         productPresenter = new ProductPresenter();
+
+
         ProductInCard producto = modeloList.get(position);
-        subtotal =subtotal+ producto.getPrecioUnitarioProducto();
+
 
         holder.tvNameOnCart.setText(producto.getNombreProducto());
         holder.tvDescriptionOnCart.setText(producto.getDesProducto());
         holder.tvPriceOnCart.setText("$ "+producto.getPrecioUnitarioProducto().toString());
         holder.tvStockOnCart.setText("Cantidad: ");
 
-        ArrayList<Double> items= ProductDetailFragment.getArrayItems(4.0);
+        ArrayList<Double> items= ProductDetailFragment.getArrayItems(producto.getStockRealProducto());
         //adapter
         SpinnerAdapter customAdapter = new SpinnerAdapter(context,R.layout.custom_spinner_adapter,items);
         holder.spinner_cantidad.setAdapter(customAdapter);
+        Double cantidad = Double.parseDouble(holder.spinner_cantidad.getSelectedItem().toString());
+        System.out.println("Encargaste"+ cantidad+ producto.getNombreProducto());
+        subtotal =subtotal+ producto.getPrecioUnitarioProducto();
+
+        System.out.println("---------EN stock---------------");
+        System.out.println("El stock es:"+producto.getStockRealProducto());
+
+
+
         //Manejar la lógica de visibilidad del boton para pagar
         //holder.btnPayment.setVisibility(View.VISIBLE);
         try{

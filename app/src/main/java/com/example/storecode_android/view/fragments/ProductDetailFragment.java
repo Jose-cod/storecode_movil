@@ -181,6 +181,7 @@ public class ProductDetailFragment extends Fragment {
 
             carritoPresenter.getIdCarrito(idUsuario,producto.getIdProducto(), cantidad.intValue());
 
+
             /*if(carritoPresenter.idUsuario!=null){
                 System.out.println("EL id del carrito es: "+carritoPresenter.idUsuario);
                 System.out.println("YA SE PUEDE PROCEDER CON EL SIGUIENTE PASO");
