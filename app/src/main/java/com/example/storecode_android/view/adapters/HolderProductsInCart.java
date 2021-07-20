@@ -21,6 +21,7 @@ public class HolderProductsInCart extends RecyclerView.ViewHolder{
     Button btnPayment;
     Button btnDeleteFromCart;
     TextView tvSubtotal;
+    TextView tvTotal;
     Spinner spinner_cantidad;
 
 
@@ -34,6 +35,7 @@ public class HolderProductsInCart extends RecyclerView.ViewHolder{
         btnPayment =  itemView.findViewById(R.id.btnPayment);
         btnDeleteFromCart = itemView.findViewById(R.id.btnDeleteFromCart);
         tvSubtotal = itemView.findViewById(R.id.tvSubtotal);
+        tvTotal = itemView.findViewById(R.id.tvTotal);
         spinner_cantidad = itemView.findViewById(R.id.spinner_cantidad);
 
     }

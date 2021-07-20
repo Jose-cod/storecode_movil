@@ -26,8 +26,8 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.denzcoskun.imageslider.ImageSlider;
-import com.denzcoskun.imageslider.models.SlideModel;
+/*import com.denzcoskun.imageslider.ImageSlider;
+import com.denzcoskun.imageslider.models.SlideModel;*/
 import com.example.storecode_android.Presenter.CarritoPresenter;
 import com.example.storecode_android.Presenter.LoginPresenter;
 import com.example.storecode_android.Presenter.ProductPresenter;
@@ -53,7 +53,7 @@ public class ProductDetailFragment extends Fragment {
 
 
     ImageButton btnSalir;
-    ImageSlider sliderImageProducts;
+    //ImageSlider sliderImageProducts;
     private ProductPresenter productPresenter;
     private LoginPresenter loginPresenter;
     private CarritoPresenter carritoPresenter;
@@ -113,7 +113,7 @@ public class ProductDetailFragment extends Fragment {
         productPresenter = new ProductPresenter(getContext(), getView());
         loginPresenter = new LoginPresenter();
         carritoPresenter = new CarritoPresenter(getActivity());
-        sliderImageProducts = view.findViewById(R.id.sliderImageProducts);
+        //sliderImageProducts = view.findViewById(R.id.sliderImageProducts);
         //asignacion de elementos de la interfaz grafica
         spinner= view.findViewById(R.id.stock_spinner);
         btnSalir= view.findViewById(R.id.btnSalir);
@@ -211,10 +211,10 @@ public class ProductDetailFragment extends Fragment {
     public void observePresenter(){
 
         productPresenter.imagesCompl.observe(getViewLifecycleOwner(), respObtenerImagesDto -> {
-            List<SlideModel> slideModels = new ArrayList();
+            //List<SlideModel> slideModels = new ArrayList();
 
 
-            if(respObtenerImagesDto!=null){
+            /*if(respObtenerImagesDto!=null){
                 slideModels.add(new SlideModel(respObtenerImagesDto.getImagenProducto(),"Imagen 1"));
                 slideModels.add(new SlideModel(respObtenerImagesDto.getImg1(),"Imagen 2"));
                 slideModels.add(new SlideModel(respObtenerImagesDto.getImg2(),"Imagen 3"));
@@ -226,11 +226,11 @@ public class ProductDetailFragment extends Fragment {
                 slideModels.add(new SlideModel("no image","Imagen 3"));
                 slideModels.add(new SlideModel("no image","Imagen 4"));
                 slideModels.add(new SlideModel("no image","Imagen 5"));
-            }
+            }*/
 
 
 
-            sliderImageProducts.setImageList(slideModels, true);
+            //sliderImageProducts.setImageList(slideModels, true);
         });
 
         loginPresenter.vendedor.observe(getViewLifecycleOwner(), vendedor -> {

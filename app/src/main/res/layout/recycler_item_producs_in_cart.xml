@@ -120,12 +120,26 @@
                     android:id="@+id/tvSubtotal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=" "
+                    android:text="Subtotal:"
+                    android:gravity="start"
+                    android:textSize="16sp"
+                    android:textColor="@color/negro"
+                    android:visibility="visible"
+                    />
+
+                <TextView
+                    android:fontFamily="@font/lato"
+                    android:id="@+id/tvTotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total:"
                     android:gravity="start"
                     android:textSize="16sp"
                     android:textColor="@color/negro"
                     android:visibility="gone"
                     />
+
+
             </LinearLayout>
 
 

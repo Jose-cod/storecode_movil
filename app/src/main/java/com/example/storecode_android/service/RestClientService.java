@@ -5,11 +5,13 @@ import com.example.storecode_android.entidades.Category;
 import com.example.storecode_android.entidades.ProductInCard;
 import com.example.storecode_android.entidades.ProductoCarrito;
 import com.example.storecode_android.entidades.ReqCarrito;
+import com.example.storecode_android.entidades.ReqItemProduct;
 import com.example.storecode_android.entidades.ReqLoginDto;
 import com.example.storecode_android.entidades.ReqUpdateProduct;
 import com.example.storecode_android.entidades.RespGetCarrito;
 import com.example.storecode_android.entidades.RespDetaProductoComen;
 import com.example.storecode_android.entidades.RespGetProductByUser;
+import com.example.storecode_android.entidades.RespIdPreference;
 import com.example.storecode_android.entidades.RespLoginDto;
 import com.example.storecode_android.entidades.RespMensaje;
 import com.example.storecode_android.entidades.RespMessage;
@@ -33,6 +35,7 @@ import retrofit2.http.Path;
 
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_COMENTS_GEN;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_COMENT_CLIENT;
+import static com.example.storecode_android.utils.Constantes.REST_SERVICE_CREATE_PREFERENCE;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_DELETE_PRODUCTS;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_DELETE_PRODUCT_CART;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_GET_BRANDS;
@@ -182,6 +185,9 @@ public interface RestClientService {
     @PUT(REST_SERVICE_DELETE_PRODUCT_CART+"/{idProductoCarrito}")
     Call<RespMensaje> deleteProductFromCart(@Path("idProductoCarrito") String idProductoCarrito);
 
+    //Request para crear el id preference del proceso de pago
+    @POST(REST_SERVICE_CREATE_PREFERENCE)
+    Call<RespIdPreference> createIdPreference(@Body ReqItemProduct reqItemProduct);
 
 
     /*@POST(REST_SERVICE_LOGIN_AUTORIZADO)

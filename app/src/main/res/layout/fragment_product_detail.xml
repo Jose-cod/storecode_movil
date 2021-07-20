@@ -53,7 +53,7 @@
                 android:textColor="@color/negro"
 
                 />
-            <com.denzcoskun.imageslider.ImageSlider
+           <!-- <com.denzcoskun.imageslider.ImageSlider
                 android:id="@+id/sliderImageProducts"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
@@ -64,7 +64,7 @@
                 android:layout_marginHorizontal="@dimen/a8dp"
                 android:layout_height="200dp">
 
-            </com.denzcoskun.imageslider.ImageSlider>
+            </com.denzcoskun.imageslider.ImageSlider>-->
 
             <TextView
                 android:layout_marginHorizontal="@dimen/a8dp"

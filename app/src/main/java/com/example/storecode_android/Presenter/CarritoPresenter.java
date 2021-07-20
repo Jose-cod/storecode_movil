@@ -10,7 +10,9 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.storecode_android.entidades.ProductInCard;
 import com.example.storecode_android.entidades.ProductoCarrito;
 import com.example.storecode_android.entidades.ReqCarrito;
+import com.example.storecode_android.entidades.ReqItemProduct;
 import com.example.storecode_android.entidades.RespGetCarrito;
+import com.example.storecode_android.entidades.RespIdPreference;
 import com.example.storecode_android.entidades.RespLoginDto;
 import com.example.storecode_android.entidades.RespMensaje;
 import com.example.storecode_android.service.RestClientService;
@@ -20,6 +22,7 @@ import com.example.storecode_android.utils.LogFile;
 import com.example.storecode_android.utils.SharedPref;
 import com.example.storecode_android.view.LoginActivity;
 import com.example.storecode_android.view.MainDrawerActivity;
+import com.mercadopago.android.px.core.MercadoPagoCheckout;
 
 import org.apache.log4j.Logger;
 
@@ -270,4 +273,50 @@ public class CarritoPresenter {
             }
         });
     }
+
+    //metodo para obtener el id preference del proceso de pago
+
+    public void createIdPreference(ReqItemProduct reqItemProduct){
+
+        log.info("--consumir create id preference--");
+        RestClientService api = new RestClientServiceImpl();
+        Call<RespIdPreference> call = api.createIdPreference(reqItemProduct);
+
+        log.info("REQUEST:" + reqItemProduct);
+
+        call.enqueue(new Callback<RespIdPreference>() {
+            @Override
+            public void onResponse(Call<RespIdPreference> call, Response<RespIdPreference> response) {
+                if(response!=null && response.code()==RESP_CODE_WEB_OK){
+                    try {
+                        System.out.println("");
+                        Log.d("CARRITO APP PRESENTER- CREATE ID PREFERENCE","RESPONSE EXITOSO");
+                        System.out.println(response.body().getId());
+                        SharedPref.guardarIdPreference(view,response.body().getId());
+                        //productPresenter.refreshProductsInCart(productoCarrito.getIdCarrito().toString());
+                        Toast.makeText(view,"Iniciando proceso de pago",Toast.LENGTH_SHORT).show();
+
+
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }else{
+                    System.out.println(response.code());
+                    System.out.println("Ocurrio un error al crear el preference");
+                    Toast.makeText(view,"Ocurrio un error al crear el preference",Toast.LENGTH_SHORT).show();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RespIdPreference> call, Throwable t) {
+                t.printStackTrace();
+                Toast.makeText(view,"Ocurrio un error al crear el preference",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+
+
 }

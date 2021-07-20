@@ -12,6 +12,9 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/px-addons" />
+            <option value="$PROJECT_DIR$/px-checkout" />
+            <option value="$PROJECT_DIR$/px-services" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import org.apache.log4j.Logger;
 
+import static com.example.storecode_android.utils.Constantes.ID_PREFERENCE;
+
 /**
  * Description: Clase encargada de extraer las preferencias de usario desde SharedPreferences
  * Created by EX440831 on 14/02/2020.
@@ -80,6 +82,18 @@ public class SharedPref {
     public static String obtenerUsuario(final Context context){
         inicializaPreferencias(context);
         return sharedPreferences.getString(Constantes.USER,"{nombreUsuario='Rosendo'}");
+    }
+
+    //Guardar el id preference de mercado pago
+    public static void guardarIdPreference(final Context context, String id){
+        inicializaPreferencias(context);
+        sharedPreferencesEdit.putString(ID_PREFERENCE, id);
+        sharedPreferencesEdit.commit();
+    }
+
+    public static String obtenerIdPreference(final Context context){
+        inicializaPreferencias(context);
+        return sharedPreferences.getString(ID_PREFERENCE,"idPreference");
     }
 
     public static void guardarIdUsuario(final Context context, Integer idUsuario){

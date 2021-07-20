@@ -5,11 +5,13 @@ import com.example.storecode_android.entidades.Category;
 import com.example.storecode_android.entidades.ProductInCard;
 import com.example.storecode_android.entidades.ProductoCarrito;
 import com.example.storecode_android.entidades.ReqCarrito;
+import com.example.storecode_android.entidades.ReqItemProduct;
 import com.example.storecode_android.entidades.ReqLoginDto;
 import com.example.storecode_android.entidades.ReqUpdateProduct;
 import com.example.storecode_android.entidades.RespDetaProductoComen;
 import com.example.storecode_android.entidades.RespGetCarrito;
 import com.example.storecode_android.entidades.RespGetProductByUser;
+import com.example.storecode_android.entidades.RespIdPreference;
 import com.example.storecode_android.entidades.RespLoginDto;
 import com.example.storecode_android.entidades.RespMensaje;
 import com.example.storecode_android.entidades.RespMessage;
@@ -237,6 +239,11 @@ public class RestClientServiceImpl implements RestClientService {
     @Override
     public Call<RespMensaje> deleteProductFromCart(String idProductoCarrito) {
         return restClient.deleteProductFromCart(idProductoCarrito);
+    }
+
+    @Override
+    public Call<RespIdPreference> createIdPreference(ReqItemProduct reqItemProduct) {
+        return restClient.createIdPreference(reqItemProduct);
     }
 
 
