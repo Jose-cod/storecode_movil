@@ -2,18 +2,40 @@ package com.example.storecode_android.entidades;
 
 public class ReqItemProduct {
 
+    Integer idProductoCarrito;
+    Integer idVendedor;
     String description;
     Double price;
     Integer quantity;
+    String clientEmail;
 
     public ReqItemProduct(){
 
     }
 
-    public ReqItemProduct(String description, Double price, Integer quantity) {
+    public ReqItemProduct(Integer idProductoCarrito, Integer idVendedor, String description, Double price, Integer quantity, String clientEmail) {
+        this.idProductoCarrito = idProductoCarrito;
+        this.idVendedor = idVendedor;
         this.description = description;
         this.price = price;
         this.quantity = quantity;
+        this.clientEmail = clientEmail;
+    }
+
+    public Integer getIdProductoCarrito() {
+        return idProductoCarrito;
+    }
+
+    public void setIdProductoCarrito(Integer idProductoCarrito) {
+        this.idProductoCarrito = idProductoCarrito;
+    }
+
+    public Integer getIdVendedor() {
+        return idVendedor;
+    }
+
+    public void setIdVendedor(Integer idVendedor) {
+        this.idVendedor = idVendedor;
     }
 
     public String getDescription() {
@@ -40,15 +62,25 @@ public class ReqItemProduct {
         this.quantity = quantity;
     }
 
+    public String getClientEmail() {
+        return clientEmail;
+    }
+
+    public void setClientEmail(String clientEmail) {
+        this.clientEmail = clientEmail;
+    }
+
     @Override
     public String toString() {
         return "{" +
-                "description='" + description + '\'' +
+                "idProductoCarrito=" + idProductoCarrito +
+                ", idVendedor=" + idVendedor +
+                ", description='" + description + '\'' +
                 ", price=" + price +
                 ", quantity=" + quantity +
+                ", clientEmail='" + clientEmail + '\'' +
                 '}';
     }
-
 
     /*
     {

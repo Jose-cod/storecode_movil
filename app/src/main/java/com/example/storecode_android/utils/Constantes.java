@@ -50,6 +50,7 @@ public class Constantes {
     public static final String ID_USER="idUsuario";
     public static final String USER="user";
     public static final String ID_PREFERENCE="idPreference";
+    public static final String PRODUCTO_IN_CARD="listProductoCarrito";
 
 
     public static final short TIME_OUT_RETROFIT = 6000;

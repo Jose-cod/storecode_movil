@@ -25,6 +25,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.storecode_android.MainActivity;
 import com.example.storecode_android.R;
 
+import com.example.storecode_android.entidades.ProductInCard;
+import com.example.storecode_android.entidades.ProductoCarrito;
+import com.example.storecode_android.entidades.ReqItemProduct;
 import com.example.storecode_android.entidades.RespObtenerProducto;
 import com.example.storecode_android.service.RestClientService;
 import com.example.storecode_android.service.RestClientServiceImpl;
@@ -33,9 +36,18 @@ import com.example.storecode_android.utils.LogFile;
 import com.example.storecode_android.utils.SharedPref;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.mercadopago.android.px.core.MercadoPagoCheckout;
+import com.mercadopago.android.px.model.Card;
+import com.mercadopago.android.px.model.MerchantAccount;
+import com.mercadopago.android.px.model.Order;
+import com.mercadopago.android.px.model.Payment;
+import com.mercadopago.android.px.model.exceptions.MercadoPagoError;
 
 import org.apache.log4j.Logger;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 
@@ -43,6 +55,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 
 import static com.example.storecode_android.utils.Constantes.RESP_CODE_WEB_OK;
+import static com.example.storecode_android.view.adapters.ProductsInCartAdapter.REQUEST_CODE;
 
 
 /**
@@ -65,6 +78,7 @@ public class MainDrawerActivity extends AppCompatActivity {
     //PerfilActivity perfilActivity;
     //SoporteTecnicoActivity soporteTecnicoActivity;
     public static SharedPreferences sharedpreferences;
+
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -297,6 +311,78 @@ public class MainDrawerActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(bnvMenuLoged, Navigation.findNavController(this, R.id.fragContentLoged));
     }
 
+
+
+
+    @Override
+    protected void onActivityResult(int requestCode, final int resultCode, final Intent data) {
+        log.info( "--onActivityResult--");
+        log.info( "Request Code:" + requestCode);
+        log.info( "Result Code:" + resultCode);
+
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == MercadoPagoCheckout.PAYMENT_RESULT_CODE) {
+                final Payment payment = (Payment) data.getSerializableExtra(MercadoPagoCheckout.EXTRA_PAYMENT_RESULT);
+                //tvResults.setText("Resultado del pago: " + payment.getPaymentStatus());
+                data.getExtras().getSerializable("");
+                //System.out.println("Resultado del pago: " + payment.getPaymentStatus());
+                if(payment.getPaymentStatus().equals("approved")){
+                    System.out.println("Tu pago fue aprobado");
+                    String resp = SharedPref.obtenerListProductInCard(this);
+                    Type listType = new TypeToken<List<ReqItemProduct>>(){}.getType();
+                    List<ReqItemProduct> listProductoCarrito  = new Gson().fromJson(resp, listType);
+                    System.out.println("Obtenidos del Shared preference");
+                    listProductoCarrito.forEach(productoInCart -> {
+                        System.out.println(productoInCart.getIdProductoCarrito());
+                        System.out.println(productoInCart.getClientEmail());
+                        System.out.println(productoInCart.getDescription());
+
+                    });
+
+                    try{
+                        String paymentType=payment.getPaymentTypeId();
+                        System.out.println("------------------Datos del pago-------------------------");
+                        System.out.println("Metodo de pago"+paymentType);
+
+                        System.out.println(payment.getCard());
+
+                        System.out.println(payment.getDateCreated());
+                        System.out.println("Amount"+payment.getCouponAmount());
+                        System.out.println("Email Payer:"+payment.getPayer().getEmail());
+                        Order order = payment.getOrder();
+                        System.out.println("OrderId"+order.getId());
+
+
+                    }catch (java.lang.NullPointerException e){
+                        e.printStackTrace();
+                    }
+
+
+                    Toast.makeText(this,"Tu pago fue aprobado", Toast.LENGTH_LONG).show();
+
+                }
+                //Done!
+            } else if (resultCode == RESULT_CANCELED) {
+                if (data != null && data.getExtras() != null
+                        && data.getExtras().containsKey(MercadoPagoCheckout.EXTRA_ERROR)) {
+                    final MercadoPagoError mercadoPagoError =
+                            (MercadoPagoError) data.getSerializableExtra(MercadoPagoCheckout.EXTRA_ERROR);
+                    //tvResults.setText("Error: " +  mercadoPagoError.getMessage());
+                    System.out.println("Error: " +  mercadoPagoError.getMessage());
+                    Toast.makeText(this,"Error"+mercadoPagoError.getMessage(),Toast.LENGTH_SHORT).show();
+                    //Resolve error in checkout
+                } else {
+                    //Resolve canceled checkout
+                }
+            }
+
+
+        }
+    }
+
+    /*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         log.info( "--onActivityResult--");
@@ -376,8 +462,8 @@ public class MainDrawerActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-        }*/
-    }
+        }
+    }*/
 
     /*private void eliminarApk() {
         log.info( "--eliminarApk--");

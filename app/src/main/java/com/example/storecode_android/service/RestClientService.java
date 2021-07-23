@@ -187,7 +187,7 @@ public interface RestClientService {
 
     //Request para crear el id preference del proceso de pago
     @POST(REST_SERVICE_CREATE_PREFERENCE)
-    Call<RespIdPreference> createIdPreference(@Body ReqItemProduct reqItemProduct);
+    Call<RespIdPreference> createIdPreference(@Body List<ReqItemProduct> reqItemProduct);
 
 
     /*@POST(REST_SERVICE_LOGIN_AUTORIZADO)

@@ -81,7 +81,7 @@ public class SharedPref {
 
     public static String obtenerUsuario(final Context context){
         inicializaPreferencias(context);
-        return sharedPreferences.getString(Constantes.USER,"{nombreUsuario='Rosendo'}");
+        return sharedPreferences.getString(Constantes.USER,"Vacio");
     }
 
     //Guardar el id preference de mercado pago
@@ -89,17 +89,30 @@ public class SharedPref {
         inicializaPreferencias(context);
         sharedPreferencesEdit.putString(ID_PREFERENCE, id);
         sharedPreferencesEdit.commit();
+        sharedPreferencesEdit.commit();
     }
 
     public static String obtenerIdPreference(final Context context){
         inicializaPreferencias(context);
-        return sharedPreferences.getString(ID_PREFERENCE,"idPreference");
+        return sharedPreferences.getString(ID_PREFERENCE,"Vacio");
     }
 
     public static void guardarIdUsuario(final Context context, Integer idUsuario){
         inicializaPreferencias(context);
         sharedPreferencesEdit.putString(Constantes.ID_USER,idUsuario.toString());
         sharedPreferencesEdit.commit();
+    }
+    //Guardar productInCard
+    public static void guardarListProductInCard(final Context context, String listProductInCard){
+        inicializaPreferencias(context);
+        sharedPreferencesEdit.putString(Constantes.PRODUCTO_IN_CARD, listProductInCard);
+        sharedPreferencesEdit.commit();
+    }
+
+    //obtener lista de productInCard
+    public static String obtenerListProductInCard(final Context context){
+        inicializaPreferencias(context);
+        return sharedPreferences.getString(Constantes.PRODUCTO_IN_CARD,"null");
     }
 
     //obtener id del Usuario
@@ -133,6 +146,9 @@ public class SharedPref {
         sharedPreferencesEdit.remove(Constantes.PRODUCTOS);
         sharedPreferencesEdit.commit();
     }
+
+
+
 
    /* public static void guardarVersionPrevActualizacion(final Context context, final String versionAnterior) {
         log.info( "--guardarPrecColocPosActualizacion--");

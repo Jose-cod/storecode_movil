@@ -1,7 +1,6 @@
 package com.example.storecode_android.entidades;
 
 public class ProductoCarrito {
-
     Integer idProducto;
     Integer idCarrito;
     Integer cantidadProducto;

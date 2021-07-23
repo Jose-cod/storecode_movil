@@ -242,7 +242,7 @@ public class RestClientServiceImpl implements RestClientService {
     }
 
     @Override
-    public Call<RespIdPreference> createIdPreference(ReqItemProduct reqItemProduct) {
+    public Call<RespIdPreference> createIdPreference(List<ReqItemProduct> reqItemProduct) {
         return restClient.createIdPreference(reqItemProduct);
     }
 

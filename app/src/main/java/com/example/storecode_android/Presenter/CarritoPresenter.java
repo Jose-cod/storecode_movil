@@ -26,6 +26,7 @@ import com.mercadopago.android.px.core.MercadoPagoCheckout;
 
 import org.apache.log4j.Logger;
 
+import java.sql.SQLOutput;
 import java.util.List;
 
 import retrofit2.Call;
@@ -33,6 +34,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.example.storecode_android.utils.Constantes.RESP_CODE_WEB_OK;
+import static com.example.storecode_android.view.adapters.ProductsInCartAdapter.PUBLIC_KEY;
+import static com.example.storecode_android.view.adapters.ProductsInCartAdapter.REQUEST_CODE;
 
 public class CarritoPresenter {
 
@@ -276,7 +279,7 @@ public class CarritoPresenter {
 
     //metodo para obtener el id preference del proceso de pago
 
-    public void createIdPreference(ReqItemProduct reqItemProduct){
+    public void createIdPreference(Context context, List<ReqItemProduct> reqItemProduct){
 
         log.info("--consumir create id preference--");
         RestClientService api = new RestClientServiceImpl();
@@ -293,11 +296,15 @@ public class CarritoPresenter {
                         Log.d("CARRITO APP PRESENTER- CREATE ID PREFERENCE","RESPONSE EXITOSO");
                         System.out.println(response.body().getId());
                         SharedPref.guardarIdPreference(view,response.body().getId());
+                        String idPreference = response.body().getId();
+                        SharedPref.guardarListProductInCard(context, reqItemProduct.toString());
+                        startMercadoPagoCheckout(context,idPreference);
                         //productPresenter.refreshProductsInCart(productoCarrito.getIdCarrito().toString());
                         Toast.makeText(view,"Iniciando proceso de pago",Toast.LENGTH_SHORT).show();
 
 
                     }catch (Exception e){
+                        System.out.println("Error al guardar el id preference");
                         e.printStackTrace();
                     }
                 }else{
@@ -314,6 +321,13 @@ public class CarritoPresenter {
                 Toast.makeText(view,"Ocurrio un error al crear el preference",Toast.LENGTH_SHORT).show();
             }
         });
+
+    }
+
+
+    public void startMercadoPagoCheckout(Context context, final String checkoutPreferenceId) {
+        MercadoPagoCheckout mercadoPagoCheckout = new MercadoPagoCheckout.Builder(PUBLIC_KEY,checkoutPreferenceId).build();
+        mercadoPagoCheckout.startPayment(context,REQUEST_CODE);
 
     }
 
