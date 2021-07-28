@@ -45,6 +45,14 @@ public class Constantes {
 
     public static final String REST_SERVICE_CREATE_PREFERENCE="create_preference";
 
+    public static final String REST_SERVICE_CREATE_VENTA = "venta";
+
+    public static final String REST_SERVICE_CREATE_CARRITO_VENTA= "carritoventa";
+
+    public static final String REST_SERVICE_UPDATE_STOCK = "updatestock";
+
+    public static final String REST_SERVICE_MYSHOPPING = "myshopping";
+
     //Constantes del Share preferences
     public static final String PRODUCTOS="productos";
     public static final String ID_USER="idUsuario";

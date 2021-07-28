@@ -3,6 +3,7 @@ package com.example.storecode_android.entidades;
 public class ProductInCard {
     Integer idproductocarrito;
     Integer idProducto;
+    Integer idCarrito;
     String nombreProducto;
     String desProducto;
     Double precioUnitarioProducto;
@@ -18,9 +19,10 @@ public class ProductInCard {
 
     }
 
-    public ProductInCard(Integer idproductocarrito,Integer idProducto, String nombreProducto, String desProducto, Double precioUnitarioProducto, String imagenProducto, Integer idMarca, Integer idCategoria, Integer idUsuario, Integer cantidadProducto, Double stockRealProducto) {
+    public ProductInCard(Integer idproductocarrito,Integer idProducto,Integer idCarrito, String nombreProducto, String desProducto, Double precioUnitarioProducto, String imagenProducto, Integer idMarca, Integer idCategoria, Integer idUsuario, Integer cantidadProducto, Double stockRealProducto) {
         this.idproductocarrito = idproductocarrito;
         this.idProducto = idProducto;
+        this.idCarrito = idCarrito;
         this.nombreProducto = nombreProducto;
         this.desProducto = desProducto;
         this.precioUnitarioProducto = precioUnitarioProducto;
@@ -51,6 +53,18 @@ public class ProductInCard {
 
     public void setIdProducto(Integer idProducto) {
         this.idProducto = idProducto;
+    }
+
+    public void setIdproductocarrito(Integer idproductocarrito) {
+        this.idproductocarrito = idproductocarrito;
+    }
+
+    public Integer getIdCarrito() {
+        return idCarrito;
+    }
+
+    public void setIdCarrito(Integer idCarrito) {
+        this.idCarrito = idCarrito;
     }
 
     public String getNombreProducto() {
@@ -120,8 +134,9 @@ public class ProductInCard {
     @Override
     public String toString() {
         return "{" +
-                "idproductocarrito="+idproductocarrito+
-                "idProducto=" + idProducto +
+                "idproductocarrito=" + idproductocarrito +
+                ", idProducto=" + idProducto +
+                ", idCarrito=" + idCarrito +
                 ", nombreProducto='" + nombreProducto + '\'' +
                 ", desProducto='" + desProducto + '\'' +
                 ", precioUnitarioProducto=" + precioUnitarioProducto +
@@ -130,7 +145,7 @@ public class ProductInCard {
                 ", idCategoria=" + idCategoria +
                 ", idUsuario=" + idUsuario +
                 ", cantidadProducto=" + cantidadProducto +
-                ", stockRealProducto="+ stockRealProducto+
+                ", stockRealProducto=" + stockRealProducto +
                 '}';
     }
 

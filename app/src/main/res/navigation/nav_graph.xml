@@ -11,11 +11,12 @@
         android:label="fragment_home_no_loged"
         tools:layout="@layout/fragment_home_no_loged" />
 
-    <fragment
+    <!--<fragment
         android:id="@+id/navCartNoLogedFragment"
         android:name="com.example.storecode_android.view.fragments.CartNoLogedFragment"
         android:label="fragment_cart_no_loged"
-        tools:layout="@layout/fragment_cart_no_loged" />
+        tools:layout="@layout/fragment_cart_no_loged" />-->
+
     <fragment
         android:id="@+id/navProfileNoLogedFragment"
         android:name="com.example.storecode_android.view.fragments.ProfileNoLogedFragment"

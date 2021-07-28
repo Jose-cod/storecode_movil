@@ -2,7 +2,9 @@ package com.example.storecode_android.entidades;
 
 public class ReqItemProduct {
 
+    Integer idProducto;
     Integer idProductoCarrito;
+    Integer idCarrito;
     Integer idVendedor;
     String description;
     Double price;
@@ -13,13 +15,23 @@ public class ReqItemProduct {
 
     }
 
-    public ReqItemProduct(Integer idProductoCarrito, Integer idVendedor, String description, Double price, Integer quantity, String clientEmail) {
+    public ReqItemProduct(Integer idProducto, Integer idProductoCarrito, Integer idCarrito, Integer idVendedor, String description, Double price, Integer quantity, String clientEmail) {
+        this.idProducto = idProducto;
         this.idProductoCarrito = idProductoCarrito;
+        this.idCarrito = idCarrito;
         this.idVendedor = idVendedor;
         this.description = description;
         this.price = price;
         this.quantity = quantity;
         this.clientEmail = clientEmail;
+    }
+
+    public Integer getIdProducto() {
+        return idProducto;
+    }
+
+    public void setIdProducto(Integer idProducto) {
+        this.idProducto = idProducto;
     }
 
     public Integer getIdProductoCarrito() {
@@ -28,6 +40,14 @@ public class ReqItemProduct {
 
     public void setIdProductoCarrito(Integer idProductoCarrito) {
         this.idProductoCarrito = idProductoCarrito;
+    }
+
+    public Integer getIdCarrito() {
+        return idCarrito;
+    }
+
+    public void setIdCarrito(Integer idCarrito) {
+        this.idCarrito = idCarrito;
     }
 
     public Integer getIdVendedor() {
@@ -73,7 +93,9 @@ public class ReqItemProduct {
     @Override
     public String toString() {
         return "{" +
-                "idProductoCarrito=" + idProductoCarrito +
+                "idProducto=" + idProducto +
+                ", idProductoCarrito=" + idProductoCarrito +
+                ", idCarrito=" + idCarrito +
                 ", idVendedor=" + idVendedor +
                 ", description='" + description + '\'' +
                 ", price=" + price +

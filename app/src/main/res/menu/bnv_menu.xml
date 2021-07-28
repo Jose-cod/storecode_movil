@@ -8,11 +8,11 @@
         />
 
 
-    <item
+    <!--<item
         android:id="@+id/navCartNoLogedFragment"
         android:title="Carrito"
         android:icon="@drawable/ic_cart"
-        />
+        />-->
 
     <item
         android:id="@+id/navProfileNoLogedFragment"

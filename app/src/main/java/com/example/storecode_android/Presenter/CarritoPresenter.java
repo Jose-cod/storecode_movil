@@ -7,14 +7,21 @@ import android.widget.Toast;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.storecode_android.entidades.CarritoVenta;
 import com.example.storecode_android.entidades.ProductInCard;
 import com.example.storecode_android.entidades.ProductoCarrito;
 import com.example.storecode_android.entidades.ReqCarrito;
 import com.example.storecode_android.entidades.ReqItemProduct;
+import com.example.storecode_android.entidades.ReqUpdateStock;
+import com.example.storecode_android.entidades.RespFolioVenta;
 import com.example.storecode_android.entidades.RespGetCarrito;
+import com.example.storecode_android.entidades.RespIdCarritoVenta;
 import com.example.storecode_android.entidades.RespIdPreference;
+import com.example.storecode_android.entidades.RespMyShopping;
+import com.example.storecode_android.entidades.Venta;
 import com.example.storecode_android.entidades.RespLoginDto;
 import com.example.storecode_android.entidades.RespMensaje;
+import com.example.storecode_android.entidades.Venta;
 import com.example.storecode_android.service.RestClientService;
 import com.example.storecode_android.service.RestClientServiceImpl;
 import com.example.storecode_android.utils.AnimacionesGenerales;
@@ -49,12 +56,19 @@ public class CarritoPresenter {
 
     public MutableLiveData<Integer> idUsuario= new MutableLiveData();
 
+    public MutableLiveData<List<RespMyShopping>> mShopping= new MutableLiveData();
+    public MutableLiveData<Boolean> isLoadingMyShopping= new MutableLiveData<>();
+
     public CarritoPresenter(){
         this.view= null;
     }
     public CarritoPresenter(FragmentActivity view) {
         this.view = view;
         productPresenter = new ProductPresenter();
+    }
+
+    public void refreshMyShopping(String idUser){
+        getMyShopping(idUser);
     }
 
     public void refreshProductsInCart(String id){
@@ -329,6 +343,186 @@ public class CarritoPresenter {
         MercadoPagoCheckout mercadoPagoCheckout = new MercadoPagoCheckout.Builder(PUBLIC_KEY,checkoutPreferenceId).build();
         mercadoPagoCheckout.startPayment(context,REQUEST_CODE);
 
+    }
+
+    //metodo para obtener el id preference del proceso de pago
+
+    public void createVenta(Venta venta, CarritoVenta carritoVenta){
+
+        log.info("--consumir create venta--");
+        RestClientService api = new RestClientServiceImpl();
+        Call<RespFolioVenta> call = api.createVenta(venta);
+
+        System.out.println(("REQUEST:" + venta));
+
+        call.enqueue(new Callback<RespFolioVenta>() {
+            @Override
+            public void onResponse(Call<RespFolioVenta> call, Response<RespFolioVenta> response) {
+                if(response!=null && response.code()==RESP_CODE_WEB_OK){
+                    try {
+                        System.out.println("");
+                        Log.d("CARRITO APP PRESENTER- CREATE VENTA","RESPONSE EXITOSO");
+                        System.out.println(response.body().getFolioVenta());
+                        Integer folioVenta = response.body().getFolioVenta();
+                        // Llamar aqui el metodo createcarrito
+                        createCarritoVenta(new CarritoVenta(
+                                carritoVenta.getIdCarrito(),
+                                folioVenta
+                        ));
+
+
+
+                    }catch (Exception e){
+                        System.out.println("Error al guardar la venta");
+                        e.printStackTrace();
+                    }
+                }else{
+                    System.out.println(response.code());
+                    System.out.println("Ocurrio un error al crear la venta");
+                    Toast.makeText(view,"Ocurrio un error al crear la venta",Toast.LENGTH_SHORT).show();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RespFolioVenta> call, Throwable t) {
+                t.printStackTrace();
+                Toast.makeText(view,"Ocurrio un error al crear la venta",Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+    //metodo para guardar un registro en la tabla Carritoventa
+
+    public void createCarritoVenta(CarritoVenta carritoVenta){
+
+        log.info("--consumir create carritoventa--");
+        RestClientService api = new RestClientServiceImpl();
+        Call<RespIdCarritoVenta> call = api.createCarritoVenta(carritoVenta);
+
+        log.info("REQUEST:" + carritoVenta);
+
+        call.enqueue(new Callback<RespIdCarritoVenta>() {
+            @Override
+            public void onResponse(Call<RespIdCarritoVenta> call, Response<RespIdCarritoVenta> response) {
+                if(response!=null && response.code()==RESP_CODE_WEB_OK){
+                    try {
+                        System.out.println("");
+                        Log.d("CARRITO APP PRESENTER- CREATE CARRITO-VENTA","RESPONSE EXITOSO");
+
+                        Toast.makeText(view,"Venta registrada", Toast.LENGTH_LONG).show();
+                    }catch (Exception e){
+                        System.err.println("Error al guardar carritoventa");
+                        e.printStackTrace();
+                    }
+                }else{
+                    System.err.println(response.code());
+                    System.out.println("Ocurrio un error al crear carritoventa");
+                    Toast.makeText(view,"Ocurrio un error al crear carritoventa",Toast.LENGTH_SHORT).show();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RespIdCarritoVenta> call, Throwable t) {
+                t.printStackTrace();
+                System.err.println("Ocurrio un error al crear el carrito venta");
+                Toast.makeText(view,"Ocurrio un error al crear el carritoventa",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+
+    //método para actualizar el stock del producto vendido
+
+    public void updateStockProductSelled(ReqUpdateStock reqUpdateStock){
+
+        log.info("--consumir update-stock--");
+        RestClientService api = new RestClientServiceImpl();
+        Call<RespMensaje> call = api.updateProductStock(reqUpdateStock);
+
+        log.info("REQUEST:" + reqUpdateStock);
+
+        call.enqueue(new Callback<RespMensaje>() {
+            @Override
+            public void onResponse(Call<RespMensaje> call, Response<RespMensaje> response) {
+                if(response!=null && response.code()==RESP_CODE_WEB_OK){
+                    try {
+                        System.out.println("");
+                        Log.d("CARRITO APP PRESENTER- UPDATE-STOCK","RESPONSE EXITOSO");
+
+                        Toast.makeText(view,"Stock actualizadp", Toast.LENGTH_LONG).show();
+                    }catch (Exception e){
+                        System.err.println("Error al guardar actualizar el stock");
+                        e.printStackTrace();
+                    }
+                }else{
+                    System.err.println(response.code());
+                    System.out.println("Ocurrio un error al actualizar el stock");
+                    Toast.makeText(view,"Ocurrio un error al actualizar el stock",Toast.LENGTH_SHORT).show();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RespMensaje> call, Throwable t) {
+                t.printStackTrace();
+                System.err.println("Ocurrio un error al actualizar el stock");
+                Toast.makeText(view,"Ocurrio un error al actualizar el stock",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+
+    /**
+     * Description: Función encargada de traer los productos comprados por el usuario actual
+     */
+
+    public void getMyShopping(String idUser) {
+        log.info("--Obteniendo los productos comprados---");
+
+
+        Call<List<RespMyShopping>> call = restClientService.getMyShopping(idUser);
+
+        Log.d("GET MYSHOPPING IN CART PRESENTER REQUEST: ", "");
+
+        call.enqueue(new Callback<List<RespMyShopping>>() {
+            @Override
+            public void onResponse(Call<List<RespMyShopping>> call, Response<List<RespMyShopping>> response) {
+                if (response != null && response.code() == RESP_CODE_WEB_OK) {
+                    //AnimacionesGenerales.mostrarLoader(false, view, null, null);
+
+
+                    try {
+                        System.out.println("");
+                        Log.d("GET MYSHOPPING", "RESPONSE EXITOSO");
+                        System.out.println(response.body());
+                        Toast.makeText(view, "Respuesta exitosa", Toast.LENGTH_SHORT).show();
+                        mShopping.postValue(response.body());
+                        processFinished();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                } else {
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<RespMyShopping>> call, Throwable t) {
+                System.err.println("Ocurrio un error al obtener mis compras" + t.getMessage());
+
+            }
+
+            public void processFinished(){
+                isLoadingMyShopping.setValue(true);
+            }
+        });
     }
 
 

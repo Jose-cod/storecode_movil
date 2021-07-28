@@ -35,6 +35,10 @@
             android:id="@+id/toProductOnSale"
             app:destination="@id/productsOnSaleFragment"
             app:enterAnim="@anim/fade_in" />
+        <action
+            android:id="@+id/toMyShoppinFragment"
+            app:destination="@id/myShoppinFragment"
+            app:enterAnim="@anim/fade_in" />
     </fragment>
     <fragment
         android:id="@+id/productDetailFragment"
@@ -92,5 +96,18 @@
         <argument
             android:name="product"
             app:argType="com.example.storecode_android.entidades.RespGetProductByUser" />
+    </fragment>
+    <fragment
+        android:id="@+id/myShoppinFragment"
+        android:name="com.example.storecode_android.view.fragments.MyShoppinFragment"
+        android:label="fragment_item_myshopping_list"
+        tools:layout="@layout/fragment_item_myshopping_list" >
+        <action
+            android:id="@+id/toProfileLogedFragment"
+            app:destination="@id/navProfileLogedFragment"
+            app:popEnterAnim="@anim/fade_out"
+            app:popUpTo="@id/navProfileLogedFragment"
+            app:popUpToInclusive="true"
+            />
     </fragment>
 </navigation>

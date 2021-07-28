@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -20,18 +19,15 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.storecode_android.MainActivity;
+import com.example.storecode_android.Presenter.CarritoPresenter;
 import com.example.storecode_android.R;
 
-import com.example.storecode_android.entidades.ProductInCard;
-import com.example.storecode_android.entidades.ProductoCarrito;
+import com.example.storecode_android.entidades.CarritoVenta;
 import com.example.storecode_android.entidades.ReqItemProduct;
-import com.example.storecode_android.entidades.RespObtenerProducto;
-import com.example.storecode_android.service.RestClientService;
-import com.example.storecode_android.service.RestClientServiceImpl;
-import com.example.storecode_android.utils.AnimacionesGenerales;
+import com.example.storecode_android.entidades.ReqUpdateStock;
+import com.example.storecode_android.entidades.Venta;
 import com.example.storecode_android.utils.LogFile;
 import com.example.storecode_android.utils.SharedPref;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -39,8 +35,6 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mercadopago.android.px.core.MercadoPagoCheckout;
-import com.mercadopago.android.px.model.Card;
-import com.mercadopago.android.px.model.MerchantAccount;
 import com.mercadopago.android.px.model.Order;
 import com.mercadopago.android.px.model.Payment;
 import com.mercadopago.android.px.model.exceptions.MercadoPagoError;
@@ -49,12 +43,9 @@ import org.apache.log4j.Logger;
 
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 
-import retrofit2.Call;
-import retrofit2.Callback;
-
-import static com.example.storecode_android.utils.Constantes.RESP_CODE_WEB_OK;
 import static com.example.storecode_android.view.adapters.ProductsInCartAdapter.REQUEST_CODE;
 
 
@@ -73,6 +64,9 @@ public class MainDrawerActivity extends AppCompatActivity {
     private ImageButton btn_cerrar_sesion;
     //private RecyclerView rvProducto;
     BottomNavigationView bnvMenuLoged ;
+
+
+    private CarritoPresenter carritoPresenter;
 
 
     //PerfilActivity perfilActivity;
@@ -95,6 +89,7 @@ public class MainDrawerActivity extends AppCompatActivity {
         //soporteTecnicoActivity = new SoporteTecnicoActivity();
 
         toolbar = findViewById(R.id.toolbar);
+        carritoPresenter = new CarritoPresenter(this);
 
         //setActionBar(toolbar);
         //PENDIENTE
@@ -333,15 +328,48 @@ public class MainDrawerActivity extends AppCompatActivity {
                     String resp = SharedPref.obtenerListProductInCard(this);
                     Type listType = new TypeToken<List<ReqItemProduct>>(){}.getType();
                     List<ReqItemProduct> listProductoCarrito  = new Gson().fromJson(resp, listType);
-                    System.out.println("Obtenidos del Shared preference");
+                    System.out.println("Productos que fueron comprados:");
+                    AtomicReference<Double> totalVendido = new AtomicReference<>(0.0);
+                    AtomicReference<String> email= new AtomicReference<>("");
+                    AtomicReference<Integer> idCarrito= new AtomicReference<>(0);
+
+
                     listProductoCarrito.forEach(productoInCart -> {
+                        idCarrito.set(productoInCart.getIdCarrito());
+                        email.set(productoInCart.getClientEmail());
+                        totalVendido.set(totalVendido.get() + productoInCart.getPrice() * productoInCart.getQuantity());
+                        productoInCart.getIdCarrito();
                         System.out.println(productoInCart.getIdProductoCarrito());
                         System.out.println(productoInCart.getClientEmail());
                         System.out.println(productoInCart.getDescription());
+                        System.out.println(productoInCart.getQuantity());
+
+                        carritoPresenter.updateStockProductSelled(new ReqUpdateStock(
+                                productoInCart.getIdProductoCarrito(),
+                                productoInCart.getIdProducto(),
+                                productoInCart.getQuantity()
+                        ));
 
                     });
 
+                    Venta venta =new Venta(
+                            "0000001010101",
+                            "Vacio",
+                            email.toString(),
+                            Double.parseDouble(totalVendido.toString())
+                    );
+                    CarritoVenta carritoVenta = new CarritoVenta(
+                            Integer.parseInt(idCarrito.toString()),
+                            0
+                    );
+
+                    carritoPresenter.createVenta(venta, carritoVenta);
+
+                    Integer idUser = Integer.parseInt(SharedPref.obtenerIdUsuario(this));
+                    carritoPresenter.refreshProductsInCart(idUser.toString());
+
                     try{
+
                         String paymentType=payment.getPaymentTypeId();
                         System.out.println("------------------Datos del pago-------------------------");
                         System.out.println("Metodo de pago"+paymentType);
@@ -358,9 +386,10 @@ public class MainDrawerActivity extends AppCompatActivity {
                     }catch (java.lang.NullPointerException e){
                         e.printStackTrace();
                     }
-
-
                     Toast.makeText(this,"Tu pago fue aprobado", Toast.LENGTH_LONG).show();
+                    //En esta linea crear la venta
+                    String productosVendidos = SharedPref.obtenerListProductInCard(this);
+                    System.out.println("Productos vendidos\n"+productosVendidos);
 
                 }
                 //Done!
@@ -381,6 +410,9 @@ public class MainDrawerActivity extends AppCompatActivity {
 
         }
     }
+
+
+
 
     /*
     @Override

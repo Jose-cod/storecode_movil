@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -63,6 +64,8 @@ public class ProfileLogedFragment extends Fragment {
     ImageButton btnSell;
     ImageButton btnProductsOnSale;
 
+    ImageButton btn_miscompras;
+
     RespUserData resp;
 
 
@@ -106,9 +109,6 @@ public class ProfileLogedFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile_loged, container, false);
-
-
-
     }
 
     @Override
@@ -120,6 +120,7 @@ public class ProfileLogedFragment extends Fragment {
         tvEmail = view.findViewById(R.id.tvEmail);
         btnSell = view.findViewById(R.id.btnSell);
         btnProductsOnSale = view.findViewById(R.id.btn_sell_products);
+        btn_miscompras = view.findViewById(R.id.btn_miscompras);
 
         if(resp.getApellido2Usuario().equals("null")){
             tvName.setText(resp.getNombreUsuario()+" "+resp.getApellido1Usuario());
@@ -142,6 +143,11 @@ public class ProfileLogedFragment extends Fragment {
         //ir a la pantalla de productos en venta
         btnProductsOnSale.setOnClickListener(v->{
             Navigation.findNavController(getView()).navigate(ProfileLogedFragmentDirections.toProductOnSale());
+        });
+
+        //ir a la pantalla mis compras
+        btn_miscompras.setOnClickListener(v->{
+            Navigation.findNavController(getView()).navigate(ProfileLogedFragmentDirections.toMyShoppinFragment());
         });
 
     }

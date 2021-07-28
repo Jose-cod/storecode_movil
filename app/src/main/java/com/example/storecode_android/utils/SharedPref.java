@@ -89,7 +89,6 @@ public class SharedPref {
         inicializaPreferencias(context);
         sharedPreferencesEdit.putString(ID_PREFERENCE, id);
         sharedPreferencesEdit.commit();
-        sharedPreferencesEdit.commit();
     }
 
     public static String obtenerIdPreference(final Context context){

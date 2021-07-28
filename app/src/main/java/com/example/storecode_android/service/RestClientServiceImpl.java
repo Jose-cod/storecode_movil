@@ -1,6 +1,7 @@
 package com.example.storecode_android.service;
 
 import com.example.storecode_android.entidades.Brand;
+import com.example.storecode_android.entidades.CarritoVenta;
 import com.example.storecode_android.entidades.Category;
 import com.example.storecode_android.entidades.ProductInCard;
 import com.example.storecode_android.entidades.ProductoCarrito;
@@ -8,16 +9,21 @@ import com.example.storecode_android.entidades.ReqCarrito;
 import com.example.storecode_android.entidades.ReqItemProduct;
 import com.example.storecode_android.entidades.ReqLoginDto;
 import com.example.storecode_android.entidades.ReqUpdateProduct;
+import com.example.storecode_android.entidades.ReqUpdateStock;
 import com.example.storecode_android.entidades.RespDetaProductoComen;
+import com.example.storecode_android.entidades.RespFolioVenta;
 import com.example.storecode_android.entidades.RespGetCarrito;
 import com.example.storecode_android.entidades.RespGetProductByUser;
+import com.example.storecode_android.entidades.RespIdCarritoVenta;
 import com.example.storecode_android.entidades.RespIdPreference;
 import com.example.storecode_android.entidades.RespLoginDto;
 import com.example.storecode_android.entidades.RespMensaje;
 import com.example.storecode_android.entidades.RespMessage;
+import com.example.storecode_android.entidades.RespMyShopping;
 import com.example.storecode_android.entidades.RespObtenerImagesDto;
 import com.example.storecode_android.entidades.RespObtenerProducto;
 import com.example.storecode_android.entidades.RespUserData;
+import com.example.storecode_android.entidades.Venta;
 import com.example.storecode_android.utils.LogFile;
 
 import org.apache.log4j.Logger;
@@ -244,6 +250,26 @@ public class RestClientServiceImpl implements RestClientService {
     @Override
     public Call<RespIdPreference> createIdPreference(List<ReqItemProduct> reqItemProduct) {
         return restClient.createIdPreference(reqItemProduct);
+    }
+
+    @Override
+    public Call<RespFolioVenta> createVenta(Venta venta) {
+        return restClient.createVenta(venta);
+    }
+
+    @Override
+    public Call<RespIdCarritoVenta> createCarritoVenta(CarritoVenta carritoVenta) {
+        return restClient.createCarritoVenta(carritoVenta);
+    }
+
+    @Override
+    public Call<RespMensaje> updateProductStock(ReqUpdateStock reqUpdateStock) {
+        return restClient.updateProductStock(reqUpdateStock);
+    }
+
+    @Override
+    public Call<List<RespMyShopping>> getMyShopping(String idUser) {
+        return restClient.getMyShopping(idUser);
     }
 
 
