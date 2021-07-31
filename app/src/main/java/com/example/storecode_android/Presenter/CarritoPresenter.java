@@ -59,12 +59,15 @@ public class CarritoPresenter {
     public MutableLiveData<List<RespMyShopping>> mShopping= new MutableLiveData();
     public MutableLiveData<Boolean> isLoadingMyShopping= new MutableLiveData<>();
 
+    //String idUser;
+
     public CarritoPresenter(){
         this.view= null;
     }
     public CarritoPresenter(FragmentActivity view) {
         this.view = view;
         productPresenter = new ProductPresenter();
+        //this.idUser= SharedPref.obtenerIdUsuario(this.view);
     }
 
     public void refreshMyShopping(String idUser){
@@ -93,7 +96,7 @@ public class CarritoPresenter {
                         System.out.println("");
                         Log.d("CARRITO APP PRESENTER","RESPONSE EXITOSO");
                         System.out.println(response.body());
-                        Toast.makeText(view,response.body().getMensaje(),Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(view,response.body().getMensaje(),Toast.LENGTH_SHORT).show();
 
                         //consumirServicioBitacoraLogin(response.body().getPayLoad().getIdFuerzaDeVenta(), view.etIdUsuario.getText().toString());
                     }catch (Exception e){
@@ -224,7 +227,7 @@ public class CarritoPresenter {
                         System.out.println("");
                         Log.d("GET PRODUCTS IN CART", "RESPONSE EXITOSO");
                         System.out.println(response.body());
-                        Toast.makeText(view, "Respuesta exitosa", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(view, "Respuesta exitosa", Toast.LENGTH_SHORT).show();
                         listProductsInCart.postValue(response.body());
                         processFinished();
                     } catch (Exception e) {
@@ -314,7 +317,7 @@ public class CarritoPresenter {
                         SharedPref.guardarListProductInCard(context, reqItemProduct.toString());
                         startMercadoPagoCheckout(context,idPreference);
                         //productPresenter.refreshProductsInCart(productoCarrito.getIdCarrito().toString());
-                        Toast.makeText(view,"Iniciando proceso de pago",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(view,"Iniciando proceso de pago",Toast.LENGTH_SHORT).show();
 
 
                     }catch (Exception e){
@@ -412,6 +415,7 @@ public class CarritoPresenter {
                         Log.d("CARRITO APP PRESENTER- CREATE CARRITO-VENTA","RESPONSE EXITOSO");
 
                         Toast.makeText(view,"Venta registrada", Toast.LENGTH_LONG).show();
+                        //refreshProductsInCart(idUser);
                     }catch (Exception e){
                         System.err.println("Error al guardar carritoventa");
                         e.printStackTrace();
@@ -453,7 +457,7 @@ public class CarritoPresenter {
                         System.out.println("");
                         Log.d("CARRITO APP PRESENTER- UPDATE-STOCK","RESPONSE EXITOSO");
 
-                        Toast.makeText(view,"Stock actualizadp", Toast.LENGTH_LONG).show();
+                        Toast.makeText(view,"Stock actualizado", Toast.LENGTH_LONG).show();
                     }catch (Exception e){
                         System.err.println("Error al guardar actualizar el stock");
                         e.printStackTrace();

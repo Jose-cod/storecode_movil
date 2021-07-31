@@ -17,6 +17,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
@@ -30,6 +31,7 @@ import com.example.storecode_android.entidades.ReqUpdateStock;
 import com.example.storecode_android.entidades.Venta;
 import com.example.storecode_android.utils.LogFile;
 import com.example.storecode_android.utils.SharedPref;
+import com.example.storecode_android.view.fragments.CartLogedFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
@@ -67,6 +69,10 @@ public class MainDrawerActivity extends AppCompatActivity {
 
 
     private CarritoPresenter carritoPresenter;
+    CartLogedFragment cartLogedFragment;
+
+
+
 
 
     //PerfilActivity perfilActivity;
@@ -88,6 +94,7 @@ public class MainDrawerActivity extends AppCompatActivity {
         //perfilActivity = new PerfilActivity();
         //soporteTecnicoActivity = new SoporteTecnicoActivity();
 
+        cartLogedFragment= (CartLogedFragment) getSupportFragmentManager().findFragmentById(R.id.cart_loged_fragment);
         toolbar = findViewById(R.id.toolbar);
         carritoPresenter = new CarritoPresenter(this);
 
@@ -352,8 +359,9 @@ public class MainDrawerActivity extends AppCompatActivity {
 
                     });
 
+                    String claveTransaccion = getRandomString(10);
                     Venta venta =new Venta(
-                            "0000001010101",
+                            payment.getId().toString(),
                             "Vacio",
                             email.toString(),
                             Double.parseDouble(totalVendido.toString())
@@ -365,22 +373,30 @@ public class MainDrawerActivity extends AppCompatActivity {
 
                     carritoPresenter.createVenta(venta, carritoVenta);
 
-                    Integer idUser = Integer.parseInt(SharedPref.obtenerIdUsuario(this));
-                    carritoPresenter.refreshProductsInCart(idUser.toString());
+
+
+
+
 
                     try{
 
                         String paymentType=payment.getPaymentTypeId();
                         System.out.println("------------------Datos del pago-------------------------");
                         System.out.println("Metodo de pago"+paymentType);
+                        System.out.println("Payment id: "+payment.getId());
+                        System.out.println("CurrencyId: "+payment.getCurrencyId());
+                        System.out.println("Description: "+payment.getDescription());
 
                         System.out.println(payment.getCard());
 
+
+
                         System.out.println(payment.getDateCreated());
-                        System.out.println("Amount"+payment.getCouponAmount());
+                        System.out.println("Amount"+payment.getInstallments());
+
                         System.out.println("Email Payer:"+payment.getPayer().getEmail());
                         Order order = payment.getOrder();
-                        System.out.println("OrderId"+order.getId());
+                        System.out.println("OrderId: "+order.getId());
 
 
                     }catch (java.lang.NullPointerException e){
@@ -390,6 +406,7 @@ public class MainDrawerActivity extends AppCompatActivity {
                     //En esta linea crear la venta
                     String productosVendidos = SharedPref.obtenerListProductInCard(this);
                     System.out.println("Productos vendidos\n"+productosVendidos);
+
 
                 }
                 //Done!
@@ -516,6 +533,31 @@ public class MainDrawerActivity extends AppCompatActivity {
             this.finish();
             this.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             super.onBackPressed();
+    }
+
+    //generar string aleatorio para obtener la clave transaccion
+    public static String getRandomString(int i) {
+        String theAlphaNumericS;
+        StringBuilder builder;
+
+        theAlphaNumericS = "0123456789";
+
+        //create the StringBuffer
+        builder = new StringBuilder(i);
+
+        for (int m = 0; m < i; m++) {
+
+            // generate numeric
+            int myindex
+                    = (int)(theAlphaNumericS.length()
+                    * Math.random());
+
+            // add the characters
+            builder.append(theAlphaNumericS
+                    .charAt(myindex));
+        }
+
+        return builder.toString();
     }
 
     //En caso de que la consulta sea mediante una notificacion

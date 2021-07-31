@@ -52,7 +52,7 @@ public class CartLogedFragment extends Fragment {
     private ProductsInCartAdapter productsInCartAdapter;
     private ProductPresenter productPresenter;
 
-    private CarritoPresenter carritoPresenter;
+    public CarritoPresenter carritoPresenter;
 
     private RelativeLayout rlBaseOnCart;
 
@@ -146,36 +146,9 @@ public class CartLogedFragment extends Fragment {
 
 
 
-    @Override
-    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
-        if (requestCode == REQUEST_CODE) {
-            if (resultCode == MercadoPagoCheckout.PAYMENT_RESULT_CODE) {
-                final Payment payment = (Payment) data.getSerializableExtra(MercadoPagoCheckout.EXTRA_PAYMENT_RESULT);
-                tvResults.setText("Resultado del pago: " + payment.getPaymentStatus());
-                Toast.makeText(getContext(),payment.getPaymentStatus(), Toast.LENGTH_LONG).show();
-                System.out.println("Resultado del pago: " + payment.getPaymentStatus());
-                //Done!
-            } else if (resultCode == RESULT_CANCELED) {
-                if (data != null && data.getExtras() != null
-                        && data.getExtras().containsKey(MercadoPagoCheckout.EXTRA_ERROR)) {
-                    final MercadoPagoError mercadoPagoError =
-                            (MercadoPagoError) data.getSerializableExtra(MercadoPagoCheckout.EXTRA_ERROR);
-                    tvResults.setText("Error: " +  mercadoPagoError.getMessage());
-                    System.out.println("Error: " +  mercadoPagoError.getMessage());
-                    Toast.makeText(getContext(),"Error"+mercadoPagoError.getMessage(),Toast.LENGTH_SHORT).show();
-                    //Resolve error in checkout
-                } else {
-                    //Resolve canceled checkout
-                }
-            }
-        }
-    }
 
-    public void startMercadoPagoCheckout(final String checkoutPreferenceId) {
-        MercadoPagoCheckout mercadoPagoCheckout = new MercadoPagoCheckout.Builder(PUBLIC_KEY,checkoutPreferenceId).build();
-        mercadoPagoCheckout.startPayment(getContext(),REQUEST_CODE);
 
-    }
+
 
 
 }

@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -49,6 +51,8 @@ public class MyShoppinFragment extends Fragment {
     private CarritoPresenter carritoPresenter;
 
     private RelativeLayout rlBaseMyShopping;
+
+    private ImageView btnReturn;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -105,6 +109,7 @@ public class MyShoppinFragment extends Fragment {
         //productPresenter = new ProductPresenter(getContext(),getView());
         carritoPresenter = new CarritoPresenter(getActivity());
         rvMyShopping= view.findViewById(R.id.list);
+        btnReturn= view.findViewById(R.id.btnReturn);
         //SearchView searchView = view.findViewById(R.id.activity_preciadorunicomodelo_searchView2);
 
         Integer idUser = Integer.parseInt(SharedPref.obtenerIdUsuario(getContext()));
@@ -117,6 +122,10 @@ public class MyShoppinFragment extends Fragment {
         rvMyShopping.setAdapter(myShoppinRecyclerViewAdapter);
 
         observer();
+
+        btnReturn.setOnClickListener(v -> {
+            Navigation.findNavController(getView()).navigate(MyShoppinFragmentDirections.toProfileLogedFragment());
+        });
     }
 
     public void observer(){

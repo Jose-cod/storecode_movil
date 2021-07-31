@@ -6,6 +6,7 @@ import android.graphics.PorterDuff;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.MutableLiveData;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -41,14 +42,23 @@ import static com.example.storecode_android.utils.Constantes.RESP_CODE_WEB_OK;
 public class LoginPresenter {
     private static final Logger log = LogFile.getLogger(LoginPresenter.class);
     private final LoginActivity view;
+    private final FragmentActivity mContext;
 
     public MutableLiveData<RespUserData> vendedor= new MutableLiveData();
 
     public LoginPresenter(){
         view=null;
+        mContext=null;
     }
     public LoginPresenter(LoginActivity view) {
         this.view = view;
+        this.mContext=null;
+    }
+
+    public LoginPresenter(FragmentActivity mContext) {
+        this.view = null;
+        this.mContext = mContext;
+
     }
 
 
@@ -196,6 +206,7 @@ public class LoginPresenter {
                         Log.d("GET VENDOR BY ID","RESPONSE EXITOSO");
                         System.out.println(response.body().toString());
                         vendedor.postValue(response.body());
+                        SharedPref.guardarVendedor(mContext, response.body().toString());
 
                         //consumirServicioBitacoraLogin(response.body().getPayLoad().getIdFuerzaDeVenta(), view.etIdUsuario.getText().toString());
                     }catch (Exception e){

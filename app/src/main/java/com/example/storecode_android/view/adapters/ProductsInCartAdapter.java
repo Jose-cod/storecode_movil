@@ -1,5 +1,6 @@
 package com.example.storecode_android.view.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,9 +10,14 @@ import android.widget.Filterable;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleRegistryOwner;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.storecode_android.Presenter.CarritoPresenter;
+import com.example.storecode_android.Presenter.LoginPresenter;
 import com.example.storecode_android.Presenter.ProductPresenter;
 import com.example.storecode_android.R;
 import com.example.storecode_android.entidades.ProductInCard;
@@ -27,6 +33,7 @@ import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class ProductsInCartAdapter extends RecyclerView.Adapter<HolderProductsInCart> implements Filterable {
@@ -40,20 +47,32 @@ public class ProductsInCartAdapter extends RecyclerView.Adapter<HolderProductsIn
     private Double subtotal=0.0;
     private Double total= 0.0;
     public static final int REQUEST_CODE = 1;
+    //public key del vendedor
     public static final String PUBLIC_KEY="TEST-3aa335c4-d833-47aa-b31b-638832e27e2a";
 
     public FragmentActivity context;
 
     private CarritoPresenter carritoPresenter;
+    private LoginPresenter loginPresenter;
     private List<ProductInCard> mFilteredList = modeloList;
 
     ProductPresenter productPresenter;
+
+    String userDataString ;
+    RespUserData userData ;
+    RespUserData vendedor;
+
 
 
     public ProductsInCartAdapter(FragmentActivity context, CarritoPresenter carritoPresenter) {
 
         this.context = context;
         this.carritoPresenter = carritoPresenter;
+        this.loginPresenter= new LoginPresenter(context);
+
+        this.userDataString =SharedPref.obtenerUsuario(context);
+
+        this.userData = new Gson().fromJson(userDataString,RespUserData.class);
     }
 
     @Override
@@ -78,12 +97,11 @@ public class ProductsInCartAdapter extends RecyclerView.Adapter<HolderProductsIn
 
         ProductInCard producto = modeloList.get(position);
 
-
+        Picasso.get().load(producto.getImagenProducto()).into(holder.ivProductOnCart);
         holder.tvNameOnCart.setText(producto.getNombreProducto());
         holder.tvDescriptionOnCart.setText(producto.getDesProducto());
         holder.tvPriceOnCart.setText("$ "+producto.getPrecioUnitarioProducto().toString());
         holder.tvStockOnCart.setText("Cantidad: ");
-
 
         ArrayList<Double> items= ProductDetailFragment.getArrayItems(producto.getStockRealProducto());
         //adapter
@@ -102,22 +120,25 @@ public class ProductsInCartAdapter extends RecyclerView.Adapter<HolderProductsIn
                 producto.getDesProducto(),
                 producto.getPrecioUnitarioProducto(),
                 quantity.intValue(),
-                "test_user_91638065@testuser.com"
+                "test_user_91638065@testuser.com",
+                "Vacio"
+                //userData.getEmailUsuario()
 
         ));
 
 
-        System.out.println("Encargaste"+ cantidad+ producto.getNombreProducto());
+
+        /*System.out.println("Encargaste"+ cantidad+ producto.getNombreProducto());
         subtotal= producto.getPrecioUnitarioProducto()*cantidad;
-        total =total+ subtotal;
+        total =total+ subtotal;*/
 
         holder.tvSubtotal.setText("Subtotal: $"+subtotal.toString());
 
+/*
         System.out.println("Total:"+ total);
 
         System.out.println("---------EN stock---------------");
-        System.out.println("El stock es:"+producto.getStockRealProducto());
-
+        System.out.println("El stock es:"+producto.getStockRealProducto());*/
 
 
         //Manejar la lógica de visibilidad del boton para pagar
@@ -127,9 +148,6 @@ public class ProductsInCartAdapter extends RecyclerView.Adapter<HolderProductsIn
 
                 System.out.println("----Subtotal-----");
                 System.out.println(total);
-                //holder.tvTotal.setVisibility(View.VISIBLE);
-                //holder.tvTotal.setText("Subtotal: $"+total.toString());
-                //holder.tvSubtotal.setText("Subtotal: $"+total.toString());
                 holder.btnPayment.setVisibility(View.VISIBLE);
                 total=0.0;
             }
@@ -138,9 +156,6 @@ public class ProductsInCartAdapter extends RecyclerView.Adapter<HolderProductsIn
             e.printStackTrace();
             System.out.println("----TOTAL-----");
             System.out.println(total);
-            //holder.tvTotal.setVisibility(View.VISIBLE);
-            //holder.tvTotal.setText("Total: $"+total.toString());
-
             holder.btnPayment.setVisibility(View.VISIBLE);
 
         }
@@ -149,12 +164,10 @@ public class ProductsInCartAdapter extends RecyclerView.Adapter<HolderProductsIn
 
         //Eliminar un producto del carrito
         holder.btnDeleteFromCart.setOnClickListener(v->{
-            Integer idUser = Integer.parseInt(SharedPref.obtenerIdUsuario(context));
-            carritoPresenter.deleteProductFromCart(producto.getIdproductocarrito().toString());
-            carritoPresenter.refreshProductsInCart(idUser.toString());
+            deleteFromCard(producto);
         });
 
-        Picasso.get().load(producto.getImagenProducto()).into(holder.ivProductOnCart);
+
         //
         holder.btnPayment.setOnClickListener(v->{
 
@@ -170,8 +183,24 @@ public class ProductsInCartAdapter extends RecyclerView.Adapter<HolderProductsIn
                     reqItemProducts.add(reqItemProduct);
                 }
             });
+
+            Integer idVendedor= reqItemProducts.get(0).getIdVendedor();
+
+            loginPresenter.getUserById(idVendedor.toString());
+
+            //asignar vendedor
+            vendedor= getCurrentUser();
+
+            reqItemProducts.forEach(reqItemProduct -> {
+                reqItemProduct.setAccessToken(vendedor.getAccessTokenMpago());
+            });
+
             System.out.println("Request enviado al createIdPreference: "+reqItemProducts.toString());
             carritoPresenter.createIdPreference(context,reqItemProducts);
+
+
+
+            //carritoPresenter.refreshProductsInCart(userData.getIdUsuario().toString());
         });
 
         holder.spinner_cantidad.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -194,12 +223,9 @@ public class ProductsInCartAdapter extends RecyclerView.Adapter<HolderProductsIn
                         reqItemProduct.setQuantity(cantidad.intValue());
                     }
 
-                   /* if(reqItemProduct.getIdVendedor()==producto.getIdUsuario()){
-                        totalAux.set(totalAux.get() + (reqItemProduct.getPrice() * reqItemProduct.getQuantity()));
-                    }*/
                 });
 
-                //holder.tvTotal.setText(totalAux.toString());
+
                 
 
             }
@@ -231,7 +257,22 @@ public class ProductsInCartAdapter extends RecyclerView.Adapter<HolderProductsIn
         notifyDataSetChanged();
     }
 
-    //metodos de mercado pago
+    public void deleteFromCard(ProductInCard producto){
+        Integer idUser = Integer.parseInt(SharedPref.obtenerIdUsuario(context));
+        carritoPresenter.deleteProductFromCart(producto.getIdproductocarrito().toString());
+        carritoPresenter.refreshProductsInCart(idUser.toString());
+    }
+
+    public RespUserData getCurrentUser(){
+        String userString = SharedPref.obtenerVendedor(context);
+        return new Gson().fromJson(userString,RespUserData.class);
+    }
+
+
+
+
+
+
 
 
 

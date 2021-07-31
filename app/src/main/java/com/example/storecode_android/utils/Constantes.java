@@ -57,8 +57,11 @@ public class Constantes {
     public static final String PRODUCTOS="productos";
     public static final String ID_USER="idUsuario";
     public static final String USER="user";
+    public static final String VENDEDOR="vendedor";
     public static final String ID_PREFERENCE="idPreference";
     public static final String PRODUCTO_IN_CARD="listProductoCarrito";
+    //Constantes para firebase cloud messaging
+    public static final String TOPIC_CLIENTS= "clientes";
 
 
     public static final short TIME_OUT_RETROFIT = 6000;

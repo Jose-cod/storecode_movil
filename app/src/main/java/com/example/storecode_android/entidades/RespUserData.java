@@ -1,6 +1,8 @@
 package com.example.storecode_android.entidades;
 
 
+
+
 public class RespUserData {
     private Integer idUsuario;
     private String nombreUsuario;
@@ -15,6 +17,9 @@ public class RespUserData {
     private String rfeUsuario;
     private String codeActive;
     private String clientidpaypal;
+    private String pk_mercadopago;
+    private String accessTokenMpago;
+    private String tokenFCM;
 
     /*
     {
@@ -38,7 +43,8 @@ public class RespUserData {
 
     }
 
-    public RespUserData(Integer idUsuario, String nombreUsuario, String apellido1Usuario, String emailUsuario, String contraUsuario, String confirmaContraUsuario, String apellido2Usuario, String imagenUsuario, String telefonoUsuario, String statusUsuario, String rfeUsuario, String codeActive, String clientidpaypal) {
+    public RespUserData(Integer idUsuario, String nombreUsuario, String apellido1Usuario, String emailUsuario, String contraUsuario, String confirmaContraUsuario, String apellido2Usuario, String imagenUsuario, String telefonoUsuario,
+                        String statusUsuario, String rfeUsuario, String codeActive, String clientidpaypal, String pk_mercadopago, String accessTokenMpago, String tokenFCM) {
         this.idUsuario = idUsuario;
         this.nombreUsuario = nombreUsuario;
         this.apellido1Usuario = apellido1Usuario;
@@ -52,6 +58,9 @@ public class RespUserData {
         this.rfeUsuario = rfeUsuario;
         this.codeActive = codeActive;
         this.clientidpaypal = clientidpaypal;
+        this.pk_mercadopago = pk_mercadopago;
+        this.accessTokenMpago = accessTokenMpago;
+        this.tokenFCM = tokenFCM;
     }
 
     public Integer getIdUsuario() {
@@ -126,6 +135,8 @@ public class RespUserData {
         this.telefonoUsuario = telefonoUsuario;
     }
 
+
+
     public String getStatusUsuario() {
         return statusUsuario;
     }
@@ -158,7 +169,53 @@ public class RespUserData {
         this.clientidpaypal = clientidpaypal;
     }
 
+    public String getPk_mercadopago() {
+        return pk_mercadopago;
+    }
+
+    public void setPk_mercadopago(String pk_mercadopago) {
+        this.pk_mercadopago = pk_mercadopago;
+    }
+
+    public String getAccessTokenMpago() {
+        return accessTokenMpago;
+    }
+
+    public void setAccessTokenMpago(String accessTokenMpago) {
+        this.accessTokenMpago = accessTokenMpago;
+    }
+
+    public String getTokenFCM() {
+        return tokenFCM;
+    }
+
+    public void setTokenFCM(String tokenFCM) {
+        this.tokenFCM = tokenFCM;
+    }
+
     @Override
+    public String toString() {
+        return "{" +
+                "idUsuario=" + idUsuario +
+                ", nombreUsuario='" + nombreUsuario + '\'' +
+                ", apellido1Usuario='" + apellido1Usuario + '\'' +
+                ", emailUsuario='" + emailUsuario + '\'' +
+                ", contraUsuario='" + contraUsuario + '\'' +
+                ", confirmaContraUsuario='" + confirmaContraUsuario + '\'' +
+                ", apellido2Usuario='" + apellido2Usuario + '\'' +
+                ", imagenUsuario='" + imagenUsuario + '\'' +
+                ", telefonoUsuario='" + telefonoUsuario + '\'' +
+                ", statusUsuario='" + statusUsuario + '\'' +
+                ", rfeUsuario='" + rfeUsuario + '\'' +
+                ", codeActive='" + codeActive + '\'' +
+                ", clientidpaypal='" + clientidpaypal + '\'' +
+                ", pk_mercadopago='" + pk_mercadopago + '\'' +
+                ", accessTokenMpago='" + accessTokenMpago + '\'' +
+                ", tokenFCM='" + tokenFCM + '\'' +
+                '}';
+    }
+
+   /*@Override
     public String toString() {
         return '{' +
                 "idUsuario=" + idUsuario +
@@ -175,5 +232,5 @@ public class RespUserData {
                 ", codeActive='" + codeActive + '\'' +
                 ", clientidpaypal='" + clientidpaypal + '\'' +
                 '}';
-    }
+    }*/
 }

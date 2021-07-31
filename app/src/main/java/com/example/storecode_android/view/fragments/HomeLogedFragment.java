@@ -118,6 +118,8 @@ public class HomeLogedFragment extends Fragment implements ModeloAdapterListener
             Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             getActivity().finish();*//*
         }*/
+
+
         return view;
 
 

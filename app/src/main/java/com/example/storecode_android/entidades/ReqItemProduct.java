@@ -10,12 +10,14 @@ public class ReqItemProduct {
     Double price;
     Integer quantity;
     String clientEmail;
+    String accessToken;
+
 
     public ReqItemProduct(){
 
     }
 
-    public ReqItemProduct(Integer idProducto, Integer idProductoCarrito, Integer idCarrito, Integer idVendedor, String description, Double price, Integer quantity, String clientEmail) {
+    public ReqItemProduct(Integer idProducto, Integer idProductoCarrito, Integer idCarrito, Integer idVendedor, String description, Double price, Integer quantity, String clientEmail, String accessToken) {
         this.idProducto = idProducto;
         this.idProductoCarrito = idProductoCarrito;
         this.idCarrito = idCarrito;
@@ -24,6 +26,7 @@ public class ReqItemProduct {
         this.price = price;
         this.quantity = quantity;
         this.clientEmail = clientEmail;
+        this.accessToken = accessToken;
     }
 
     public Integer getIdProducto() {
@@ -90,6 +93,14 @@ public class ReqItemProduct {
         this.clientEmail = clientEmail;
     }
 
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
     @Override
     public String toString() {
         return "{" +
@@ -101,6 +112,7 @@ public class ReqItemProduct {
                 ", price=" + price +
                 ", quantity=" + quantity +
                 ", clientEmail='" + clientEmail + '\'' +
+                ", accessToken='" + accessToken + '\'' +
                 '}';
     }
 

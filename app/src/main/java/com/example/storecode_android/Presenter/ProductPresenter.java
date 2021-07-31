@@ -136,7 +136,7 @@ public class ProductPresenter {
                         Log.d("GET ALL PRODUCTS APP PRESENTER","RESPONSE EXITOSO");
                         System.out.println(response.body());
                         //SharedPref.guardarIdUsuario(view,response.body().getIdUsuario());
-                        Toast.makeText(view,"Respuesta exitosa",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(view,"Respuesta exitosa",Toast.LENGTH_SHORT).show();
                         listAllProducts.postValue(response.body());
                         processFinished();
                     }catch (Exception e){
@@ -189,7 +189,7 @@ public class ProductPresenter {
                         Log.d("GET ALL CATEGORIES APP PRESENTER","RESPONSE EXITOSO");
                         System.out.println(response.body());
                         //SharedPref.guardarIdUsuario(view,response.body().getIdUsuario());
-                        Toast.makeText(view,"Respuesta exitosa",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(view,"Respuesta exitosa",Toast.LENGTH_SHORT).show();
                         listCategories.postValue(response.body());
                         //processFinished();
                     }catch (Exception e){
@@ -244,7 +244,7 @@ public class ProductPresenter {
                         Log.d("GET ALL BRANDS APP PRESENTER","RESPONSE EXITOSO");
                         System.out.println(response.body());
                         //SharedPref.guardarIdUsuario(view,response.body().getIdUsuario());
-                        Toast.makeText(view,"Respuesta exitosa",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(view,"Respuesta exitosa",Toast.LENGTH_SHORT).show();
                         listBrands.postValue(response.body());
                         //processFinished();
                     }catch (Exception e){
@@ -298,7 +298,7 @@ public class ProductPresenter {
                         Log.d("GET PRODUCTS BY USER APP PRESENTER","RESPONSE EXITOSO");
                         System.out.println(response.body());
                         //SharedPref.guardarIdUsuario(view,response.body().getIdUsuario());
-                        Toast.makeText(view,"Respuesta exitosa",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(view,"Respuesta exitosa",Toast.LENGTH_SHORT).show();
                         listProducts.postValue(response.body());
                         processFinished();
                     }catch (Exception e){
@@ -352,7 +352,7 @@ public class ProductPresenter {
                         Log.d("GET PRODUCTS BY USER APP PRESENTER","RESPONSE EXITOSO");
                         System.out.println(response.body());
                         //SharedPref.guardarIdUsuario(view,response.body().getIdUsuario());
-                        Toast.makeText(view,"Respuesta exitosa",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(view,"Respuesta exitosa",Toast.LENGTH_SHORT).show();
                         listProductsOnSale.postValue(response.body());
                         processFinished();
                     }catch (Exception e){
@@ -408,7 +408,7 @@ public class ProductPresenter {
                         Log.d("GET IMAGES PRODUCT APP PRESENTER", "RESPONSE EXITOSO");
                         System.out.println(response.body());
                         //SharedPref.guardarIdUsuario(view,response.body().getIdUsuario());
-                        Toast.makeText(view, "Respuesta exitosa", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(view, "Respuesta exitosa", Toast.LENGTH_SHORT).show();
                         imagesCompl.postValue(response.body());
                         //processFinished();
                     } catch (Exception e) {
@@ -459,7 +459,7 @@ public class ProductPresenter {
                         System.out.println("");
                         Log.d("GET COMENTS PRESENTER", "RESPONSE EXITOSO");
                         System.out.println(response.body());
-                        Toast.makeText(view, "Respuesta exitosa", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(view, "Respuesta exitosa", Toast.LENGTH_SHORT).show();
                         comentarios.postValue(response.body());
                         processFinished();
                     } catch (Exception e) {
@@ -510,7 +510,7 @@ public class ProductPresenter {
                         System.out.println("");
                         Log.d("GET COMENTS PRESENTER", "RESPONSE EXITOSO");
                         System.out.println(response.body());
-                        Toast.makeText(view, "Respuesta exitosa", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(view, "Respuesta exitosa", Toast.LENGTH_SHORT).show();
                         comentariosClient.postValue(response.body());
                         processFinished();
                     } catch (Exception e) {

@@ -84,6 +84,19 @@ public class SharedPref {
         return sharedPreferences.getString(Constantes.USER,"Vacio");
     }
 
+    //guardar datos del usuario
+
+    public static void guardarVendedor(final Context context, String vendedor){
+        inicializaPreferencias(context);
+        sharedPreferencesEdit.putString(Constantes.VENDEDOR, vendedor);
+        sharedPreferencesEdit.commit();
+    }
+
+    public static String obtenerVendedor(final Context context){
+        inicializaPreferencias(context);
+        return sharedPreferences.getString(Constantes.VENDEDOR,"Vacio");
+    }
+
     //Guardar el id preference de mercado pago
     public static void guardarIdPreference(final Context context, String id){
         inicializaPreferencias(context);

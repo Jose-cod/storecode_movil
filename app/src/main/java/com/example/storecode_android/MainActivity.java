@@ -1,5 +1,6 @@
 package com.example.storecode_android;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
@@ -15,10 +16,14 @@ import com.example.storecode_android.entidades.RespObtenerProducto;
 import com.example.storecode_android.service.RestClientService;
 import com.example.storecode_android.service.RestClientServiceImpl;
 import com.example.storecode_android.utils.AnimacionesGenerales;
+import com.example.storecode_android.utils.Constantes;
 import com.example.storecode_android.utils.LogFile;
 import com.example.storecode_android.utils.SharedPref;
 import com.example.storecode_android.view.MainDrawerActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.apache.log4j.Logger;
 
@@ -27,7 +32,9 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 
+import static android.content.ContentValues.TAG;
 import static com.example.storecode_android.utils.Constantes.RESP_CODE_WEB_OK;
+import static com.example.storecode_android.utils.Constantes.TOPIC_CLIENTS;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -57,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         if(!idUser.equals("null")){
             System.out.println("----------------------id user-------------------------------");
             System.out.println(idUser);
+            notification();
             // Cambia de activity
             Intent intent = new Intent(this, MainDrawerActivity.class);
             this.startActivity(intent);
@@ -66,9 +74,31 @@ public class MainActivity extends AppCompatActivity {
         }else{
             configNav();
             cargarProductos();
+
         }
     }
 
+    public void notification(){
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                        return;
+                    }
+
+                    // Get new FCM registration token
+                    String token = task.getResult();
+                    System.out.println("fcm token unico del dispositivo:"+token);
+
+                    // Log and toast
+                    /*String msg = getString(R.string.msg_token_fmt, token);
+                    Log.d(TAG, msg);
+                    Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();*/
+                });
+        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC_CLIENTS);
+
+        //temas (topics)
+    }
 
 
     public void cargarProductos(){
