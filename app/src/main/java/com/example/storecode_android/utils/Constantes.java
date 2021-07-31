@@ -52,6 +52,7 @@ public class Constantes {
     public static final String REST_SERVICE_UPDATE_STOCK = "updatestock";
 
     public static final String REST_SERVICE_MYSHOPPING = "myshopping";
+    public static final String REST_SERVICE_IMERCADOPAGO = "user/mpagocredentials";
 
     //Constantes del Share preferences
     public static final String PRODUCTOS="productos";

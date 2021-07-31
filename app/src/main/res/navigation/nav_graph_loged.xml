@@ -38,6 +38,12 @@
         <action
             android:id="@+id/toMyShoppinFragment"
             app:destination="@id/myShoppinFragment"
+            app:enterAnim="@anim/fade_in"
+            app:popUpTo="@id/navProfileLogedFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/toDataMercadoPago"
+            app:destination="@id/dataMercadoPagoFragment"
             app:enterAnim="@anim/fade_in" />
     </fragment>
     <fragment
@@ -109,5 +115,15 @@
             app:popUpTo="@id/navProfileLogedFragment"
             app:popUpToInclusive="true"
             />
+    </fragment>
+    <fragment
+        android:id="@+id/dataMercadoPagoFragment"
+        android:name="com.example.storecode_android.view.fragments.DataMercadoPagoFragment"
+        android:label="fragment_data_mercado_pago"
+        tools:layout="@layout/fragment_data_mercado_pago" >
+        <action
+            android:id="@+id/toNavProfileLogedFragment"
+            app:destination="@id/navProfileLogedFragment"
+            app:exitAnim="@anim/fade_out" />
     </fragment>
 </navigation>

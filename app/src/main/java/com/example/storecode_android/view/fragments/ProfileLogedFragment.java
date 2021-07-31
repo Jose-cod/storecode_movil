@@ -63,6 +63,7 @@ public class ProfileLogedFragment extends Fragment {
     TextView tvEmail;
     ImageButton btnSell;
     ImageButton btnProductsOnSale;
+    ImageButton btnMercadoPago;
 
     ImageButton btn_miscompras;
 
@@ -121,6 +122,7 @@ public class ProfileLogedFragment extends Fragment {
         btnSell = view.findViewById(R.id.btnSell);
         btnProductsOnSale = view.findViewById(R.id.btn_sell_products);
         btn_miscompras = view.findViewById(R.id.btn_miscompras);
+        btnMercadoPago= view.findViewById(R.id.btnMercadoPago);
 
         if(resp.getApellido2Usuario().equals("null")){
             tvName.setText(resp.getNombreUsuario()+" "+resp.getApellido1Usuario());
@@ -149,6 +151,12 @@ public class ProfileLogedFragment extends Fragment {
         btn_miscompras.setOnClickListener(v->{
             Navigation.findNavController(getView()).navigate(ProfileLogedFragmentDirections.toMyShoppinFragment());
         });
+
+        //ir a la pantalla "Datos de mercado pago"
+        btnMercadoPago.setOnClickListener(v->{
+            Navigation.findNavController(getView()).navigate(ProfileLogedFragmentDirections.toDataMercadoPago());
+        });
+
 
     }
 

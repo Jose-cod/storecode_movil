@@ -8,6 +8,7 @@ import com.example.storecode_android.entidades.ProductoCarrito;
 import com.example.storecode_android.entidades.ReqCarrito;
 import com.example.storecode_android.entidades.ReqItemProduct;
 import com.example.storecode_android.entidades.ReqLoginDto;
+import com.example.storecode_android.entidades.ReqMercadoPago;
 import com.example.storecode_android.entidades.ReqUpdateProduct;
 import com.example.storecode_android.entidades.ReqUpdateStock;
 import com.example.storecode_android.entidades.RespFolioVenta;
@@ -51,6 +52,7 @@ import static com.example.storecode_android.utils.Constantes.REST_SERVICE_GET_CA
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_GET_CATEGORIES;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_GET_PRODUCTS_IN_CART;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_IMAGES_COMPLE;
+import static com.example.storecode_android.utils.Constantes.REST_SERVICE_IMERCADOPAGO;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_INSERT_CART;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_LOGIN;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_MYSHOPPING;
@@ -170,6 +172,10 @@ public interface RestClientService {
     //obtener mis compras
     @GET(REST_SERVICE_MYSHOPPING+"/{idUser}")
     Call<List<RespMyShopping>> getMyShopping(@Path("idUser") String idUser);
+
+    //insertar o actualizar datos de mercado pago
+    @PUT(REST_SERVICE_IMERCADOPAGO)
+    Call<RespMensaje> guardarDatosMercadoPago(@Body ReqMercadoPago reqMercadoPago);
 
 
 

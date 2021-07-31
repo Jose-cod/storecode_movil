@@ -8,6 +8,7 @@ import com.example.storecode_android.entidades.ProductoCarrito;
 import com.example.storecode_android.entidades.ReqCarrito;
 import com.example.storecode_android.entidades.ReqItemProduct;
 import com.example.storecode_android.entidades.ReqLoginDto;
+import com.example.storecode_android.entidades.ReqMercadoPago;
 import com.example.storecode_android.entidades.ReqUpdateProduct;
 import com.example.storecode_android.entidades.ReqUpdateStock;
 import com.example.storecode_android.entidades.RespDetaProductoComen;
@@ -270,6 +271,11 @@ public class RestClientServiceImpl implements RestClientService {
     @Override
     public Call<List<RespMyShopping>> getMyShopping(String idUser) {
         return restClient.getMyShopping(idUser);
+    }
+
+    @Override
+    public Call<RespMensaje> guardarDatosMercadoPago(ReqMercadoPago reqMercadoPago) {
+        return restClient.guardarDatosMercadoPago(reqMercadoPago);
     }
 
 

@@ -18,6 +18,7 @@ import com.example.storecode_android.entidades.RespGetCarrito;
 import com.example.storecode_android.entidades.RespIdCarritoVenta;
 import com.example.storecode_android.entidades.RespIdPreference;
 import com.example.storecode_android.entidades.RespMyShopping;
+import com.example.storecode_android.entidades.RespUserData;
 import com.example.storecode_android.entidades.Venta;
 import com.example.storecode_android.entidades.RespLoginDto;
 import com.example.storecode_android.entidades.RespMensaje;
@@ -29,6 +30,7 @@ import com.example.storecode_android.utils.LogFile;
 import com.example.storecode_android.utils.SharedPref;
 import com.example.storecode_android.view.LoginActivity;
 import com.example.storecode_android.view.MainDrawerActivity;
+import com.google.gson.Gson;
 import com.mercadopago.android.px.core.MercadoPagoCheckout;
 
 import org.apache.log4j.Logger;
@@ -315,7 +317,8 @@ public class CarritoPresenter {
                         SharedPref.guardarIdPreference(view,response.body().getId());
                         String idPreference = response.body().getId();
                         SharedPref.guardarListProductInCard(context, reqItemProduct.toString());
-                        startMercadoPagoCheckout(context,idPreference);
+                        RespUserData vendedor = getCurrentUser(context);
+                        startMercadoPagoCheckout(context,idPreference, vendedor.getPk_mercadopago());
                         //productPresenter.refreshProductsInCart(productoCarrito.getIdCarrito().toString());
                         //Toast.makeText(view,"Iniciando proceso de pago",Toast.LENGTH_SHORT).show();
 
@@ -342,10 +345,16 @@ public class CarritoPresenter {
     }
 
 
-    public void startMercadoPagoCheckout(Context context, final String checkoutPreferenceId) {
-        MercadoPagoCheckout mercadoPagoCheckout = new MercadoPagoCheckout.Builder(PUBLIC_KEY,checkoutPreferenceId).build();
+    public void startMercadoPagoCheckout(Context context, final String checkoutPreferenceId, String publicKey) {
+        System.out.println("Public key"+publicKey);
+        MercadoPagoCheckout mercadoPagoCheckout = new MercadoPagoCheckout.Builder(publicKey,checkoutPreferenceId).build();
         mercadoPagoCheckout.startPayment(context,REQUEST_CODE);
 
+    }
+
+    public RespUserData getCurrentUser(Context context){
+        String userString = SharedPref.obtenerVendedor(context);
+        return new Gson().fromJson(userString,RespUserData.class);
     }
 
     //metodo para obtener el id preference del proceso de pago

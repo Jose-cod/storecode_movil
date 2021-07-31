@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.example.storecode_android.R;
 import com.example.storecode_android.entidades.RespMyShopping;
-import com.example.storecode_android.view.fragments.dummy.DummyContent.DummyItem;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

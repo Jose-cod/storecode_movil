@@ -28,7 +28,6 @@ import com.example.storecode_android.entidades.RespObtenerProducto;
 import com.example.storecode_android.utils.SharedPref;
 import com.example.storecode_android.view.adapters.MyShoppinRecyclerViewAdapter;
 import com.example.storecode_android.view.adapters.ProductsInCartAdapter;
-import com.example.storecode_android.view.fragments.dummy.DummyContent;
 
 import java.util.List;
 
