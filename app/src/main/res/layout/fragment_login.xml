@@ -1,25 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layout_login"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:background="@color/colorBackground"
+    tools:context=".view.fragments.LoginFragment">
 
-    tools:context=".view.LoginActivity"
-    >
-
-    <fragment
-
-        android:id="@+id/fragContentLogin"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:navGraph="@navigation/nav_graph_login"
-        app:defaultNavHost="true"></fragment>
-
-    <!--<LinearLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight=".008"
@@ -128,7 +117,7 @@
                 android:hint="@string/email_usuario"
                 >
 
-                &lt;!&ndash;android:id="@+id/et_no_empleado"&ndash;&gt;
+                <!--android:id="@+id/et_no_empleado"-->
                 <EditText
                     android:id="@+id/editTextUser"
                     android:layout_width="fill_parent"
@@ -277,6 +266,38 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_weight=".3"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight=".1"/>
+
+            <Button
+                android:id="@+id/btnCreateAccount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/blanco"
+                android:fontFamily="@font/telcel_nova_media_otf"
+                android:radius="@dimen/margin_h4"
+                android:text="Crear cuenta"
+                android:textColor="@color/colorBackground"
+                android:textSize="@dimen/text_h2"
+                tools:ignore="SpUsage" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight=".1"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight=".15"
             android:layout_gravity="center"
             android:gravity="center"
@@ -312,6 +333,7 @@
                 android:layout_weight=".05"/>
 
             <TextView
+                android:visibility="gone"
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
@@ -329,6 +351,6 @@
 
         </LinearLayout>
 
-    </LinearLayout>-->
+    </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -15,9 +15,12 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 
-import com.example.storecode_android.BuildConfig;
+//import com.example.storecode_android.BuildConfig;
 import com.example.storecode_android.Presenter.LoginPresenter;
 import com.example.storecode_android.R;
 import com.example.storecode_android.utils.LogFile;
@@ -40,8 +43,8 @@ import static mx.com.telcel.di.sds.gsac.dapmov.precio_inteligente.utils.Variable
  * Description: Función encargada de tener los eventos y controles de vista para el actividad Login
  */
 @SuppressWarnings("FieldCanBeLocal")
-public class LoginActivity extends Activity {
-    private static final Logger log = LogFile.getLogger(LoginActivity.class);
+public class LoginActivity extends AppCompatActivity {
+    /*private static final Logger log = LogFile.getLogger(LoginActivity.class);
     private LoginPresenter loginPresenter;
     public Switch mSwitch;
     public EditText etIdUsuario, etContrasenia;
@@ -49,11 +52,11 @@ public class LoginActivity extends Activity {
     public Button btnEntrar;
 
     public TextView textInicio, textSingle;
-    public TextInputLayout textLayout;
+    public TextInputLayout textLayout;*/
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        log.info("--onCreate--");
+        //log.info("--onCreate--");
         super.onCreate(savedInstanceState);
         //Asignamos la orientación del disposito
         //setRequestedOrientation(FuncionesGenerales.asigaOrientacionDispositivo(this));
@@ -64,14 +67,17 @@ public class LoginActivity extends Activity {
         //Cambio de color de la barra de notificaciones
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         getWindow().setStatusBarColor(getResources().getColor(R.color.colorBackground));
+        setContentView(R.layout.activity_login);
+
+        //configNav();
 
         //Seleccionamos el activity a mostrar
-        setContentView(R.layout.activity_login);
+        //setContentView(R.layout.activity_login);
         //Asignamos las configuraciones especiales al activity
         //FuncionesGenerales.asignarConfiguracionesEspeciales(this);
 
         //Construimos el presentador
-        loginPresenter = new LoginPresenter(this);
+        /*loginPresenter = new LoginPresenter();
         //Inicializamos los componentes
         mSwitch = findViewById(R.id.inicio_sesion_switch);
         etIdUsuario = findViewById(R.id.editTextUser);
@@ -148,7 +154,7 @@ public class LoginActivity extends Activity {
                 }
                 return false;
             }
-        });
+        });*/
 
         //Cargamos las preferencias del usuario
         /*
@@ -216,13 +222,16 @@ public class LoginActivity extends Activity {
     /**
      * Cuando se presiona el botón regresar
      */
-
+    /*public void configNav(){
+        //NavigationUI.setupWithNavController(bnvMenu, Navigation.findNavController(this, R.id.fragContent));
+        //NavigationUI.setupWithNavController(null,Navigation.findNavController(this,R.id.fragContent2));
+        Navigation.findNavController(this, R.id.fragContent2);
+    }*/
     /*
     @Override
     public void onBackPressed() {
         FuncionesGenerales.cerrarAplicacion(LoginActivity.this);
     }*/
-
 
 
 }

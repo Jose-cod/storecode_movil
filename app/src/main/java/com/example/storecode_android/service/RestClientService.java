@@ -76,6 +76,10 @@ public interface RestClientService {
     @POST(REST_SERVICE_LOGIN)
     Call<RespLoginDto> login(@Body ReqLoginDto request);
 
+    // Servicio para registrar un nuevo usuario
+    @POST(REST_SERVICE_USER_BY_ID)
+    Call<RespMensaje> createAccount(@Body RespUserData respUserData);
+
     @GET(REST_SERVICE_PRODUCTS_BY_USER+"/{id}")
     Call<List<RespObtenerProducto>> cargarProductos(@Path("id") String id);
 

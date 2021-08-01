@@ -163,6 +163,11 @@ public class RestClientServiceImpl implements RestClientService {
     }
 
     @Override
+    public Call<RespMensaje> createAccount(RespUserData respUserData) {
+        return restClient.createAccount(respUserData);
+    }
+
+    @Override
     public Call<List<RespObtenerProducto>> cargarProductos(String id) {
         return restClient.cargarProductos(id);
     }

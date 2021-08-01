@@ -80,9 +80,11 @@ public class ProfileNoLogedFragment extends Fragment {
                //Intent intent = new Intent(getContext(), LoginActivity.class);
                 //startActivity(intent);
                //Navegacion hacia la pantalla de Login
-               NavController navController = Navigation.findNavController(getActivity(), R.id.fragContent);
-               navController.navigate(R.id.toLoginActivity);
-
+               /*NavController navController = Navigation.findNavController(getActivity(), R.id.fragContent);
+               navController.navigate(R.id.toLoginActivity);*/
+               Navigation.findNavController(getView()).navigate(ProfileNoLogedFragmentDirections.toLoginActivity());
+               /*Intent intent = new Intent(getContext(), LoginActivity.class);
+               startActivity(intent);*/
 
 
 
