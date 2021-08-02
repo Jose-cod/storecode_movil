@@ -1,9 +1,14 @@
 package com.example.storecode_android.Presenter;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.os.AsyncTask;
 import android.service.autofill.UserData;
+import android.text.Html;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,8 +37,22 @@ import com.subhrajyoti.passwordview.PasswordView;
 
 import org.apache.log4j.Logger;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Properties;
 
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
+
+import okhttp3.Request;
+import okhttp3.Route;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -43,7 +62,7 @@ import static com.example.storecode_android.utils.Constantes.RESP_CODE_WEB_OK;
 
 
 /**
- * Description: Clase encargada de tener las reglas del negocio para el Login
+ * Description: Clase encargada de tener las reglas del negocio para que el usuario pueda hacer Login
  */
 public class LoginPresenter {
     private static final Logger log = LogFile.getLogger(LoginPresenter.class);
@@ -52,6 +71,9 @@ public class LoginPresenter {
     EditText etIdUsuario;
     EditText etContrasenia;
     Button btnEntrar;
+
+    public final String sMail="andresjimenez.isc@gmail.com";
+    public final String password ="jcT18_SnH";
 
     public MutableLiveData<RespUserData> vendedor= new MutableLiveData();
 
@@ -255,6 +277,7 @@ public class LoginPresenter {
                     try{
                         System.out.println(response.body().toString());
                         Toast.makeText(mContext,response.body().getMensaje(),Toast.LENGTH_LONG).show();
+                        sendEmail(userData.getEmailUsuario(), userData.getCodeActive());
                         //consumirServicioBitacoraLogin(response.body().getPayLoad().getIdFuerzaDeVenta(), view.etIdUsuario.getText().toString());
                     }catch (Exception e){
                         e.printStackTrace();
@@ -283,6 +306,54 @@ public class LoginPresenter {
                 AnimacionesGenerales.mostrarAlertDialogErrorServer(mContext);
             }
         });
+    }
+
+    /**
+     *
+     * Description: función para enviar email al usuario
+     */
+
+    public void sendEmail(String recipientEmail, String codeActive){
+        Properties properties = new Properties();
+        properties.put("mail.smtp.auth","true");
+        properties.put("mail.smtp.starttls.enable","true");
+        properties.put("mail.smtp.host","smtp.gmail.com");
+        properties.put("mail.smtp.port","587");
+
+        final String link= "http://192.168.1.72:3000/storecode/linkactivacion";
+        final String textBody ="\nGracias por crear su cuenta en STORECODE, para poder hacer uso de la tienda debe activar su usuario, haciendo clic en el siguiente enlace:\n";
+
+        //Inicializar sesión
+        Session session = Session.getInstance(properties,new Authenticator(){
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(sMail,password);
+            }
+        });
+
+
+        try {
+            //Inicializar contenido del email
+            Message message = new MimeMessage(session);
+            //sender email
+            message.setFrom(new InternetAddress(sMail));
+            //recipient
+            message.setRecipient(Message.RecipientType.TO,new InternetAddress(recipientEmail));
+
+            //email subject
+            message.setSubject("Link de activacion de Cuenta en STORECODE");
+            message.setText(textBody +
+                    link+"?link="+codeActive+"&email="+recipientEmail);
+
+            /*
+            """<p>${textBody}</p><br>
+          <a href='${link}?link=${codeActive}&email=${recipient}'>Activar cuenta</a> """
+             */
+            //send email
+            new SendEmail().execute(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
     }
 
     /*
@@ -451,9 +522,66 @@ public class LoginPresenter {
         return builder.toString();
     }
 
+    private class SendEmail extends AsyncTask<Message, String, String> {
+        private ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = ProgressDialog.show(mContext,"Por favor, espera","Enviando email",true, false);
+        }
+
+        @Override
+        protected String doInBackground(Message... messages) {
+            try {
+                Transport.send(messages[0]);
+                return "Success";
+            } catch (MessagingException e) {
+                e.printStackTrace();
+                return "Error";
+            }
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            progressDialog.dismiss();
+
+            if(s.equals("Success")){
+                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                builder.setCancelable(false);
+
+                builder.setTitle(Html.fromHtml("<font color='#509324'>Éxito</font>"));
+
+                builder.setMessage("Email enviado exitosamente");
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+
+                    }
+                });
+
+                builder.show();
+            }else{
+                Toast.makeText(mContext, "Algo salió mal", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
     /**
      * Description: Función encargada de consumir el servicio de Bitacora Login
      */
+
+    /*
+     *  sender email:
+     *  final userEmail="andresjimenez.isc@gmail.com";
+     *  final password="jcT18_SnH";
+     */
+
+
 
     /*
     private void consumirServicioBitacoraLogin(String fuerza_venta, String num_empleado) {
