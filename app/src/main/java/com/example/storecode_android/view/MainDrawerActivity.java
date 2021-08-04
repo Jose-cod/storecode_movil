@@ -359,7 +359,7 @@ public class MainDrawerActivity extends AppCompatActivity {
 
                     });
 
-                    String claveTransaccion = getRandomString(10);
+                    //String claveTransaccion = getRandomString(10);
                     Venta venta =new Venta(
                             payment.getId().toString(),
                             "Vacio",

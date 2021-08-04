@@ -24,6 +24,7 @@ import com.example.storecode_android.entidades.RespMyShopping;
 import com.example.storecode_android.entidades.RespObtenerImagesDto;
 import com.example.storecode_android.entidades.RespObtenerProducto;
 import com.example.storecode_android.entidades.RespUserData;
+import com.example.storecode_android.entidades.TokenFCM;
 import com.example.storecode_android.entidades.Venta;
 
 import java.util.List;
@@ -32,6 +33,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
@@ -60,6 +62,8 @@ import static com.example.storecode_android.utils.Constantes.REST_SERVICE_PRODUC
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_PRODUCTS_BY_USER;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_PRODUCTS_ON_SALE;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_PRODUCT_CART;
+import static com.example.storecode_android.utils.Constantes.REST_SERVICE_PUSH_TO_DEVICE;
+import static com.example.storecode_android.utils.Constantes.REST_SERVICE_TOKEN_FCM;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_UPDATE_STOCK;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_UPLOAD_PRODUCT;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_USER_BY_ID;
@@ -180,6 +184,17 @@ public interface RestClientService {
     //insertar o actualizar datos de mercado pago
     @PUT(REST_SERVICE_IMERCADOPAGO)
     Call<RespMensaje> guardarDatosMercadoPago(@Body ReqMercadoPago reqMercadoPago);
+
+    //insertar o actualizar el token fcm
+    @PUT(REST_SERVICE_TOKEN_FCM)
+    Call<RespMensaje> guardarUsuarioTokenFCM(@Body TokenFCM tokenFCM);
+
+    //enviar notificacion a un dispositivo
+    @POST(REST_SERVICE_PUSH_TO_DEVICE)
+    Call<String> sendNotificationTODevice(@Body TokenFCM tokenFCM);
+
+
+
 
 
 

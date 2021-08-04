@@ -73,7 +73,7 @@ public class LoginPresenter {
     Button btnEntrar;
 
     public final String sMail="andresjimenez.isc@gmail.com";
-    public final String password ="jcT18_SnH";
+    public final String password ="todoEsTuyo30";
 
     public MutableLiveData<RespUserData> vendedor= new MutableLiveData();
 

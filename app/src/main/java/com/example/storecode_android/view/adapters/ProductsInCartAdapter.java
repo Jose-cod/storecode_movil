@@ -120,6 +120,7 @@ public class ProductsInCartAdapter extends RecyclerView.Adapter<HolderProductsIn
                 producto.getDesProducto(),
                 producto.getPrecioUnitarioProducto(),
                 quantity.intValue(),
+                //reemplazar por el user(comprador) email
                 "test_user_91638065@testuser.com",
                 "Vacio"
                 //userData.getEmailUsuario()

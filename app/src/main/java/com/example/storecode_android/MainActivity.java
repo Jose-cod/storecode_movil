@@ -12,7 +12,9 @@ import android.view.View;
 import android.widget.Toast;
 
 
+import com.example.storecode_android.Presenter.UserPresenter;
 import com.example.storecode_android.entidades.RespObtenerProducto;
+import com.example.storecode_android.entidades.TokenFCM;
 import com.example.storecode_android.service.RestClientService;
 import com.example.storecode_android.service.RestClientServiceImpl;
 import com.example.storecode_android.utils.AnimacionesGenerales;
@@ -64,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         if(!idUser.equals("null")){
             System.out.println("----------------------id user-------------------------------");
             System.out.println(idUser);
-            notification();
+            notification(Integer.parseInt(idUser));
             // Cambia de activity
             Intent intent = new Intent(this, MainDrawerActivity.class);
             this.startActivity(intent);
@@ -78,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void notification(){
+    public void notification(Integer idUsuario){
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(task -> {
                     if (!task.isSuccessful()) {
@@ -88,6 +90,12 @@ public class MainActivity extends AppCompatActivity {
 
                     // Get new FCM registration token
                     String token = task.getResult();
+                    UserPresenter userPresenter= new UserPresenter();
+                    SharedPref.guardarTokenFCM(this,token);
+                    userPresenter.guardarUsuarioTokenFCM(new TokenFCM(
+                            idUsuario,
+                            token
+                    ));
                     System.out.println("fcm token unico del dispositivo:"+token);
 
                     // Log and toast

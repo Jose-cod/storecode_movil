@@ -19,6 +19,7 @@ import com.example.storecode_android.entidades.RespIdCarritoVenta;
 import com.example.storecode_android.entidades.RespIdPreference;
 import com.example.storecode_android.entidades.RespMyShopping;
 import com.example.storecode_android.entidades.RespUserData;
+import com.example.storecode_android.entidades.TokenFCM;
 import com.example.storecode_android.entidades.Venta;
 import com.example.storecode_android.entidades.RespLoginDto;
 import com.example.storecode_android.entidades.RespMensaje;
@@ -380,6 +381,14 @@ public class CarritoPresenter {
                         createCarritoVenta(new CarritoVenta(
                                 carritoVenta.getIdCarrito(),
                                 folioVenta
+                        ));
+                        //enviar notificacion
+                        UserPresenter userPresenter= new UserPresenter();
+                        String idUsuario = SharedPref.obtenerIdUsuario(view);
+                        String tokenFCM = SharedPref.obtenerTokenFCM(view);
+                        userPresenter.sendNotificationToDevice(new TokenFCM(
+                                Integer.parseInt(idUsuario),
+                                tokenFCM
                         ));
 
 

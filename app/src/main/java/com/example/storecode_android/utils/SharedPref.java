@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import org.apache.log4j.Logger;
 
 import static com.example.storecode_android.utils.Constantes.ID_PREFERENCE;
+import static com.example.storecode_android.utils.Constantes.TOKEN_FCM;
 
 /**
  * Description: Clase encargada de extraer las preferencias de usario desde SharedPreferences
@@ -112,6 +113,17 @@ public class SharedPref {
     public static void guardarIdUsuario(final Context context, Integer idUsuario){
         inicializaPreferencias(context);
         sharedPreferencesEdit.putString(Constantes.ID_USER,idUsuario.toString());
+        sharedPreferencesEdit.commit();
+    }
+    //obtener el tokenFCM
+    public static String obtenerTokenFCM(final Context context){
+        inicializaPreferencias(context);
+        return sharedPreferences.getString(TOKEN_FCM,"Vacio");
+    }
+
+    public static void guardarTokenFCM(final Context context, String tokenFCM){
+        inicializaPreferencias(context);
+        sharedPreferencesEdit.putString(Constantes.TOKEN_FCM, tokenFCM);
         sharedPreferencesEdit.commit();
     }
     //Guardar productInCard

@@ -24,6 +24,7 @@ import com.example.storecode_android.entidades.RespMyShopping;
 import com.example.storecode_android.entidades.RespObtenerImagesDto;
 import com.example.storecode_android.entidades.RespObtenerProducto;
 import com.example.storecode_android.entidades.RespUserData;
+import com.example.storecode_android.entidades.TokenFCM;
 import com.example.storecode_android.entidades.Venta;
 import com.example.storecode_android.utils.LogFile;
 
@@ -38,6 +39,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -281,6 +283,16 @@ public class RestClientServiceImpl implements RestClientService {
     @Override
     public Call<RespMensaje> guardarDatosMercadoPago(ReqMercadoPago reqMercadoPago) {
         return restClient.guardarDatosMercadoPago(reqMercadoPago);
+    }
+
+    @Override
+    public Call<RespMensaje> guardarUsuarioTokenFCM(TokenFCM tokenFCM) {
+        return restClient.guardarUsuarioTokenFCM(tokenFCM);
+    }
+
+    @Override
+    public Call<String> sendNotificationTODevice(TokenFCM tokenFCM) {
+        return restClient.sendNotificationTODevice(tokenFCM);
     }
 
 

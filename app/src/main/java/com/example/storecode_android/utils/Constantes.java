@@ -53,10 +53,13 @@ public class Constantes {
 
     public static final String REST_SERVICE_MYSHOPPING = "myshopping";
     public static final String REST_SERVICE_IMERCADOPAGO = "user/mpagocredentials";
+    public static final String REST_SERVICE_TOKEN_FCM= "tokenfcm";
+    public static final String REST_SERVICE_PUSH_TO_DEVICE= "push_notification";
 
     //Constantes del Share preferences
     public static final String PRODUCTOS="productos";
     public static final String ID_USER="idUsuario";
+    public static final String TOKEN_FCM="tokenFCM";
     public static final String USER="user";
     public static final String VENDEDOR="vendedor";
     public static final String ID_PREFERENCE="idPreference";
