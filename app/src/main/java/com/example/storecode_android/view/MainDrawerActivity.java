@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.Navigation;
@@ -23,15 +24,19 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.storecode_android.MainActivity;
 import com.example.storecode_android.Presenter.CarritoPresenter;
+import com.example.storecode_android.Presenter.UserPresenter;
 import com.example.storecode_android.R;
 
 import com.example.storecode_android.entidades.CarritoVenta;
+import com.example.storecode_android.entidades.NotificationToDevice;
 import com.example.storecode_android.entidades.ReqItemProduct;
 import com.example.storecode_android.entidades.ReqUpdateStock;
+import com.example.storecode_android.entidades.TokenFCM;
 import com.example.storecode_android.entidades.Venta;
 import com.example.storecode_android.utils.LogFile;
 import com.example.storecode_android.utils.SharedPref;
 import com.example.storecode_android.view.fragments.CartLogedFragment;
+import com.example.storecode_android.view.fragments.NotificationsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
@@ -44,6 +49,7 @@ import com.mercadopago.android.px.model.exceptions.MercadoPagoError;
 import org.apache.log4j.Logger;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -105,7 +111,7 @@ public class MainDrawerActivity extends AppCompatActivity {
         btn_notificaciones = findViewById(R.id.btn_notificaciones);
         //btn_cerrar_sesion = findViewById(R.id.btn_cerrar_sesion);
 
-        /*btn_notificaciones.setOnTouchListener((v, event) -> {
+        btn_notificaciones.setOnTouchListener((v, event) -> {
             switch(event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                      ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(btn_notificaciones, "alpha",0, 1);
@@ -116,26 +122,29 @@ public class MainDrawerActivity extends AppCompatActivity {
 
                 case MotionEvent.ACTION_UP:
                     //Elimino la notificacion
-                    SharedPref.deleteNotificacionActiva(getApplicationContext());
+                    //SharedPref.deleteNotificacionActiva(getApplicationContext());
 
-                    NotificacionesActivity notificacionesActivity = new NotificacionesActivity();
+                    NotificationsFragment notificationsFragment = new NotificationsFragment();
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.main_contenedor, notificacionesActivity).commit();
-                    btn_notificaciones.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_notifications_white_24dp));
+                    getSupportFragmentManager().beginTransaction().replace(R.id.main_contenedor, notificationsFragment).commit();
+
+
+                    //btn_notificaciones.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_notifications_white_24dp));
+                    btn_notificaciones.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_notification));
 
                     return true;
             }
             return false;
-        });*/
+        });
 
-        /*try{
+        try{
             String resultado = SharedPref.obtenerguardarNotificacionActiva(this);
             if(!resultado.equals("Vacio")){
                 btn_notificaciones.setBackground(ContextCompat.getDrawable(this, R.drawable.notification_full));
             }
         }catch (Exception e){
             e.printStackTrace();
-        }*/
+        }
 
         //Capturo Bandera para Tabulador
         /*Bundle datos = this.getIntent().getExtras();
@@ -358,6 +367,21 @@ public class MainDrawerActivity extends AppCompatActivity {
                         ));
 
                     });
+
+                    System.out.println("Imprimiendo ReqItemProduct-----------------");
+                    System.out.println(listProductoCarrito.toString());
+
+                    //enviar notificacion
+                    UserPresenter userPresenter= new UserPresenter();
+                    String idUsuario = SharedPref.obtenerIdUsuario(this);
+                    String tokenFCM = SharedPref.obtenerTokenFCM(this);
+                    userPresenter.sendNotificationToDevice(new NotificationToDevice(
+                            Integer.parseInt(idUsuario),
+                            tokenFCM,
+                            payment.getId().toString(),
+                            Double.parseDouble(totalVendido.toString()),
+                            listProductoCarrito.toString()
+                    ));
 
                     //String claveTransaccion = getRandomString(10);
                     Venta venta =new Venta(

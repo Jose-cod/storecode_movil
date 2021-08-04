@@ -382,14 +382,7 @@ public class CarritoPresenter {
                                 carritoVenta.getIdCarrito(),
                                 folioVenta
                         ));
-                        //enviar notificacion
-                        UserPresenter userPresenter= new UserPresenter();
-                        String idUsuario = SharedPref.obtenerIdUsuario(view);
-                        String tokenFCM = SharedPref.obtenerTokenFCM(view);
-                        userPresenter.sendNotificationToDevice(new TokenFCM(
-                                Integer.parseInt(idUsuario),
-                                tokenFCM
-                        ));
+
 
 
 

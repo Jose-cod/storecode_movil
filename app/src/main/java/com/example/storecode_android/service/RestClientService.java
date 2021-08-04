@@ -3,6 +3,7 @@ package com.example.storecode_android.service;
 import com.example.storecode_android.entidades.Brand;
 import com.example.storecode_android.entidades.CarritoVenta;
 import com.example.storecode_android.entidades.Category;
+import com.example.storecode_android.entidades.NotificationToDevice;
 import com.example.storecode_android.entidades.ProductInCard;
 import com.example.storecode_android.entidades.ProductoCarrito;
 import com.example.storecode_android.entidades.ReqCarrito;
@@ -191,7 +192,7 @@ public interface RestClientService {
 
     //enviar notificacion a un dispositivo
     @POST(REST_SERVICE_PUSH_TO_DEVICE)
-    Call<String> sendNotificationTODevice(@Body TokenFCM tokenFCM);
+    Call<String> sendNotificationTODevice(@Body NotificationToDevice notificationToDevice);
 
 
 

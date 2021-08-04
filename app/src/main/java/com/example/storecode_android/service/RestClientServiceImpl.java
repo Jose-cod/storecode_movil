@@ -3,6 +3,7 @@ package com.example.storecode_android.service;
 import com.example.storecode_android.entidades.Brand;
 import com.example.storecode_android.entidades.CarritoVenta;
 import com.example.storecode_android.entidades.Category;
+import com.example.storecode_android.entidades.NotificationToDevice;
 import com.example.storecode_android.entidades.ProductInCard;
 import com.example.storecode_android.entidades.ProductoCarrito;
 import com.example.storecode_android.entidades.ReqCarrito;
@@ -291,8 +292,8 @@ public class RestClientServiceImpl implements RestClientService {
     }
 
     @Override
-    public Call<String> sendNotificationTODevice(TokenFCM tokenFCM) {
-        return restClient.sendNotificationTODevice(tokenFCM);
+    public Call<String> sendNotificationTODevice(NotificationToDevice notificationToDevice) {
+        return restClient.sendNotificationTODevice(notificationToDevice);
     }
 
 

@@ -8,6 +8,7 @@ import android.widget.Toast;
 import androidx.fragment.app.FragmentActivity;
 
 import com.example.storecode_android.R;
+import com.example.storecode_android.entidades.NotificationToDevice;
 import com.example.storecode_android.entidades.ReqMercadoPago;
 import com.example.storecode_android.entidades.RespMensaje;
 import com.example.storecode_android.entidades.RespUserData;
@@ -145,11 +146,11 @@ public class UserPresenter {
       Función para una notificacion a un dispositivo especifico
      */
 
-    public void sendNotificationToDevice(TokenFCM tokenFCM){
+    public void sendNotificationToDevice(NotificationToDevice notificationToDevice){
         System.out.println("--enviar notificación a un dispositivo--");
         //obtener el id con el shared preferences
         RestClientService api = new RestClientServiceImpl();
-        Call<String> call = api.sendNotificationTODevice(tokenFCM);
+        Call<String> call = api.sendNotificationTODevice(notificationToDevice);
 
         call.enqueue(new Callback<String>() {
             @Override

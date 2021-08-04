@@ -3,6 +3,9 @@ package com.example.storecode_android.utils;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import com.example.storecode_android.entidades.NotificationToDevice;
+
 import org.apache.log4j.Logger;
 
 import static com.example.storecode_android.utils.Constantes.ID_PREFERENCE;
@@ -170,6 +173,48 @@ public class SharedPref {
         sharedPreferencesEdit.remove(Constantes.PRODUCTOS);
         sharedPreferencesEdit.commit();
     }
+
+
+
+    public static void guardarNotificacionDescartada(final Context context, NotificationToDevice notificacion_descartada ) {
+        inicializaPreferencias(context);
+        sharedPreferencesEdit.putString(Constantes.SHAR_PREF_NOTIFICACIONES_DESCARTADAS, notificacion_descartada.toString());
+        sharedPreferencesEdit.commit();
+    }
+
+    public static String obtenerNotificacionDescartada(final Context context) {
+        inicializaPreferencias(context);
+        return sharedPreferences.getString(Constantes.SHAR_PREF_NOTIFICACIONES_DESCARTADAS, "Vacio");
+    }
+
+    public static void deleteNotificacionDescartada(final Context context) {
+        log.info("Notificacion Eliminada");
+        inicializaPreferencias(context);
+        sharedPreferencesEdit.remove(Constantes.SHAR_PREF_NOTIFICACIONES_DESCARTADAS);
+        sharedPreferencesEdit.commit();
+    }
+
+    //Bandera de Notificaciones Activas
+    public static void guardarNotificacionActiva(final Context context, String bandera_notificacion) {
+        inicializaPreferencias(context);
+        sharedPreferencesEdit.putString(Constantes.SHAR_PREF_NOTIFICACIONES_ACTIVA, bandera_notificacion);
+        sharedPreferencesEdit.commit();
+    }
+
+    public static String obtenerguardarNotificacionActiva(final Context context) {
+        inicializaPreferencias(context);
+        return sharedPreferences.getString(Constantes.SHAR_PREF_NOTIFICACIONES_ACTIVA, "Vacio");
+    }
+
+    public static void deleteNotificacionActiva(final Context context) {
+        log.info("Notificacion Eliminada");
+        inicializaPreferencias(context);
+        sharedPreferencesEdit.remove(Constantes.SHAR_PREF_NOTIFICACIONES_ACTIVA);
+        sharedPreferencesEdit.commit();
+    }
+
+    //Bandera de Notificaciones Activas
+
 
 
 
