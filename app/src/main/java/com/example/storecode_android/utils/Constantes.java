@@ -4,6 +4,10 @@ public class Constantes {
     public static final Long LOG_SIZE_MB = 10485760L;
     public static final String LOG_FILE_NAME = "Storecode";
     public static final String SHAR_PREF_NAME = "share_storecode";
+    public static final CharSequence NOTIFICATION_DESCRIPTION = "Storecode notification";
+    public static final CharSequence APLICATION_NAME = "Storecode";
+    public static final String NOTIFICATION_CHANNEL = "CHANNEL_RIFAO";
+    public static final int NOTIFICATION_ID = 5;
     public static String URL_BASE= "http://192.168.1.72:3000/storecode/";
 
     //Servicios generales
@@ -73,4 +77,8 @@ public class Constantes {
     public static final short TIME_OUT_RETROFIT = 6000;
 
     public static final short RESP_CODE_WEB_OK = 200;
+
+    public static final short NOTIFICATION_REQUEST_CODE = 5;
+
+
 }
