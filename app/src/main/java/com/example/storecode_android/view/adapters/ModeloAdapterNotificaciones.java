@@ -18,11 +18,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.storecode_android.R;
 import com.example.storecode_android.entidades.NotificationToDevice;
+import com.example.storecode_android.entidades.ReqItemProduct;
 import com.example.storecode_android.utils.LogFile;
 import com.example.storecode_android.utils.SharedPref;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.apache.log4j.Logger;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import androidx.annotation.NonNull;
 
@@ -72,13 +78,30 @@ public class ModeloAdapterNotificaciones extends RecyclerView.Adapter<HolderMode
     public void onBindViewHolder(@NonNull final HolderModeloNotificaciones holder, final int position) {
         final NotificationToDevice modelo = mFilteredList.get(position);
 
+        final List<ReqItemProduct> productosComprados = getProducts(modelo.getItems());
+
+
+
         holder.tvTituloApp.setText(modelo.getClaveTransaccion());
-        holder.tvDescripcion.setText("Precio"+modelo.getTotalVendido().toString());
+
+        String description="Productos";
+
+        for (ReqItemProduct productoComprado: productosComprados) {
+            description= description+ "\n"+productoComprado.getDescription()+"\n"+
+                    "Cantidad: "+productoComprado.getQuantity()+
+                    "\n"+"Precio Unitario"+productoComprado.getPrice();
+        }
+
+        description= description+"\n"+modelo.getTotalVendido().toString();
+
+        holder.tvDescripcion.setText(description);
         holder.tv_hora.setText("Hora");
 
         holder.item_card_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Preguntar que hacer cuando el usuario da click en el item  TO-DO
+
 
                 /*log.info("ID de la aplicacion de la notificacion: "+ modelo.getAppID());
                 consumoServicioDetalle(Integer.parseInt(modelo.getAppID()));*/
@@ -108,6 +131,12 @@ public class ModeloAdapterNotificaciones extends RecyclerView.Adapter<HolderMode
         modeloList.addAll(data);
         System.out.println(modeloList);
         notifyDataSetChanged();
+    }
+
+    public ArrayList<ReqItemProduct> getProducts(String items){
+        Type listType = new TypeToken<List<ReqItemProduct>>(){}.getType();
+        ArrayList<ReqItemProduct> listProducts= new Gson().fromJson(items, listType);
+        return listProducts;
     }
 
     @Override

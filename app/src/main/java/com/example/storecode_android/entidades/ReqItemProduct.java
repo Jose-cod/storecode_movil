@@ -101,20 +101,23 @@ public class ReqItemProduct {
         this.accessToken = accessToken;
     }
 
+    //Revisar que no lance otros errores
     @Override
     public String toString() {
         return "{" +
-                "idProducto=" + idProducto +
-                ", idProductoCarrito=" + idProductoCarrito +
-                ", idCarrito=" + idCarrito +
-                ", idVendedor=" + idVendedor +
-                ", description='" + description + '\'' +
-                ", price=" + price +
-                ", quantity=" + quantity +
-                ", clientEmail='" + clientEmail + '\'' +
-                ", accessToken='" + accessToken + '\'' +
+                "\"idProducto\":" + idProducto +
+                ", \"idProductoCarrito\":" + idProductoCarrito +
+                ", \"idCarrito\":" + idCarrito +
+                ", \"idVendedor\":" + idVendedor +
+                ", \"description\":\"" + description + '\"' +
+                ", \"price\":" + price +
+                ", \"quantity\":" + quantity +
+                ", \"clientEmail\":\"" + clientEmail + '\"' +
+                ", \"accessToken\":\"" + accessToken + '\"' +
                 '}';
     }
+
+
 
     /*
     {

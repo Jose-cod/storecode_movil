@@ -45,7 +45,7 @@ public class NotificationToDevice extends TokenFCM {
         return "{" +
                 "claveTransaccion='" + claveTransaccion + '\'' +
                 ", totalVendido=" + totalVendido +
-                ", items='" + items +"'"+
+                ", items='" + items +""+ '\'' +
                 ", idUsuario=" + idUsuario +
                 ", tokenFCM='" + tokenFCM + '\'' +
                 '}';

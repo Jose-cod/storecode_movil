@@ -92,7 +92,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
 
             Toast.makeText(getBaseContext(),remoteMessage.getNotification().getTitle()+claveTransaccion+"Total pagado"+totalPagado,Toast.LENGTH_LONG).show();
-            System.out.println("Recibiendo notificacion en primer plano");
+            //System.out.println("Recibiendo notificacion en primer plano");
             System.out.println("Clave"+claveTransaccion);
             System.out.println("Tus productos");
             listItem.forEach(product ->{
@@ -110,7 +110,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     "ITEMS PENDIENTES POR GUARDAR"
             );
 
-            SharedPref.guardarNotificacionDescartada(getBaseContext(),notificationToDevice);
+            //SharedPref.guardarNotificacionDescartada(getBaseContext(),notificationToDevice);
 
         }
 

@@ -13,6 +13,8 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.example.storecode_android.Presenter.UserPresenter;
 import com.example.storecode_android.R;
+import com.example.storecode_android.entidades.NotificationToDevice;
+import com.example.storecode_android.entidades.ReqItemProduct;
 import com.example.storecode_android.entidades.TokenFCM;
 import com.example.storecode_android.utils.Constantes;
 import com.example.storecode_android.utils.LogFile;
@@ -20,9 +22,14 @@ import com.example.storecode_android.utils.SharedPref;
 import com.example.storecode_android.view.SplashScreenActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.apache.log4j.Logger;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -47,24 +54,67 @@ public class NotificacionFirebaseMessagingService extends FirebaseMessagingServi
                 //Primero verifica si los datos enviados son un ID y un AppID
                 switch (remoteMessage.getData().get("message")) {
                     case "Notificacion":
-                        String app_id = remoteMessage.getData().get("body");
-                        String app_name = remoteMessage.getData().get("title");
+                        String claveTransaccion= remoteMessage.getData().get("claveTransaccion");
+                        Double totalPagado = Double.parseDouble(remoteMessage.getData().get("totalVendido"));
+                        String body = remoteMessage.getData().get("body");
+                        String title = remoteMessage.getData().get("title");
                         log.info("Pruebas Notificación Recibida: " + remoteMessage.getData().get("claveTransaccion") + " - " + remoteMessage.getData().get("totalVendido"));
 
                         System.out.println("Pruebas Notificación Recibida: " + remoteMessage.getData().get("claveTransaccion") + " - " + remoteMessage.getData().get("totalVendido"));
 
-                        /*Notification notification = new NotificationCompat.Builder(getBaseContext())
-                                .setContentTitle(app_name)
-                                .setContentText(app_id)
-                                .setSmallIcon(R.drawable.ic_notification)
-                                .build();
-                        NotificationManagerCompat manager = NotificationManagerCompat.from(getBaseContext());
-                        manager.notify(*//*notification id*//*0, notification);*/
+                        String items= remoteMessage.getData().get("items");
+
+                        System.out.println("Imprimiendo items---------------");
+                        String productosComprados= items.substring(1,(items.length()-1));
+                        System.out.println(items);
+                        System.out.println("productos comprados:"+ productosComprados);
+
+
+
+
+                        /*Type listType = new TypeToken<List<ReqItemProduct>>(){}.getType();
+                        List<ReqItemProduct> listItem  = new Gson().fromJson(productosComprados, listType);
+
+                        System.out.println("Clave"+claveTransaccion);
+                        System.out.println("Tus productos");
+                        listItem.forEach(product ->{
+                            System.out.println(product.getDescription());
+                            System.out.println(product.getPrice());
+                        });*/
+
+                        String idUsuario= SharedPref.obtenerIdUsuario(getBaseContext());
+                        NotificationToDevice notificationToDevice = new NotificationToDevice(
+                                Integer.parseInt(idUsuario),
+                                null,
+                                claveTransaccion,
+                                totalPagado,
+                                //items o productos comprados: este es un string
+                                productosComprados
+                        );
+
+                        //ArrayList<NotificationToDevice> notificationToDeviceList= new ArrayList<>();
+
+                        String currentNotification= SharedPref.obtenerNotificacionDescartada(getBaseContext());
+                        System.out.println("currentNotification:"+currentNotification);
+
+                        if(!currentNotification.equals("Vacio")){
+                            Type listType2 = new TypeToken<List<NotificationToDevice>>(){}.getType();
+                            ArrayList<NotificationToDevice> listNotifications = new Gson().fromJson(currentNotification, listType2);
+                            listNotifications.add(notificationToDevice);
+
+                            SharedPref.guardarNotificacionDescartada(getBaseContext(),listNotifications);
+                        }else{
+                            ArrayList<NotificationToDevice> listNotification = new ArrayList<>();
+                            listNotification.add(notificationToDevice);
+                            SharedPref.guardarNotificacionDescartada(getBaseContext(),listNotification);
+                        }
+
+
 
 
                         Intent intent = new Intent(getApplicationContext(), SplashScreenActivity.class);
-                        intent.putExtra("claveTransaccion", app_name);
-                        intent.putExtra("totalVendido", app_id);
+                        /*intent.putExtra("claveTransaccion", app_name);
+                        intent.putExtra("totalVendido", app_id);*/
 
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
@@ -77,7 +127,7 @@ public class NotificacionFirebaseMessagingService extends FirebaseMessagingServi
                                 .setSmallIcon(R.mipmap.ic_launcher)
                                 .setTicker(Constantes.NOTIFICATION_DESCRIPTION)
                                 .setContentTitle(Constantes.APLICATION_NAME)
-                                .setContentText(app_name)
+                                .setContentText(title)
                                 .setContentInfo(Constantes.NOTIFICATION_DESCRIPTION)
                                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                                 .setContentIntent(pendingIntent);
@@ -139,10 +189,13 @@ public class NotificacionFirebaseMessagingService extends FirebaseMessagingServi
         String idUsuario= SharedPref.obtenerIdUsuario(getBaseContext());
         UserPresenter userPresenter= new UserPresenter();
         SharedPref.guardarTokenFCM(this,token);
-        userPresenter.guardarUsuarioTokenFCM(new TokenFCM(
-                Integer.parseInt(idUsuario),
-                token
-        ));
+
+        if(!idUsuario.equals("null")){
+            userPresenter.guardarUsuarioTokenFCM(new TokenFCM(
+                    Integer.parseInt(idUsuario),
+                    token
+            ));
+        }
     }
 
 }

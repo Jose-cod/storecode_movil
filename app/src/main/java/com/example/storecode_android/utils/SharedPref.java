@@ -8,6 +8,8 @@ import com.example.storecode_android.entidades.NotificationToDevice;
 
 import org.apache.log4j.Logger;
 
+import java.util.List;
+
 import static com.example.storecode_android.utils.Constantes.ID_PREFERENCE;
 import static com.example.storecode_android.utils.Constantes.TOKEN_FCM;
 
@@ -176,9 +178,9 @@ public class SharedPref {
 
 
 
-    public static void guardarNotificacionDescartada(final Context context, NotificationToDevice notificacion_descartada ) {
+    public static void guardarNotificacionDescartada(final Context context, List<NotificationToDevice> notificacions ) {
         inicializaPreferencias(context);
-        sharedPreferencesEdit.putString(Constantes.SHAR_PREF_NOTIFICACIONES_DESCARTADAS, notificacion_descartada.toString());
+        sharedPreferencesEdit.putString(Constantes.SHAR_PREF_NOTIFICACIONES_DESCARTADAS, notificacions.toString());
         sharedPreferencesEdit.commit();
     }
 

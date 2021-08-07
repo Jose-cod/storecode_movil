@@ -382,6 +382,7 @@ public class MainDrawerActivity extends AppCompatActivity {
                             Double.parseDouble(totalVendido.toString()),
                             listProductoCarrito.toString()
                     ));
+                    //enviar notificacion
 
                     //String claveTransaccion = getRandomString(10);
                     Venta venta =new Venta(

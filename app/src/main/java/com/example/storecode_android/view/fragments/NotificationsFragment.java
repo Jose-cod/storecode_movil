@@ -26,10 +26,13 @@ import com.example.storecode_android.utils.SharedPref;
 import com.example.storecode_android.view.MainDrawerActivity;
 import com.example.storecode_android.view.adapters.ModeloAdapterNotificaciones;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.apache.log4j.Logger;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -112,10 +115,10 @@ public class NotificationsFragment extends Fragment {
             contenedor_principal = view.findViewById(R.id.contenedor_principal);
             recyclerView = view.findViewById(R.id.activity_notificaciones_recyclerView);
 
-            NotificationToDevice notificacion_descartada;
             String datosNotificaciones = SharedPref.obtenerNotificacionDescartada(getContext());
 
             System.out.println("NOTIFICACION ACTUAL"+ datosNotificaciones);
+
             if(datosNotificaciones.equals("Vacio")){
                 layout_notificaciones.setVisibility(View.VISIBLE);
                 layout_fondo_notificaciones_recycler.setVisibility(View.GONE);
@@ -125,13 +128,15 @@ public class NotificationsFragment extends Fragment {
                 layout_fondo_notificaciones_recycler.setVisibility(View.VISIBLE);
                 contenedor_principal.setBackgroundColor(getActivity().getColor(R.color.blanco));
 
-                notificacion_descartada= gson.fromJson(datosNotificaciones, NotificationToDevice.class);
+                Type listType;
+                listType = new TypeToken<List<NotificationToDevice>>(){}.getType();
+                ArrayList<NotificationToDevice> notifications= gson.fromJson(datosNotificaciones, listType);
 
 
-                log.info("Datos Notificaciones2:" + notificacion_descartada.getClaveTransaccion());
-                log.info("ID App:" + notificacion_descartada.getClaveTransaccion());
-                notificacion_descartadas = new ArrayList<>();
-                notificacion_descartadas.add(notificacion_descartada);
+                log.info("Datos Notificaciones2:" + notifications.get(0));
+                //log.info("ID App:" + notificacion_descartada.getClaveTransaccion());
+                notificacion_descartadas = notifications;
+                //notificacion_descartadas.add(notificacion_descartada);
                 recyclerView.setVisibility(View.VISIBLE);
                 recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
                 ModeloAdapterNotificaciones adapter = new ModeloAdapterNotificaciones(notificacion_descartadas, getActivity(), recyclerView);
