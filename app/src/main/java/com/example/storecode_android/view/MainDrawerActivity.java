@@ -441,12 +441,15 @@ public class MainDrawerActivity extends AppCompatActivity {
                     final MercadoPagoError mercadoPagoError =
                             (MercadoPagoError) data.getSerializableExtra(MercadoPagoCheckout.EXTRA_ERROR);
                     //tvResults.setText("Error: " +  mercadoPagoError.getMessage());
-                    System.out.println("Error: " +  mercadoPagoError.getMessage());
-                    Toast.makeText(this,"Error"+mercadoPagoError.getMessage(),Toast.LENGTH_SHORT).show();
+                    System.out.println("Error al realizar el pago:---------------------------------------------------------------------");
+                    System.out.println("Error: " + mercadoPagoError.getMessage());
+                    Toast.makeText(this, "Error" + mercadoPagoError.getMessage(), Toast.LENGTH_SHORT).show();
                     //Resolve error in checkout
                 } else {
                     //Resolve canceled checkout
                 }
+
+
             }
 
 

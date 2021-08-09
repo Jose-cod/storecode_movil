@@ -3,6 +3,7 @@ package com.example.storecode_android.view.adapters;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,7 @@ import com.example.storecode_android.utils.LogFile;
 import com.example.storecode_android.utils.SharedPref;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.squareup.picasso.Picasso;
 
 import org.apache.log4j.Logger;
 
@@ -82,20 +84,26 @@ public class ModeloAdapterNotificaciones extends RecyclerView.Adapter<HolderMode
 
 
 
-        holder.tvTituloApp.setText(modelo.getClaveTransaccion());
+        holder.tvTituloApp.setText("Clave transacción: \n"+modelo.getClaveTransaccion());
 
-        String description="Productos";
-
-        for (ReqItemProduct productoComprado: productosComprados) {
-            description= description+ "\n"+productoComprado.getDescription()+"\n"+
-                    "Cantidad: "+productoComprado.getQuantity()+
-                    "\n"+"Precio Unitario"+productoComprado.getPrice();
+        if(productosComprados.get(0).getImagenProducto()!=null){
+            Picasso.get().load(Uri.parse(productosComprados.get(0).getImagenProducto()))
+                    .into(holder.ivModelo);
         }
 
-        description= description+"\n"+modelo.getTotalVendido().toString();
+        String description="Detalles de tu compra";
+
+        for (ReqItemProduct productoComprado: productosComprados) {
+            description= description+ "\n"+"Producto: "+productoComprado.getNombreProducto()+"\n"+
+                    "Cantidad: "+productoComprado.getQuantity()+
+                    "\n"+"Precio Unitario: $"+productoComprado.getPrice();
+        }
+
+        //description= description+"\n"+modelo.getTotalVendido().toString();
 
         holder.tvDescripcion.setText(description);
-        holder.tv_hora.setText("Hora");
+        holder.tvPrice.setText("Total: $"+modelo.getTotalVendido().toString());
+        holder.tv_hora.setText("Fecha");
 
         holder.item_card_view.setOnClickListener(new View.OnClickListener() {
             @Override

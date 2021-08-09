@@ -49,8 +49,6 @@ public class NotificacionFirebaseMessagingService extends FirebaseMessagingServi
             //Verificacion parametros enviados desde el Postman o Tapps WEB
             try {
 
-
-
                 //Primero verifica si los datos enviados son un ID y un AppID
                 switch (remoteMessage.getData().get("message")) {
                     case "Notificacion":

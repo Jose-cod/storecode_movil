@@ -20,7 +20,7 @@ public class HolderModeloNotificaciones extends RecyclerView.ViewHolder{
 
     public final LinearLayout item_card_view;
     public final ImageView ivModelo;
-    public final TextView tvTituloApp, tvDescripcion, tv_hora;
+    public final TextView tvTituloApp, tvDescripcion, tv_hora,tvPrice;
 
     public HolderModeloNotificaciones(View itemView) {
         super(itemView);
@@ -29,5 +29,6 @@ public class HolderModeloNotificaciones extends RecyclerView.ViewHolder{
         tvTituloApp = itemView.findViewById(R.id.tvTitulo);
         tvDescripcion = itemView.findViewById(R.id.tvDescripcion);
         tv_hora = itemView.findViewById(R.id.tv_hora);
+        tvPrice= itemView.findViewById(R.id.tvPrice);
     }
 }

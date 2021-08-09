@@ -117,9 +117,12 @@ public class ProductsInCartAdapter extends RecyclerView.Adapter<HolderProductsIn
                 producto.getIdproductocarrito(),
                 producto.getIdCarrito(),
                 producto.getIdUsuario(),
+                producto.getNombreProducto(),
                 producto.getDesProducto(),
+                producto.getImagenProducto(),
                 producto.getPrecioUnitarioProducto(),
                 quantity.intValue(),
+                //"test_user_91638065@testuser.com",
                 //reemplazar por el user(comprador) email
                 userData.getEmailUsuario(),
                 "Vacio"
@@ -268,18 +271,6 @@ public class ProductsInCartAdapter extends RecyclerView.Adapter<HolderProductsIn
         String userString = SharedPref.obtenerVendedor(context);
         return new Gson().fromJson(userString,RespUserData.class);
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

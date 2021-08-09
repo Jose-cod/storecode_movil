@@ -6,7 +6,9 @@ public class ReqItemProduct {
     Integer idProductoCarrito;
     Integer idCarrito;
     Integer idVendedor;
+    String nombreProducto;
     String description;
+    String imagenProducto;
     Double price;
     Integer quantity;
     String clientEmail;
@@ -17,12 +19,14 @@ public class ReqItemProduct {
 
     }
 
-    public ReqItemProduct(Integer idProducto, Integer idProductoCarrito, Integer idCarrito, Integer idVendedor, String description, Double price, Integer quantity, String clientEmail, String accessToken) {
+    public ReqItemProduct(Integer idProducto, Integer idProductoCarrito, Integer idCarrito, Integer idVendedor, String nombreProducto,String description,String imagenProducto, Double price, Integer quantity, String clientEmail, String accessToken) {
         this.idProducto = idProducto;
         this.idProductoCarrito = idProductoCarrito;
         this.idCarrito = idCarrito;
         this.idVendedor = idVendedor;
+        this.nombreProducto = nombreProducto;
         this.description = description;
+        this.imagenProducto = imagenProducto;
         this.price = price;
         this.quantity = quantity;
         this.clientEmail = clientEmail;
@@ -59,6 +63,22 @@ public class ReqItemProduct {
 
     public void setIdVendedor(Integer idVendedor) {
         this.idVendedor = idVendedor;
+    }
+
+    public String getNombreProducto() {
+        return nombreProducto;
+    }
+
+    public void setNombreProducto(String nombreProducto) {
+        this.nombreProducto = nombreProducto;
+    }
+
+    public String getImagenProducto() {
+        return imagenProducto;
+    }
+
+    public void setImagenProducto(String imagenProducto) {
+        this.imagenProducto = imagenProducto;
     }
 
     public String getDescription() {
@@ -102,8 +122,8 @@ public class ReqItemProduct {
     }
 
     //Revisar que no lance otros errores
-    @Override
-    public String toString() {
+
+    public String toStringv1() {
         return "{" +
                 "\"idProducto\":" + idProducto +
                 ", \"idProductoCarrito\":" + idProductoCarrito +
@@ -117,7 +137,22 @@ public class ReqItemProduct {
                 '}';
     }
 
-
+    @Override
+    public String toString() {
+        return "{" +
+                "\"idProducto\":" + idProducto +
+                ", \"idProductoCarrito\":" + idProductoCarrito +
+                ", \"idCarrito\":" + idCarrito +
+                ", \"idVendedor\":" + idVendedor +
+                ", \"nombreProducto\":\"" + nombreProducto + '\"' +
+                ", \"description\":\"" + description + '\"' +
+                ", \"imagenProducto\":\"" + imagenProducto + '\"' +
+                ", \"price\":" + price +
+                ", \"quantity\":" + quantity +
+                ", \"clientEmail\":\"" + clientEmail + '\"' +
+                ", \"accessToken\":\"" + accessToken + '\"' +
+                '}';
+    }
 
     /*
     {
