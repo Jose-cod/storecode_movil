@@ -68,7 +68,8 @@
         <action
             android:id="@+id/toProfileLogedFragment"
             app:destination="@id/navProfileLogedFragment"
-            app:popEnterAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"
             app:popUpTo="@id/navProfileLogedFragment"
             app:popUpToInclusive="true" />
     </fragment>

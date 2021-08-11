@@ -106,4 +106,7 @@ public class ModeloAdapterPurchase extends RecyclerView.Adapter<HolderModeloPurc
     public int getItemCount() {
         return modeloList.size();
     }
+
+
+
 }

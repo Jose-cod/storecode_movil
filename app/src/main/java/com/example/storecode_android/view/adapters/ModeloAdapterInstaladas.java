@@ -22,6 +22,7 @@ import com.example.storecode_android.R;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.storecode_android.entidades.ReqItemProduct;
 import com.example.storecode_android.entidades.RespGetProductByUser;
 import com.example.storecode_android.entidades.RespObtenerProducto;
 import com.example.storecode_android.utils.LogFile;
@@ -90,7 +91,36 @@ public class ModeloAdapterInstaladas extends RecyclerView.Adapter<HolderModeloIn
 
     @Override
     public Filter getFilter() {
-        return null;
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                final String charString = charSequence.toString().toLowerCase();
+                if (charString.isEmpty()) {
+                    mFilteredList = modeloList;
+                } else {
+                    ArrayList<RespObtenerProducto> filteredList = new ArrayList<>();
+                    for (RespObtenerProducto modelo : modeloList) {
+                        if (modelo.getNombreProducto().toLowerCase().startsWith(charString)) {
+                            filteredList.add(modelo);
+                        } else if (modelo.getNombreProducto().toLowerCase().contains(charString)) {
+                            filteredList.add(modelo);
+                        }
+                    }
+                    mFilteredList = filteredList;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = mFilteredList;
+                return filterResults;
+            }
+
+            @SuppressWarnings("unchecked")
+            @Override
+            protected void publishResults(CharSequence charSequence,
+                                          FilterResults filterResults) {
+                mFilteredList = (ArrayList<RespObtenerProducto>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     @NonNull
@@ -99,7 +129,7 @@ public class ModeloAdapterInstaladas extends RecyclerView.Adapter<HolderModeloIn
 
         View view = null;
         view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_item_modelos_instaladas, parent, false);
-
+        filtrarModelos();
         //filtrarModelos();
         return new HolderModeloInstaladas(view);
 
@@ -107,7 +137,7 @@ public class ModeloAdapterInstaladas extends RecyclerView.Adapter<HolderModeloIn
 
     @Override
     public void onBindViewHolder(@NonNull HolderModeloInstaladas holder, int position) {
-        RespObtenerProducto producto= modeloList.get(position);
+        RespObtenerProducto producto= mFilteredList.get(position);
         System.out.println("----------------");
         System.out.printf("OnBindViewHolder");
         System.out.println(producto.getNombreProducto());
@@ -134,6 +164,8 @@ public class ModeloAdapterInstaladas extends RecyclerView.Adapter<HolderModeloIn
         });
 
 
+
+
         //Toast.makeText(context,"EL producto que seleccionaste es:"+producto.getNombreProducto()+"y su id es:"+producto.getIdProducto(),Toast.LENGTH_SHORT).show();
 
         //ENVIAR SIG SERVICIO
@@ -150,7 +182,7 @@ public class ModeloAdapterInstaladas extends RecyclerView.Adapter<HolderModeloIn
     public int getItemCount() {
         System.out.println("---------getItemCount de modelo instaladas------------");
         System.out.println(modeloList.size());
-        return modeloList.size();
+        return mFilteredList.size();
     }
 
     public void updateData(List<RespObtenerProducto> data){
@@ -158,8 +190,25 @@ public class ModeloAdapterInstaladas extends RecyclerView.Adapter<HolderModeloIn
 
         modeloList.clear();
         modeloList.addAll(data);
+        mFilteredList=modeloList;
         System.out.println(modeloList);
         notifyDataSetChanged();
+    }
+
+
+    public void filtrarModelos() {
+        msearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                getFilter().filter(query);
+                return false;
+            }
+        });
     }
 
     //DetalleAplicacionesInstaladas mdetalleAplicacionesInstaladas;

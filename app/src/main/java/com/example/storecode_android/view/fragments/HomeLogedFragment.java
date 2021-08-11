@@ -152,6 +152,8 @@ public class HomeLogedFragment extends Fragment implements ModeloAdapterListener
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(modeloAdapterInstaladas);
 
+        //modeloAdapterInstaladas.filtrarModelos();
+
         observePresenter();
     }
 
