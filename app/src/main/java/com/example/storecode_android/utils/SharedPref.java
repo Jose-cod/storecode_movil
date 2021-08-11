@@ -217,6 +217,26 @@ public class SharedPref {
 
     //Bandera de Notificaciones Activas
 
+    //Shared para guardar y consultar detalle de la compra
+
+    public static void guardarNotificacionCompra(final Context context, NotificationToDevice notificacions) {
+        inicializaPreferencias(context);
+        sharedPreferencesEdit.putString(Constantes.SHAR_PREF_NOTIFICATION_COMPRA, notificacions.toString());
+        sharedPreferencesEdit.commit();
+    }
+
+    public static String obtenerNotificacionCompra(final Context context) {
+        inicializaPreferencias(context);
+        return sharedPreferences.getString(Constantes.SHAR_PREF_NOTIFICATION_COMPRA, "Vacio");
+    }
+
+    public static void deleteNotificacionCompra(final Context context) {
+        log.info("Notificacion Eliminada");
+        inicializaPreferencias(context);
+        sharedPreferencesEdit.remove(Constantes.SHAR_PREF_NOTIFICATION_COMPRA);
+        sharedPreferencesEdit.commit();
+    }
+
 
 
 

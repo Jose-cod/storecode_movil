@@ -53,6 +53,7 @@ public class NotificacionFirebaseMessagingService extends FirebaseMessagingServi
                 switch (remoteMessage.getData().get("message")) {
                     case "Notificacion":
                         String claveTransaccion= remoteMessage.getData().get("claveTransaccion");
+                        String idVendedor= remoteMessage.getData().get("idVendedor");
                         Double totalPagado = Double.parseDouble(remoteMessage.getData().get("totalVendido"));
                         String body = remoteMessage.getData().get("body");
                         String title = remoteMessage.getData().get("title");
@@ -84,6 +85,7 @@ public class NotificacionFirebaseMessagingService extends FirebaseMessagingServi
                         NotificationToDevice notificationToDevice = new NotificationToDevice(
                                 Integer.parseInt(idUsuario),
                                 null,
+                                Integer.parseInt(idVendedor),
                                 claveTransaccion,
                                 totalPagado,
                                 //items o productos comprados: este es un string

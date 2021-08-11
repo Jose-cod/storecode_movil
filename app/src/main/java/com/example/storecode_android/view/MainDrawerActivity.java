@@ -129,6 +129,7 @@ public class MainDrawerActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction().replace(R.id.main_contenedor, notificationsFragment).commit();
 
 
+
                     //btn_notificaciones.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_notifications_white_24dp));
                     btn_notificaciones.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_notification));
 
@@ -378,6 +379,7 @@ public class MainDrawerActivity extends AppCompatActivity {
                     userPresenter.sendNotificationToDevice(new NotificationToDevice(
                             Integer.parseInt(idUsuario),
                             tokenFCM,
+                            listProductoCarrito.get(0).getIdVendedor(),
                             payment.getId().toString(),
                             Double.parseDouble(totalVendido.toString()),
                             listProductoCarrito.toString()
@@ -397,11 +399,6 @@ public class MainDrawerActivity extends AppCompatActivity {
                     );
 
                     carritoPresenter.createVenta(venta, carritoVenta);
-
-
-
-
-
 
                     try{
 

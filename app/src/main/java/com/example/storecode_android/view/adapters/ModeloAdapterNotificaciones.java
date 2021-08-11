@@ -2,6 +2,7 @@ package com.example.storecode_android.view.adapters;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,6 +16,10 @@ import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.storecode_android.R;
@@ -22,6 +27,8 @@ import com.example.storecode_android.entidades.NotificationToDevice;
 import com.example.storecode_android.entidades.ReqItemProduct;
 import com.example.storecode_android.utils.LogFile;
 import com.example.storecode_android.utils.SharedPref;
+import com.example.storecode_android.view.fragments.DetalleCompraFragment;
+import com.example.storecode_android.view.fragments.NotificationsFragment;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
@@ -46,7 +53,9 @@ import retrofit2.Callback;
 public class ModeloAdapterNotificaciones extends RecyclerView.Adapter<HolderModeloNotificaciones> implements Filterable {
 
     private static final Logger log = LogFile.getLogger(ModeloAdapterNotificaciones.class);
+
     private final Activity context;
+    private final FragmentManager fragmentManager;
     private final List<NotificationToDevice> modeloList;
     private List<NotificationToDevice> mFilteredList;
     private int aux;
@@ -60,8 +69,9 @@ public class ModeloAdapterNotificaciones extends RecyclerView.Adapter<HolderMode
 
     //DetalleAplicacionesInstaladas mdetalleAplicacionesInstaladas;
 
-    public ModeloAdapterNotificaciones(List<NotificationToDevice> modeloList, Activity context, RecyclerView recyclerView) {
+    public ModeloAdapterNotificaciones(List<NotificationToDevice> modeloList, Activity context, FragmentManager fragmentManager, RecyclerView recyclerView) {
         this.context = context;
+        this.fragmentManager = fragmentManager;
         this.modeloList = modeloList;
         this.mFilteredList = modeloList;
         this.mrecyclerView = recyclerView;
@@ -103,16 +113,43 @@ public class ModeloAdapterNotificaciones extends RecyclerView.Adapter<HolderMode
 
         holder.tvDescripcion.setText(description);
         holder.tvPrice.setText("Total: $"+modelo.getTotalVendido().toString());
-        holder.tv_hora.setText("Fecha");
 
-        holder.item_card_view.setOnClickListener(new View.OnClickListener() {
+
+        holder.btnVerDetalle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Preguntar que hacer cuando el usuario da click en el item  TO-DO
+               /* NotificationsFragmentDirections.ToDetalleCompraFragment action= NotificationsFragmentDirections.toDetalleCompraFragment(modelo);
+                Navigation.findNavController(v).navigate(action);
+
+                System.out.println(modelo.toString());*/
+            }
+        });
 
 
-                /*log.info("ID de la aplicacion de la notificacion: "+ modelo.getAppID());
-                consumoServicioDetalle(Integer.parseInt(modelo.getAppID()));*/
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPref.guardarNotificacionCompra(context, modelo);
+                System.out.println("--------------modelo--------------------------");
+                System.out.println(modelo.toString());
+
+                DetalleCompraFragment detalleCompraFragment = new DetalleCompraFragment();
+
+                context.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                fragmentManager.beginTransaction().replace(R.id.main_contenedor, detalleCompraFragment).commit();
+
+                //context.getParent().getFragmentManager().beginTransaction().replace(R.id.main_contenedor, detalleCompraFragment).commit();
+            }
+        });
+
+        /*holder.item_card_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Navegar hacia la pantalla "Detalle de la compra"
+
+
+                //log.info("ID de la aplicacion de la notificacion: "+ modelo.getItems());
+                //consumoServicioDetalle(Integer.parseInt(modelo.getAppID()));
 
                 //Elimino la notificacion seleccionada
                 SharedPref.deleteNotificacionDescartada(context);
@@ -123,7 +160,7 @@ public class ModeloAdapterNotificaciones extends RecyclerView.Adapter<HolderMode
                 notifyDataSetChanged();
 
             }
-        });
+        });*/
     }
 
     @Override

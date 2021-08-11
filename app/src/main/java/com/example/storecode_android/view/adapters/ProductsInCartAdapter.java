@@ -54,7 +54,7 @@ public class ProductsInCartAdapter extends RecyclerView.Adapter<HolderProductsIn
 
     private CarritoPresenter carritoPresenter;
     private LoginPresenter loginPresenter;
-    private List<ProductInCard> mFilteredList = modeloList;
+    //private List<ProductInCard> mFilteredList = modeloList;
 
     ProductPresenter productPresenter;
 
@@ -122,9 +122,9 @@ public class ProductsInCartAdapter extends RecyclerView.Adapter<HolderProductsIn
                 producto.getImagenProducto(),
                 producto.getPrecioUnitarioProducto(),
                 quantity.intValue(),
-                //"test_user_91638065@testuser.com",
+                "test_user_91638065@testuser.com",
                 //reemplazar por el user(comprador) email
-                userData.getEmailUsuario(),
+                //userData.getEmailUsuario(),
                 "Vacio"
                 //userData.getEmailUsuario()
 

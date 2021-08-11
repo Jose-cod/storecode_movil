@@ -70,6 +70,8 @@ public class Constantes {
     public static final String PRODUCTO_IN_CARD="listProductoCarrito";
     public static final String SHAR_PREF_NOTIFICACIONES_DESCARTADAS= "notificaciones";
     public static final String SHAR_PREF_NOTIFICACIONES_ACTIVA= "notificaciones_activa";
+
+    public static final String SHAR_PREF_NOTIFICATION_COMPRA= "notificationCompra";
     //Constantes para firebase cloud messaging
     public static final String TOPIC_CLIENTS= "clientes";
 

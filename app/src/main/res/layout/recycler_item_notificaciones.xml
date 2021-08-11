@@ -11,11 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:background="@drawable/shape_background_cardview"
         android:elevation="@dimen/a20dp">
 
         <!--android:background="@drawable/btn_item_grid_marca"-->
         <LinearLayout
-            android:background="@color/blanco"
             android:orientation="horizontal"
             android:layout_width="0dp"
             android:layout_weight="3"
@@ -83,18 +83,21 @@
             android:layout_height="fill_parent"
             android:layout_weight="1">
 
-            <TextView
-                android:id="@+id/tv_hora"
+
+
+            <Button
+                android:id="@+id/btnVerDetalle"
+                android:layout_margin="@dimen/a8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/colorBackground"
+                android:textColor="@color/white"
+                android:text="Ver detalle"
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:fontFamily="@font/lato_regular_otf"
-                android:radius="@dimen/margin_h4"
-                android:text=""
-                android:textColor="@color/negro"
-                android:textSize="@dimen/text_h2" />
+                android:textAllCaps="false"
+                ></Button>
 
         </LinearLayout>
 

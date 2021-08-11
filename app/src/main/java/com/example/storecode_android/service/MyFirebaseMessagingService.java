@@ -82,6 +82,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if(remoteMessage.getData().size()>0){
             log.info("Message data payload: " + remoteMessage.getData());
             String claveTransaccion= remoteMessage.getData().get("claveTransaccion");
+            String idVendedor= remoteMessage.getData().get("idVendedor");
             Double totalPagado = Double.parseDouble(remoteMessage.getData().get("totalVendido"));
 
             String items= remoteMessage.getData().get("items");
@@ -105,6 +106,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             NotificationToDevice notificationToDevice = new NotificationToDevice(
                     Integer.parseInt(idUsuario),
                     null,
+                    Integer.parseInt(idVendedor),
                     claveTransaccion,
                     totalPagado,
                     "ITEMS PENDIENTES POR GUARDAR"

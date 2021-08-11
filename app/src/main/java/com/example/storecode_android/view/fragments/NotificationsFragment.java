@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -109,6 +110,8 @@ public class NotificationsFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_notifications,container,false);
 
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+
         try{
             layout_notificaciones = view.findViewById(R.id.layout_fondo_notificaciones);
             layout_fondo_notificaciones_recycler = view.findViewById(R.id.layout_fondo_notificaciones_recycler);
@@ -118,6 +121,8 @@ public class NotificationsFragment extends Fragment {
             String datosNotificaciones = SharedPref.obtenerNotificacionDescartada(getContext());
 
             System.out.println("NOTIFICACION ACTUAL"+ datosNotificaciones);
+
+
 
             if(datosNotificaciones.equals("Vacio")){
                 layout_notificaciones.setVisibility(View.VISIBLE);
@@ -139,7 +144,7 @@ public class NotificationsFragment extends Fragment {
                 //notificacion_descartadas.add(notificacion_descartada);
                 recyclerView.setVisibility(View.VISIBLE);
                 recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
-                ModeloAdapterNotificaciones adapter = new ModeloAdapterNotificaciones(notificacion_descartadas, getActivity(), recyclerView);
+                ModeloAdapterNotificaciones adapter = new ModeloAdapterNotificaciones(notificacion_descartadas, getActivity(),fragmentManager, recyclerView);
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setAdapter(adapter);
             }
