@@ -137,6 +137,8 @@ public class CarritoPresenter {
                         System.out.println("");
                         Log.d("CARRITO APP PRESENTER-GET ID CARRITO","RESPONSE EXITOSO");
                         System.out.println(response.body());
+
+
                         insertProductInCart(new ProductoCarrito(
                                 idProducto,
                                 response.body().getIdCarrito(),
@@ -225,6 +227,14 @@ public class CarritoPresenter {
                 if (response != null && response.code() == RESP_CODE_WEB_OK) {
                     //AnimacionesGenerales.mostrarLoader(false, view, null, null);
 
+                    System.out.println(response.body());
+                    if(response.body().size()==0){
+                        System.out.println("La lista esta vacio:"+response.body().size());
+
+                        //logica para agregar nuevo carrito
+                    }else{
+                        System.out.println("La lista tiene este");
+                    }
 
                     try {
                         System.out.println("");

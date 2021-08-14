@@ -11,6 +11,7 @@ import com.example.storecode_android.R;
 import com.example.storecode_android.entidades.NotificationToDevice;
 import com.example.storecode_android.entidades.ReqMercadoPago;
 import com.example.storecode_android.entidades.RespMensaje;
+import com.example.storecode_android.entidades.RespObtenerProducto;
 import com.example.storecode_android.entidades.RespUserData;
 import com.example.storecode_android.entidades.TokenFCM;
 import com.example.storecode_android.service.RestClientService;
@@ -182,5 +183,48 @@ public class UserPresenter {
 
 
     }
+
+    /**
+     * Función encargada de enviar una notificación cuando el usuario publica un nuevo producto
+     */
+
+    public void sendNotificationToTopics(RespObtenerProducto producto){
+        System.out.println("--enviar notificación por tema--");
+        //obtener el id con el shared preferences
+        RestClientService api = new RestClientServiceImpl();
+        Call<String> call = api.sendNotificationToTopics(producto);
+
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if(response!=null && response.code()==RESP_CODE_WEB_OK){
+
+                    try{
+                        System.out.println("");
+                        Log.d("ENVIAR NOTIFICACION","RESPONSE EXITOSO");
+                        //Toast.makeText(view,response.body().getMensaje(),Toast.LENGTH_SHORT).show();
+
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                }else{
+                    System.out.println("Ocurrio un error al enviar la notificacion");
+                    Log.d("errorMessage", "Ocurrio un error al enviar la notificacion");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                t.printStackTrace();
+                System.out.println("Ocurrio un error al enviar la notificacion");
+                Log.d("errorMessage", "Ocurrio un error al enviar la notificacion");
+            }
+        });
+
+
+    }
+
+
 
 }

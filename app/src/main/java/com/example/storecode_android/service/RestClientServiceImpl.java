@@ -296,6 +296,11 @@ public class RestClientServiceImpl implements RestClientService {
         return restClient.sendNotificationTODevice(notificationToDevice);
     }
 
+    @Override
+    public Call<String> sendNotificationToTopics(RespObtenerProducto producto) {
+        return restClient.sendNotificationToTopics(producto);
+    }
+
 
 
 

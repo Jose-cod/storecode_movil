@@ -39,6 +39,7 @@ import com.example.storecode_android.view.fragments.CartLogedFragment;
 import com.example.storecode_android.view.fragments.NotificationsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mercadopago.android.px.core.MercadoPagoCheckout;
@@ -352,6 +353,7 @@ public class MainDrawerActivity extends AppCompatActivity {
 
 
                     listProductoCarrito.forEach(productoInCart -> {
+
                         idCarrito.set(productoInCart.getIdCarrito());
                         email.set(productoInCart.getClientEmail());
                         totalVendido.set(totalVendido.get() + productoInCart.getPrice() * productoInCart.getQuantity());
@@ -400,6 +402,10 @@ public class MainDrawerActivity extends AppCompatActivity {
 
                     carritoPresenter.createVenta(venta, carritoVenta);
 
+                    //suscribir a notificaciones
+                    String idVendedor = listProductoCarrito.get(0).getIdVendedor().toString();
+                    suscribeToVendor(idVendedor);
+
                     try{
 
                         String paymentType=payment.getPaymentTypeId();
@@ -429,6 +435,8 @@ public class MainDrawerActivity extends AppCompatActivity {
                     String productosVendidos = SharedPref.obtenerListProductInCard(this);
                     System.out.println("Productos vendidos\n"+productosVendidos);
 
+                    //llamar al método para suscribir al cliente con el id del vendedor
+
 
                 }
                 //Done!
@@ -451,6 +459,20 @@ public class MainDrawerActivity extends AppCompatActivity {
 
 
         }
+    }
+
+
+    public void suscribeToVendor(String idVendedor){
+        FirebaseMessaging.getInstance().subscribeToTopic(idVendedor)
+                .addOnCompleteListener(task -> {
+                    String msg = "Ocurrio  un error al suscribir";
+                    if (!task.isSuccessful()) {
+                        msg = "Ocurrio un error al suscribir";
+                        FirebaseMessaging.getInstance().unsubscribeFromTopic(idVendedor);
+                        suscribeToVendor(idVendedor);
+                    }
+                    log.info("Result: "+ msg);
+                });
     }
 
 

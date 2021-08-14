@@ -59,6 +59,7 @@ public class Constantes {
     public static final String REST_SERVICE_IMERCADOPAGO = "user/mpagocredentials";
     public static final String REST_SERVICE_TOKEN_FCM= "tokenfcm";
     public static final String REST_SERVICE_PUSH_TO_DEVICE= "push_notification";
+    public static final String REST_SERVICE_PUSH_TO_TOPICS = "push_notification/bytopic";
 
     //Constantes del Share preferences
     public static final String PRODUCTOS="productos";

@@ -68,9 +68,6 @@ public class NotificacionFirebaseMessagingService extends FirebaseMessagingServi
                         System.out.println(items);
                         System.out.println("productos comprados:"+ productosComprados);
 
-
-
-
                         /*Type listType = new TypeToken<List<ReqItemProduct>>(){}.getType();
                         List<ReqItemProduct> listItem  = new Gson().fromJson(productosComprados, listType);
 
@@ -145,15 +142,50 @@ public class NotificacionFirebaseMessagingService extends FirebaseMessagingServi
                         break;
 
                     //Segundo verifica si el dato enviado es Prueba que indica que abra SMA
-                    case "Prueba":
+                    case "NotificacionVendedor":
 
-                        try {
+                        String titleVendedor= remoteMessage.getData().get("title");
+                        String descriptionVendedor = remoteMessage.getData().get("description");
+                        Intent intentVendedor = new Intent(getApplicationContext(), SplashScreenActivity.class);
+                        /*intent.putExtra("claveTransaccion", app_name);
+                        intent.putExtra("totalVendido", app_id);*/
+
+                        intentVendedor.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                        PendingIntent pendingIntentVendedor = PendingIntent.getActivity(getApplicationContext(), Constantes.NOTIFICATION_REQUEST_CODE, intentVendedor, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                        NotificationCompat.Builder notificationBuilderVendedor = new NotificationCompat.Builder(getApplicationContext(), "CHANNEL_RIFAO");
+                        notificationBuilderVendedor.setAutoCancel(true)
+                                .setDefaults(Notification.DEFAULT_ALL)
+                                .setWhen(System.currentTimeMillis())
+                                .setSmallIcon(R.mipmap.ic_launcher)
+                                .setTicker(Constantes.NOTIFICATION_DESCRIPTION)
+                                .setContentTitle(Constantes.APLICATION_NAME)
+                                .setContentText(titleVendedor)
+                                .setContentInfo(Constantes.NOTIFICATION_DESCRIPTION)
+                                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                                .setContentIntent(pendingIntentVendedor);
+
+
+                        CharSequence name2 = Constantes.NOTIFICATION_CHANNEL;
+                        String description2 = Constantes.NOTIFICATION_CHANNEL;
+                        int importance2 = NotificationManager.IMPORTANCE_HIGH;
+                        NotificationChannel channel2 = new NotificationChannel(Constantes.NOTIFICATION_CHANNEL, name2, importance2);
+                        channel2.setDescription(descriptionVendedor);
+
+                        NotificationManager notificationManager2 = getApplicationContext().getSystemService(NotificationManager.class);
+                        notificationManager2.createNotificationChannel(channel2);
+                        notificationManager2.notify(Constantes.NOTIFICATION_ID, notificationBuilderVendedor.build());
+
+
+
+                        /*try {
                             Intent intent2 = new Intent(getApplicationContext(), SplashScreenActivity.class);
                             intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             getApplicationContext().startActivity(intent2);
                         } catch (Exception e) {
                             e.printStackTrace();
-                        }
+                        }*/
 
                         break;
                     //Tercero verifica si el dato enviador es Remote que indica que abra el Servicio de Remote Config para otras aplicaciones diferentes a Precio Inteligente

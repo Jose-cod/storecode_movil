@@ -20,6 +20,7 @@
             android:layout_height="fill_parent">
 
             <ImageView
+                android:layout_marginTop="@dimen/a8dp"
                 android:id="@+id/ivModeloMyShopping"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/a100dp"
@@ -122,35 +123,7 @@
 
 
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="0.3"
-            android:layout_height="fill_parent"
-            android:orientation="vertical"
-            >
 
-            <ImageButton
-                android:id="@+id/btnEdit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_edit"
-                ></ImageButton>
-
-            <ImageButton
-                android:id="@+id/btnDelete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_delete"
-                ></ImageButton>
-
-            <ImageButton
-                android:id="@+id/btnAddImages"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_image"
-                ></ImageButton>
-
-        </LinearLayout>
 
     </LinearLayout>
 

@@ -170,6 +170,18 @@ public class ProductDetailFragment extends Fragment {
 
 
         btnAddTOCart.setOnClickListener(v -> {
+            //Primero consultar el id del vendedor del producto
+            //mandamos a preguntar si el carrito no esta vacio?
+            //al click en agregar al carrito
+            //pregunta si la lista esta vacia
+            //si esta vacia agrega un nuevo carrito
+            //se crea nuevo id carrito
+            //luego capturo id del carrito
+            //agregar el productocarrito
+            //!si es lcarrito no esta vacio?
+            //se captura el id del vendedor y preguntar si ese vendedor coincide con el elemento del carrito que ya esta creado
+            //preguntar si es el mismo vendedor, si no es el mismo se crea nuevo carrito
+
             String idUsuario = SharedPref.obtenerIdUsuario(getContext());
             Double cantidad = Double.parseDouble(String.valueOf(spinner.getSelectedItem()));
             carritoPresenter.insertCarrito(new ReqCarrito(

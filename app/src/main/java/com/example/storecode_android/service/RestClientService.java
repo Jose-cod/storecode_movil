@@ -64,6 +64,7 @@ import static com.example.storecode_android.utils.Constantes.REST_SERVICE_PRODUC
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_PRODUCTS_ON_SALE;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_PRODUCT_CART;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_PUSH_TO_DEVICE;
+import static com.example.storecode_android.utils.Constantes.REST_SERVICE_PUSH_TO_TOPICS;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_TOKEN_FCM;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_UPDATE_STOCK;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_UPLOAD_PRODUCT;
@@ -193,6 +194,11 @@ public interface RestClientService {
     //enviar notificacion a un dispositivo
     @POST(REST_SERVICE_PUSH_TO_DEVICE)
     Call<String> sendNotificationTODevice(@Body NotificationToDevice notificationToDevice);
+
+    //enviar notificacion por tema/topics
+
+    @POST(REST_SERVICE_PUSH_TO_TOPICS)
+    Call<String> sendNotificationToTopics(@Body RespObtenerProducto producto);
 
 
 

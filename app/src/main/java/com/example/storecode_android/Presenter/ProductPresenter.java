@@ -582,6 +582,12 @@ public class ProductPresenter {
                         System.out.println(response.body().toString());
                         System.out.println(response.code());
                         System.out.println("Producto saved");
+                        /*UserPresenter userPresenter = new UserPresenter();
+                        
+                        RespObtenerProducto producto1  =  new RespObtenerProducto(
+
+                        );
+                        userPresenter.sendNotificationToTopics();*/
                         Toast.makeText(view, "Producto registrado correctamente", Toast.LENGTH_SHORT).show();
                         if(view2!=null){
                             Navigation.findNavController(view2).navigate(RegisterProductFragmentDirections.toProfileLogedFragment());

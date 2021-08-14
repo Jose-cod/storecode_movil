@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG, msg);
                     Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();*/
                 });
-        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC_CLIENTS);
+        //FirebaseMessaging.getInstance().subscribeToTopic("100");
 
         //temas (topics)
     }
