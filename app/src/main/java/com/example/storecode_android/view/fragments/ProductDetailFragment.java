@@ -32,6 +32,7 @@ import com.example.storecode_android.Presenter.CarritoPresenter;
 import com.example.storecode_android.Presenter.LoginPresenter;
 import com.example.storecode_android.Presenter.ProductPresenter;
 import com.example.storecode_android.R;
+import com.example.storecode_android.entidades.ProductoCarrito;
 import com.example.storecode_android.entidades.ReqCarrito;
 import com.example.storecode_android.entidades.RespObtenerImagesDto;
 import com.example.storecode_android.entidades.RespObtenerProducto;
@@ -184,14 +185,22 @@ public class ProductDetailFragment extends Fragment {
 
             String idUsuario = SharedPref.obtenerIdUsuario(getContext());
             Double cantidad = Double.parseDouble(String.valueOf(spinner.getSelectedItem()));
-            carritoPresenter.insertCarrito(new ReqCarrito(
+
+            carritoPresenter.insertProductInCart(new ProductoCarrito(
+                    producto.getIdProducto(),
+                    Integer.parseInt(idUsuario),
+                    cantidad.intValue()
+            ));
+            /*carritoPresenter.insertCarrito(new ReqCarrito(
                     Integer.parseInt(idUsuario),
                     producto.getPrecioUnitarioProducto(),
                     0.0,
                     "1"
             ));
 
-            carritoPresenter.getIdCarrito(idUsuario,producto.getIdProducto(), cantidad.intValue());
+
+
+            carritoPresenter.getIdCarrito(idUsuario,producto.getIdProducto(), cantidad.intValue());*/
 
 
             /*if(carritoPresenter.idUsuario!=null){

@@ -185,7 +185,7 @@ public class CarritoPresenter {
                         System.out.println("");
                         Log.d("CARRITO APP PRESENTER-INSERT INTO CARRITO","RESPONSE EXITOSO");
                         System.out.println(response.body());
-                        refreshProductsInCart(productoCarrito.getIdCarrito().toString());
+                        //refreshProductsInCart(productoCarrito.getIdCarrito().toString());
 
                         Toast.makeText(view,response.body().getMensaje(),Toast.LENGTH_SHORT).show();
 
@@ -210,7 +210,7 @@ public class CarritoPresenter {
     }
 
     /**
-     * Description: Función encargada de traer los comentarios generales
+     * Description: Función encargada de traer los productos que estan en el carrito
      */
 
     public void getProductsInCart(String id) {
@@ -327,6 +327,8 @@ public class CarritoPresenter {
                         System.out.println(response.body().getId());
                         SharedPref.guardarIdPreference(view,response.body().getId());
                         String idPreference = response.body().getId();
+
+
                         SharedPref.guardarListProductInCard(context, reqItemProduct.toString());
                         RespUserData vendedor = getCurrentUser(context);
                         startMercadoPagoCheckout(context,idPreference, vendedor.getPk_mercadopago());
@@ -370,7 +372,7 @@ public class CarritoPresenter {
 
     //metodo para obtener el id preference del proceso de pago
 
-    public void createVenta(Venta venta, CarritoVenta carritoVenta){
+    public void createVenta(Venta venta,List<ReqItemProduct> listProductoCarrito){
 
         log.info("--consumir create venta--");
         RestClientService api = new RestClientServiceImpl();
@@ -388,10 +390,19 @@ public class CarritoPresenter {
                         System.out.println(response.body().getFolioVenta());
                         Integer folioVenta = response.body().getFolioVenta();
                         // Llamar aqui el metodo createcarrito
-                        createCarritoVenta(new CarritoVenta(
-                                carritoVenta.getIdCarrito(),
+                        //agregar la logica para asociar los productoscarritos a una venta a traves de la
+                        //tabla poductocarritoventa
+
+                        listProductoCarrito.forEach(productocarrito -> {
+                            createCarritoVenta(new CarritoVenta(
+                                    productocarrito.getIdProductoCarrito(),
+                                    folioVenta
+                            ));
+                        });
+                        /*createCarritoVenta(new CarritoVenta(
+                                0,
                                 folioVenta
-                        ));
+                        ));*/
 
 
 
@@ -435,7 +446,7 @@ public class CarritoPresenter {
                         System.out.println("");
                         Log.d("CARRITO APP PRESENTER- CREATE CARRITO-VENTA","RESPONSE EXITOSO");
 
-                        Toast.makeText(view,"Venta registrada", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(view,"Venta registrada", Toast.LENGTH_LONG).show();
                         //refreshProductsInCart(idUser);
                     }catch (Exception e){
                         System.err.println("Error al guardar carritoventa");

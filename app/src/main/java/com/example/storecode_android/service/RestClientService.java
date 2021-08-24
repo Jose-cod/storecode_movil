@@ -171,7 +171,7 @@ public interface RestClientService {
     @POST(REST_SERVICE_CREATE_VENTA)
     Call<RespFolioVenta> createVenta(@Body Venta venta);
 
-    //Request para insertar registro en carritoventa
+    //Request para insertar registro en productocarritoventa
 
     @POST(REST_SERVICE_CREATE_CARRITO_VENTA)
     Call<RespIdCarritoVenta> createCarritoVenta(@Body CarritoVenta carritoVenta);

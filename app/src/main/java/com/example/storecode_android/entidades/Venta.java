@@ -2,20 +2,44 @@ package com.example.storecode_android.entidades;
 
 public class Venta {
 
+    Integer idUsuario;
+    Integer idPaginaPago;
     String claveTransaccion;
     String paypalDatos;
     String correo;
     Double totalVendido;
+    String direccionEntrega;
 
     public Venta() {
     }
 
-    public Venta(String claveTransaccion, String paypalDatos, String correo, Double totalVendido) {
+    public Venta( Integer idUsuario, Integer idPaginaPago, String claveTransaccion, String paypalDatos, String correo, Double totalVendido, String direccionEntrega) {
 
+        this.idUsuario = idUsuario;
+        this.idPaginaPago = idPaginaPago;
         this.claveTransaccion = claveTransaccion;
         this.paypalDatos = paypalDatos;
         this.correo = correo;
         this.totalVendido = totalVendido;
+        this.direccionEntrega = direccionEntrega;
+    }
+
+
+
+    public Integer getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public Integer getIdPaginaPago() {
+        return idPaginaPago;
+    }
+
+    public void setIdPaginaPago(Integer idPaginaPago) {
+        this.idPaginaPago = idPaginaPago;
     }
 
     public String getClaveTransaccion() {
@@ -50,22 +74,37 @@ public class Venta {
         this.totalVendido = totalVendido;
     }
 
+    public String getDireccionEntrega() {
+        return direccionEntrega;
+    }
+
+    public void setDireccionEntrega(String direccionEntrega) {
+        this.direccionEntrega = direccionEntrega;
+    }
+
     @Override
     public String toString() {
         return "{" +
-                "claveTransaccion='" + claveTransaccion + '\'' +
+                "idUsuario=" + idUsuario +
+                ", idPaginaPago=" + idPaginaPago +
+                ", claveTransaccion='" + claveTransaccion + '\'' +
                 ", paypalDatos='" + paypalDatos + '\'' +
                 ", correo='" + correo + '\'' +
                 ", totalVendido=" + totalVendido +
+                ", direccionEntrega='" + direccionEntrega + '\'' +
                 '}';
     }
 
     /*
     {
-    "claveTransaccion": "hdadh222",
-    "paypalDatos":"usdhsaudhsa",
-    "correo" : "chend@gmail.com",
-    "totalVendido" : 200
+    "idProductoCarrito": 127,
+    "idUsuario":83,
+    "idPaginaPago":1,
+    "claveTransaccion": "7364982748",
+    "paypalDatos":"Vacio",
+    "correo" : "cheche1430@gmail.com",
+    "totalVendido" : 200,
+    "direccionEntrega":"Calle Anteros 603"
 }
      */
 }

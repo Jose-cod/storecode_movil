@@ -358,6 +358,7 @@ public class MainDrawerActivity extends AppCompatActivity {
                         email.set(productoInCart.getClientEmail());
                         totalVendido.set(totalVendido.get() + productoInCart.getPrice() * productoInCart.getQuantity());
                         productoInCart.getIdCarrito();
+                        System.out.println("-------idProductoCarrito---------");
                         System.out.println(productoInCart.getIdProductoCarrito());
                         System.out.println(productoInCart.getClientEmail());
                         System.out.println(productoInCart.getDescription());
@@ -390,17 +391,20 @@ public class MainDrawerActivity extends AppCompatActivity {
 
                     //String claveTransaccion = getRandomString(10);
                     Venta venta =new Venta(
+                            Integer.parseInt(idUsuario),
+                            1,
                             payment.getId().toString(),
                             "Vacio",
                             email.toString(),
-                            Double.parseDouble(totalVendido.toString())
+                            Double.parseDouble(totalVendido.toString()),
+                            "Calle Anteros 603"
                     );
-                    CarritoVenta carritoVenta = new CarritoVenta(
+                    /*CarritoVenta carritoVenta = new CarritoVenta(
                             Integer.parseInt(idCarrito.toString()),
                             0
-                    );
+                    );*/
 
-                    carritoPresenter.createVenta(venta, carritoVenta);
+                    carritoPresenter.createVenta(venta, listProductoCarrito);
 
                     //suscribir a notificaciones
                     String idVendedor = listProductoCarrito.get(0).getIdVendedor().toString();

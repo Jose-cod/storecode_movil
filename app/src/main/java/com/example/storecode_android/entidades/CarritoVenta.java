@@ -1,23 +1,23 @@
 package com.example.storecode_android.entidades;
 
 public class CarritoVenta {
-    Integer idCarrito;
+    Integer idProductoCarrito;
     Integer FolioVenta;
 
     public CarritoVenta() {
     }
 
-    public CarritoVenta(Integer idCarrito, Integer folioVenta) {
-        this.idCarrito = idCarrito;
+    public CarritoVenta(Integer idProductoCarrito, Integer folioVenta) {
+        this.idProductoCarrito = idProductoCarrito;
         FolioVenta = folioVenta;
     }
 
-    public Integer getIdCarrito() {
-        return idCarrito;
+    public Integer getIdProductoCarrito() {
+        return idProductoCarrito;
     }
 
-    public void setIdCarrito(Integer idCarrito) {
-        this.idCarrito = idCarrito;
+    public void setIdProductoCarrito(Integer idProductoCarrito) {
+        this.idProductoCarrito = idProductoCarrito;
     }
 
     public Integer getFolioVenta() {
@@ -31,14 +31,14 @@ public class CarritoVenta {
     @Override
     public String toString() {
         return "{" +
-                "idCarrito=" + idCarrito +
+                "idProductoCarrito=" + idProductoCarrito +
                 ", FolioVenta=" + FolioVenta +
                 '}';
     }
 
     /*
     {
-    "idCarrito": 8,
+    "idProductoCarrito": 8,
     "FolioVenta": 84
 }
      */
