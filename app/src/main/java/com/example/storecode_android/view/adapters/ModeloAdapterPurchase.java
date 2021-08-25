@@ -17,6 +17,7 @@ import com.example.storecode_android.R;
 import com.example.storecode_android.entidades.NotificationToDevice;
 import com.example.storecode_android.entidades.ReqItemProduct;
 import com.example.storecode_android.utils.LogFile;
+import com.example.storecode_android.view.fragments.MyShoppinFragmentDirections;
 import com.squareup.picasso.Picasso;
 
 import org.apache.log4j.Logger;
@@ -100,6 +101,8 @@ public class ModeloAdapterPurchase extends RecyclerView.Adapter<HolderModeloPurc
         holder.tvDescripcion.setText("Descripción: "+modelo.getDescription());
         //holder.tvCantidad.setText(modelo.getQuantity());
         holder.tvPrice.setText("Precio unitario: $"+modelo.getPrice().toString());
+
+
     }
 
     @Override

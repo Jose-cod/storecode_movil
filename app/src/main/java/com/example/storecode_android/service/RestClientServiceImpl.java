@@ -6,6 +6,8 @@ import com.example.storecode_android.entidades.Category;
 import com.example.storecode_android.entidades.NotificationToDevice;
 import com.example.storecode_android.entidades.ProductInCard;
 import com.example.storecode_android.entidades.ProductoCarrito;
+import com.example.storecode_android.entidades.Purchase;
+import com.example.storecode_android.entidades.PurchasedItem;
 import com.example.storecode_android.entidades.ReqCarrito;
 import com.example.storecode_android.entidades.ReqItemProduct;
 import com.example.storecode_android.entidades.ReqLoginDto;
@@ -28,6 +30,8 @@ import com.example.storecode_android.entidades.RespUserData;
 import com.example.storecode_android.entidades.TokenFCM;
 import com.example.storecode_android.entidades.Venta;
 import com.example.storecode_android.utils.LogFile;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.apache.log4j.Logger;
 
@@ -85,8 +89,15 @@ public class RestClientServiceImpl implements RestClientService {
                 final SSLContext sslContext = SSLContext.getInstance("SSL");
                 sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
                 // Create an ssl socket factory with our all-trusting manager
-                final SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
+                final S
+
+                SLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
                 */
+
+                Gson gson = new GsonBuilder()
+                        .setDateFormat("yyyy-MM-dd'T'HH:mm:ssz")
+                        .create();
+
                 OkHttpClient client = new OkHttpClient.Builder()
                 //.sslSocketFactory(sslSocketFactory)
                 //.hostnameVerifier((hostname, session) -> true)
@@ -96,7 +107,7 @@ public class RestClientServiceImpl implements RestClientService {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(URL_BASE)
                 .client(client)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         restClient = retrofit.create(RestClientService.class);
 
@@ -277,7 +288,7 @@ public class RestClientServiceImpl implements RestClientService {
     }
 
     @Override
-    public Call<List<RespMyShopping>> getMyShopping(String idUser) {
+    public Call<List<Purchase>> getMyShopping(String idUser) {
         return restClient.getMyShopping(idUser);
     }
 
@@ -299,6 +310,11 @@ public class RestClientServiceImpl implements RestClientService {
     @Override
     public Call<String> sendNotificationToTopics(RespObtenerProducto producto) {
         return restClient.sendNotificationToTopics(producto);
+    }
+
+    @Override
+    public Call<List<PurchasedItem>> getPurchasedItem(String folioVenta) {
+        return restClient.getPurchasedItem(folioVenta);
     }
 
 

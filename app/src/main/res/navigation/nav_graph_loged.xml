@@ -116,6 +116,10 @@
             app:popUpTo="@id/navProfileLogedFragment"
             app:popUpToInclusive="true"
             />
+        <action
+            android:id="@+id/toPurchasedDetailFragment"
+            app:destination="@id/purchasedDetailFragment"
+            app:enterAnim="@anim/fade_in" />
     </fragment>
     <fragment
         android:id="@+id/dataMercadoPagoFragment"
@@ -126,5 +130,21 @@
             android:id="@+id/toNavProfileLogedFragment"
             app:destination="@id/navProfileLogedFragment"
             app:exitAnim="@anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/purchasedDetailFragment"
+        android:name="com.example.storecode_android.view.fragments.PurchasedDetailFragment"
+        android:label="fragment_purchased_detail"
+        tools:layout="@layout/fragment_purchased_detail" >
+        <action
+            android:id="@+id/toMyShoppingFragment"
+            app:destination="@id/myShoppinFragment"
+            app:popUpTo="@id/myShoppinFragment"
+            app:popEnterAnim="@anim/fade_out"
+            app:popUpToInclusive="true" />
+
+        <argument
+            android:name="Purchase"
+            app:argType="com.example.storecode_android.entidades.Purchase" />
     </fragment>
 </navigation>

@@ -6,9 +6,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.storecode_android.R;
 import com.example.storecode_android.entidades.NotificationToDevice;
+import com.example.storecode_android.entidades.Purchase;
+import com.example.storecode_android.entidades.PurchasedItem;
 import com.example.storecode_android.entidades.ReqMercadoPago;
 import com.example.storecode_android.entidades.RespMensaje;
 import com.example.storecode_android.entidades.RespObtenerProducto;
@@ -23,6 +26,8 @@ import com.example.storecode_android.view.LoginActivity;
 
 import org.apache.log4j.Logger;
 
+import java.util.List;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,6 +38,9 @@ import static com.example.storecode_android.utils.Constantes.RESP_CODE_WEB_OK;
 public class UserPresenter {
     private static final Logger log = LogFile.getLogger(UserPresenter.class);
     private final FragmentActivity view;
+
+    public MutableLiveData<List<PurchasedItem>> purchasedItemList= new MutableLiveData();
+    public MutableLiveData<Boolean> isLoading= new MutableLiveData<>();
 
     public UserPresenter(){
         this.view=null;
@@ -224,6 +232,61 @@ public class UserPresenter {
 
 
     }
+
+
+    /**
+     *Función encargada de consultar los articulos de una venta a traves del folio de venta
+     *
+     */
+
+
+    public void getPurchasedItem(String folioVenta) {
+        log.info("--Obteniendo los productos de una venta---");
+
+        RestClientService api = new RestClientServiceImpl();
+        Call<List<PurchasedItem>> call = api.getPurchasedItem(folioVenta);
+
+        Log.d("GET PURCHASED ITEM IN USER PRESENTER REQUEST: ", "");
+
+        call.enqueue(new Callback<List<PurchasedItem>>() {
+            @Override
+            public void onResponse(Call<List<PurchasedItem>> call, Response<List<PurchasedItem>> response) {
+                System.out.println("response code:");
+                System.out.println(response.code());
+                if (response != null && response.code() == RESP_CODE_WEB_OK) {
+                    //AnimacionesGenerales.mostrarLoader(false, view, null, null);
+
+
+                    try {
+                        System.out.println("");
+                        Log.d("GET PURCHASED ITEM", "RESPONSE EXITOSO");
+                        System.out.println("items de la venta");
+                        System.out.println(response.body());
+                        purchasedItemList.postValue(response.body());
+                        processFinished();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                } else {
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<PurchasedItem>> call, Throwable t) {
+                System.err.println("Ocurrio un error al obtener los articulos de la venta" + t.getMessage());
+
+            }
+
+            public void processFinished(){
+                isLoading.postValue(true);
+            }
+        });
+    }
+
+
 
 
 

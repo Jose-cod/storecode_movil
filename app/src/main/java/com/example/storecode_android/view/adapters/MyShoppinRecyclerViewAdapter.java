@@ -1,5 +1,7 @@
 package com.example.storecode_android.view.adapters;
 
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -10,19 +12,18 @@ import android.widget.TextView;
 
 
 import com.example.storecode_android.R;
+import com.example.storecode_android.entidades.Purchase;
 import com.example.storecode_android.entidades.RespMyShopping;
+import com.example.storecode_android.view.fragments.MyShoppinFragmentDirections;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem}.
- * TODO: Replace the implementation with code for your data type.
- */
+
 public class MyShoppinRecyclerViewAdapter extends RecyclerView.Adapter<MyShoppinRecyclerViewAdapter.ViewHolder> {
 
-    private final ArrayList<RespMyShopping> mValues= new ArrayList();
+    private final ArrayList<Purchase> mValues= new ArrayList();
 
     /*public MyShoppinRecyclerViewAdapter(ArrayList<RespMyShopping> items) {
         mValues = items;
@@ -44,13 +45,16 @@ public class MyShoppinRecyclerViewAdapter extends RecyclerView.Adapter<MyShoppin
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
 
-        holder.tvClaveTransaccion.setText(holder.mItem.getClaveTransaccion());
-        holder.tvNombreProducto.setText(holder.mItem.getNombreProducto());
-        holder.tvDesProducto.setText(holder.mItem.getDesProducto());
+        holder.tvClaveTransaccion.setText("Clave Transacción: "+holder.mItem.getClaveTransaccion());
+        holder.tvDatePurchase.setText("Fecha: "+holder.mItem.getFechaVenta().toString());
+        holder.tvMonto.setText("Monto: $"+holder.mItem.getTotalVendido().toString());
+
+        holder.itemView.setOnClickListener(v-> Navigation.findNavController(v).navigate(MyShoppinFragmentDirections.toPurchasedDetailFragment(holder.mItem)));
+        //holder.tvDesProducto.setText(holder.mItem.getDesProducto());
         //holder.tvQuantityProducto.setText(holder.mItem.getCantidadProducto());
         //holder.tvTotalVendido.setText(holder.mItem.getTotalVendido().toString());
 
-        Picasso.get().load(holder.mItem.getImagenProducto()).into(holder.ivModeloMyShopping);
+        //Picasso.get().load(holder.mItem.getImagenProducto()).into(holder.ivModeloMyShopping);
 
     }
 
@@ -59,7 +63,7 @@ public class MyShoppinRecyclerViewAdapter extends RecyclerView.Adapter<MyShoppin
         return mValues.size();
     }
 
-    public void updateData(List<RespMyShopping> data) {
+    public void updateData(List<Purchase> data) {
         System.out.println("------------en el update data de RespMyShopping---------");
 
         mValues.clear();
@@ -70,30 +74,26 @@ public class MyShoppinRecyclerViewAdapter extends RecyclerView.Adapter<MyShoppin
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView tvNombreProducto;
-        public final TextView tvDesProducto;
-        public final TextView tvQuantityProducto;
         public final TextView tvClaveTransaccion;
-        public final TextView tvTotalVendido;
-        public final ImageView ivModeloMyShopping;
+        public final TextView tvDatePurchase;
+        public final TextView tvMonto;
 
-        public RespMyShopping mItem;
+
+
+        public Purchase mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            tvNombreProducto= view.findViewById(R.id.tvNameMyShopping);
-            tvDesProducto= view.findViewById(R.id.tvDescriptionMyShopping);
-            tvQuantityProducto = view.findViewById(R.id.tvQuantityMyShopping);
             tvClaveTransaccion = view.findViewById(R.id.tvClaveTransaccion);
-            tvTotalVendido = view.findViewById(R.id.tvTotalSelled);
-            ivModeloMyShopping = view.findViewById(R.id.ivModeloMyShopping);
+            tvDatePurchase = view.findViewById(R.id.tvDatePurchase);
+            tvMonto= view.findViewById(R.id.tvMonto);
         }
 
         @Override
         public String toString() {
 
-            return super.toString() + " '" + tvNombreProducto.getText() + "'";
+            return super.toString() + " '" + tvClaveTransaccion.getText() + "'";
         }
     }
 }

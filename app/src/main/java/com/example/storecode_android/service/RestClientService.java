@@ -6,6 +6,8 @@ import com.example.storecode_android.entidades.Category;
 import com.example.storecode_android.entidades.NotificationToDevice;
 import com.example.storecode_android.entidades.ProductInCard;
 import com.example.storecode_android.entidades.ProductoCarrito;
+import com.example.storecode_android.entidades.Purchase;
+import com.example.storecode_android.entidades.PurchasedItem;
 import com.example.storecode_android.entidades.ReqCarrito;
 import com.example.storecode_android.entidades.ReqItemProduct;
 import com.example.storecode_android.entidades.ReqLoginDto;
@@ -63,6 +65,7 @@ import static com.example.storecode_android.utils.Constantes.REST_SERVICE_PRODUC
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_PRODUCTS_BY_USER;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_PRODUCTS_ON_SALE;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_PRODUCT_CART;
+import static com.example.storecode_android.utils.Constantes.REST_SERVICE_PURCHASED_ITEM;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_PUSH_TO_DEVICE;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_PUSH_TO_TOPICS;
 import static com.example.storecode_android.utils.Constantes.REST_SERVICE_TOKEN_FCM;
@@ -181,7 +184,7 @@ public interface RestClientService {
 
     //obtener mis compras
     @GET(REST_SERVICE_MYSHOPPING+"/{idUser}")
-    Call<List<RespMyShopping>> getMyShopping(@Path("idUser") String idUser);
+    Call<List<Purchase>> getMyShopping(@Path("idUser") String idUser);
 
     //insertar o actualizar datos de mercado pago
     @PUT(REST_SERVICE_IMERCADOPAGO)
@@ -199,6 +202,10 @@ public interface RestClientService {
 
     @POST(REST_SERVICE_PUSH_TO_TOPICS)
     Call<String> sendNotificationToTopics(@Body RespObtenerProducto producto);
+
+    //consultar los productos comprados a traves del folio de venta
+    @GET(REST_SERVICE_PURCHASED_ITEM+"/{FolioVenta}")
+    Call<List<PurchasedItem>> getPurchasedItem(@Path("FolioVenta") String folioVenta);
 
 
 

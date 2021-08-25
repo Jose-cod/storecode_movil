@@ -70,7 +70,7 @@ public class ProductsOnSaleAdapter extends RecyclerView.Adapter<HolderProductsOn
     @Override
     public HolderProductsOnSale onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = null;
+        View view;
         view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_items_products_onsale, parent, false);
 
         //filtrarModelos();

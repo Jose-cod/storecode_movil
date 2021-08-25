@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/margin_h4"
@@ -30,7 +30,7 @@
 
                 <ImageView
                     android:layout_margin="6dp"
-                    android:id="@+id/ivProductPurchase"
+                    android:id="@+id/ivProduct"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/a100dp"
                     android:layout_weight="1"
@@ -46,10 +46,10 @@
                 >
                 <TextView
                     android:fontFamily="@font/lato"
-                    android:id="@+id/tvNameProductPurchase"
+                    android:id="@+id/tvNameProduct"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nombre del producto"
+                    android:text="Nombre del producto: "
                     android:gravity="start"
                     android:textSize="14sp"
                     android:textColor="@color/negro"
@@ -58,10 +58,10 @@
                     />
                 <TextView
                     android:fontFamily="@font/lato"
-                    android:id="@+id/tvDescriptionPurchase"
+                    android:id="@+id/tvDescriptionProduct"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Descripcion del producto"
+                    android:text="Descripcion del producto: "
                     android:gravity="start"
                     android:textSize="14sp"
                     android:textColor="@color/negro"
@@ -69,10 +69,10 @@
                     />
                 <TextView
                     android:fontFamily="@font/lato"
-                    android:id="@+id/tvPricePurchase"
+                    android:id="@+id/tvPriceProduct"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Precio del producto"
+                    android:text="Precio del producto: "
                     android:gravity="start"
                     android:textSize="14sp"
                     android:textStyle="bold"
@@ -81,45 +81,37 @@
                     />
 
                 <TextView
-                    android:id="@+id/tvQuantityPurchase"
+                    android:fontFamily="@font/lato"
+                    android:id="@+id/tvQuantityProduct"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato"
-                    android:gravity="center_vertical"
-                    android:text="Cantidad"
-                    android:textColor="@color/negro"
+                    android:text="Cantidad: "
+                    android:gravity="start"
                     android:textSize="14sp"
-                    android:visibility="visible" />
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                </LinearLayout>
-
+                    android:textStyle="bold"
+                    android:textColor="@color/colorBackground"
+                    android:visibility="visible"
+                    />
 
                 <TextView
                     android:fontFamily="@font/lato"
-                    android:id="@+id/tvTotal"
+                    android:id="@+id/tvSubtotal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Total:"
+                    android:text="Subtotal:"
                     android:gravity="start"
                     android:textSize="16sp"
                     android:textColor="@color/negro"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     />
-
 
 
 
             </LinearLayout>
 
-
         </LinearLayout>
 
-
     </LinearLayout>
+
 
 </androidx.cardview.widget.CardView>

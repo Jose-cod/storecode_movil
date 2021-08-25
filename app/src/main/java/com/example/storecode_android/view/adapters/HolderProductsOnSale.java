@@ -24,7 +24,6 @@ public class HolderProductsOnSale extends RecyclerView.ViewHolder {
 
     public HolderProductsOnSale(@NonNull View itemView) {
         super(itemView);
-
         ivModeloOnSale = itemView.findViewById(R.id.ivModeloOnSale);
         tvNameOnSale = itemView.findViewById(R.id.tvNameOnSale);
         tvDescriptionOnSale = itemView.findViewById(R.id.tvDescriptionOnSale);
@@ -36,6 +35,7 @@ public class HolderProductsOnSale extends RecyclerView.ViewHolder {
         btnEdit = itemView.findViewById(R.id.btnEdit);
         btnDelete = itemView.findViewById(R.id.btnDelete);
         btnAddImages = itemView.findViewById(R.id.btnAddImages);
+
     }
 
 }

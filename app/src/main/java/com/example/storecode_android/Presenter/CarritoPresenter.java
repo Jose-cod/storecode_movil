@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.storecode_android.entidades.CarritoVenta;
 import com.example.storecode_android.entidades.ProductInCard;
 import com.example.storecode_android.entidades.ProductoCarrito;
+import com.example.storecode_android.entidades.Purchase;
 import com.example.storecode_android.entidades.ReqCarrito;
 import com.example.storecode_android.entidades.ReqItemProduct;
 import com.example.storecode_android.entidades.ReqUpdateStock;
@@ -59,7 +60,7 @@ public class CarritoPresenter {
 
     public MutableLiveData<Integer> idUsuario= new MutableLiveData();
 
-    public MutableLiveData<List<RespMyShopping>> mShopping= new MutableLiveData();
+    public MutableLiveData<List<Purchase>> mShopping= new MutableLiveData();
     public MutableLiveData<Boolean> isLoadingMyShopping= new MutableLiveData<>();
 
     //String idUser;
@@ -521,13 +522,13 @@ public class CarritoPresenter {
         log.info("--Obteniendo los productos comprados---");
 
 
-        Call<List<RespMyShopping>> call = restClientService.getMyShopping(idUser);
+        Call<List<Purchase>> call = restClientService.getMyShopping(idUser);
 
         Log.d("GET MYSHOPPING IN CART PRESENTER REQUEST: ", "");
 
-        call.enqueue(new Callback<List<RespMyShopping>>() {
+        call.enqueue(new Callback<List<Purchase>>() {
             @Override
-            public void onResponse(Call<List<RespMyShopping>> call, Response<List<RespMyShopping>> response) {
+            public void onResponse(Call<List<Purchase>> call, Response<List<Purchase>> response) {
                 if (response != null && response.code() == RESP_CODE_WEB_OK) {
                     //AnimacionesGenerales.mostrarLoader(false, view, null, null);
 
@@ -550,7 +551,7 @@ public class CarritoPresenter {
             }
 
             @Override
-            public void onFailure(Call<List<RespMyShopping>> call, Throwable t) {
+            public void onFailure(Call<List<Purchase>> call, Throwable t) {
                 System.err.println("Ocurrio un error al obtener mis compras" + t.getMessage());
 
             }

@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.example.storecode_android.Presenter.CarritoPresenter;
 import com.example.storecode_android.Presenter.ProductPresenter;
 import com.example.storecode_android.R;
+import com.example.storecode_android.entidades.Purchase;
 import com.example.storecode_android.entidades.RespMyShopping;
 import com.example.storecode_android.entidades.RespObtenerProducto;
 import com.example.storecode_android.utils.SharedPref;
@@ -130,9 +131,9 @@ public class MyShoppinFragment extends Fragment {
     public void observer(){
 
         // Create the observer which updates the UI.
-        final Observer<List<RespMyShopping>> myShoppingObserver = new Observer<List<RespMyShopping>>() {
+        final Observer<List<Purchase>> myShoppingObserver = new Observer<List<Purchase>>() {
             @Override
-            public void onChanged(List<RespMyShopping> myShoppings) {
+            public void onChanged(List<Purchase> myShoppings) {
                 myShoppinRecyclerViewAdapter.updateData(myShoppings);
             }
 
